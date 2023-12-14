@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from "../Navbar/Navbar"
-const Layout:React.FC = ({children}) => {
-    return(
+const Layout: React.FC = ({ children }) => {
+    return (
         <>
-            <Navbar/>
+            <Navbar />
             <main>
                 {children}
             </main>
