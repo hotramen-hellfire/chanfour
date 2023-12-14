@@ -1,45 +1,22 @@
-import React, { useState } from "react";
-import { Button, Flex, Text, Input } from "@chakra-ui/react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { authentication } from "../../../firebase/clientApp";
+import { Button, Flex, Input, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { authModalState } from '../../atoms/authModalAtom';
-import { useSetRecoilState } from "recoil";
-type SignUpProps = {
+type LoginProps = {
 
 };
 
-const SignUp: React.FC<SignUpProps> = () => {
-
+const Login: React.FC<LoginProps> = () => {
     const setAuthModelState = useSetRecoilState(authModalState)
-    const [signUpForm, setSignUpForm] = useState({
+    const [loginForm, setLoginForm] = useState({
         email: "",
-        password: "",
-        confirmPassword: ""
+        password: ""
     });
-    const [error, setError] = useState("");
-    const [
-        createUserWithEmailAndPassword,
-        user,
-        loading,
-        userError,
-    ] = useCreateUserWithEmailAndPassword(authentication);
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (error) setError("");
-        let domain = "@iitb";
-        if (!signUpForm.email.includes(domain)) {
-            setError("only IITB email allowed\;>)");
-            return;
-        }
-        if (signUpForm.password !== signUpForm.confirmPassword) {
-            setError("looks like STML, hmmmm/;)");
-            return;
-        }
-        createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
-    };
+
+    const onSubmit = () => { };
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSignUpForm(prev => ({
+        setLoginForm(prev => ({
             ...prev,
             [event.target.name]: event.target.value,
         }))
@@ -74,7 +51,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 required
                 textAlign={"center"}
                 name="password"
-                placeholder='set password'
+                placeholder='password'
                 type='password'
                 mb={2}
                 onChange={onChange}
@@ -93,55 +70,28 @@ const SignUp: React.FC<SignUpProps> = () => {
                     borderColor: "purple.500"
                 }}
             />
-            <Input
-                required
-                textAlign={"center"}
-                name="confirmPassword"
-                placeholder='confirm password, (or STML check?)'
-                type='password'
-                mb={2}
-                onChange={onChange}
-                fontSize={"10pt"}
-                bg="gray.50"
-                _placeholder={{ color: "gray.500" }}
-                _hover={{
-                    bg: "white",
-                    border: "1px solid",
-                    borderColor: "purple.500"
-                }}
-                _focus={{
-                    outline: "none",
-                    bg: "white",
-                    border: "1px solid",
-                    borderColor: "purple.500"
-                }}
-            />
-            {error && <Text textAlign="center" color={"red"}>
-                {error}
-            </Text>}
             <Button
                 width="100%"
                 height="36px"
                 mt={"2px"}
                 mb={"2px"}
-                isLoading={loading}
-                type="submit">SignUp</Button>
+                type="submit">Login</Button>
             <Flex mt={2} fontSize="9pt" justifyContent={"center"}>
                 <Text mr={1}>
-                    Already have an account??
+                    New Here??
                 </Text>
                 <Text ml={1} color={"purple.500"} fontWeight={700} cursor="pointer"
                     onClick={() =>
                         setAuthModelState((prev) => ({
                             ...prev,
-                            view: "login"
+                            view: "signup"
                         }))
                     }
                 >
-                    Login
+                    SignUp
                 </Text>
             </Flex>
         </form>
     )
 }
-export default SignUp;
+export default Login;
