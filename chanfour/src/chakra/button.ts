@@ -30,6 +30,7 @@ export const Button: ComponentStyleConfig = {
             color: "purple.500",
             border: "1px solid",
             borderColor: "purple.500",
+            bg: "purple.100",
         },
         oauth: {
             height: "34px",

@@ -4,6 +4,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { authentication } from "../../../firebase/clientApp";
 import { authModalState } from '../../atoms/authModalAtom';
 import { useSetRecoilState } from "recoil";
+import { FIREBASE_ERRORS } from '../../../firebase/errors';
 type SignUpProps = {
 
 };
@@ -29,11 +30,15 @@ const SignUp: React.FC<SignUpProps> = () => {
         if (error) setError("");
         let domain = "@iitb";
         if (!signUpForm.email.includes(domain)) {
-            setError("only IITB email allowed\;>)");
+            setError("only IITB emails allowed!! :)");
+            return;
+        }
+        if (signUpForm.password.length < 8) {
+            setError("use passphrase of length>=8 pls. . .")
             return;
         }
         if (signUpForm.password !== signUpForm.confirmPassword) {
-            setError("looks like STML, hmmmm/;)");
+            setError("sadly, passes do not match. . .")
             return;
         }
         createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
@@ -51,7 +56,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 required
                 textAlign={"center"}
                 name="email"
-                placeholder='email'
+                placeholder='iitb email'
                 type='email'
                 mb={1}
                 onChange={onChange}
@@ -74,9 +79,9 @@ const SignUp: React.FC<SignUpProps> = () => {
                 required
                 textAlign={"center"}
                 name="password"
-                placeholder='set password'
+                placeholder='set passphrase'
                 type='password'
-                mb={2}
+                mb={1}
                 onChange={onChange}
                 fontSize={"10pt"}
                 bg="gray.50"
@@ -97,7 +102,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 required
                 textAlign={"center"}
                 name="confirmPassword"
-                placeholder='confirm password, (or STML check?)'
+                placeholder='confirm passphrase, (or STML check?)'
                 type='password'
                 mb={2}
                 onChange={onChange}
@@ -116,8 +121,8 @@ const SignUp: React.FC<SignUpProps> = () => {
                     borderColor: "purple.500"
                 }}
             />
-            {error && <Text textAlign="center" color={"red"}>
-                {error}
+            {error || userError && <Text textAlign="center" color={"blue"} size={"10pt"}>
+                {error || FIREBASE_ERRORS[userError.message as keyof typeof FIREBASE_ERRORS]}
             </Text>}
             <Button
                 width="100%"
