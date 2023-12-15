@@ -7,7 +7,7 @@ import { authentication } from '@/src/firebase/clientApp';
 const Navbar: React.FC = () => {
     const [user, loading, error] = useAuthState(authentication);
     return (
-        <Flex bg="#710193" border="1px solid purple" height="44px" padding="6px 12px">
+        <Flex bg="#710193" border="1px solid purple" height="44px" padding="6px 12px" overflow={"visible"}>
             <Flex align="center">
                 <Image src="images/leaf.svg" height="30px" />
                 <Image display={{ base: "none", md: "unset" }} src="images/webname.png" height="46px" />
