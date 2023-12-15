@@ -11,7 +11,7 @@ type SignUpProps = {
 
 const SignUp: React.FC<SignUpProps> = () => {
 
-    const setAuthModelState = useSetRecoilState(authModalState)
+    const setAuthModalState = useSetRecoilState(authModalState)
     const [signUpForm, setSignUpForm] = useState({
         email: "",
         password: "",
@@ -137,13 +137,13 @@ const SignUp: React.FC<SignUpProps> = () => {
                 </Text>
                 <Text ml={1} color={"purple.500"} fontWeight={700} cursor="pointer"
                     onClick={() =>
-                        setAuthModelState((prev) => ({
+                        setAuthModalState((prev) => ({
                             ...prev,
                             view: "login"
                         }))
                     }
                 >
-                    Login
+                    Login. . .
                 </Text>
             </Flex>
         </form>

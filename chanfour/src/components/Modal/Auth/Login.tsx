@@ -10,7 +10,7 @@ type LoginProps = {
 };
 
 const Login: React.FC<LoginProps> = () => {
-    const setAuthModelState = useSetRecoilState(authModalState)
+    const setAuthModalState = useSetRecoilState(authModalState)
     const [loginForm, setLoginForm] = useState({
         email: "",
         password: ""
@@ -96,17 +96,32 @@ const Login: React.FC<LoginProps> = () => {
                 type="submit">Login</Button>
             <Flex mt={2} fontSize="9pt" justifyContent={"center"}>
                 <Text mr={1}>
-                    New Here??
+                    Forgot passphrase??
                 </Text>
                 <Text ml={1} color={"purple.500"} fontWeight={700} cursor="pointer"
                     onClick={() =>
-                        setAuthModelState((prev) => ({
+                        setAuthModalState((prev) => ({
+                            ...prev,
+                            view: "resetPassword"
+                        }))
+                    }
+                >
+                    Reset. . .
+                </Text>
+            </Flex>
+            <Flex mt={0} fontSize="9pt" justifyContent={"center"}>
+                <Text mr={1}>
+                    New here??
+                </Text>
+                <Text ml={1} color={"purple.500"} fontWeight={700} cursor="pointer"
+                    onClick={() =>
+                        setAuthModalState((prev) => ({
                             ...prev,
                             view: "signup"
                         }))
                     }
                 >
-                    SignUp
+                    SignUp. . .
                 </Text>
             </Flex>
         </form>
