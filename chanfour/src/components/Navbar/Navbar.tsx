@@ -9,12 +9,12 @@ const Navbar: React.FC = () => {
     const [user, loading, error] = useAuthState(authentication);
     return (
         <Flex bg="#710193" border="1px solid purple" height="44px" padding="6px 12px" overflow={"visible"}>
-            <Flex align="center" mr={2}>
-                <Image src="images/leaf.svg" height="30px" mr={2} />
+            <Flex align="center" mr={{ base: 2, md: 6, lg: 2 }}>
+                <Image src="images/leaf.png" height="30px" mr={2} />
                 <Image display={{ base: "none", md: "unset" }} src="images/webname.png" height="46px" />
             </Flex>
-            <DirectoryWrapper />
-            <SearchInput />
+            {user && <DirectoryWrapper />}
+            <SearchInput user={user} />
             <RightContent user={user} />
         </Flex>
     );

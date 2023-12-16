@@ -24,7 +24,7 @@ const UserList: React.FC<UserListProps> = () => {
             <MenuItem
                 fontSize="10pt"
                 fontWeight={700}
-                _hover={{ bg: "blue.500", color: "white" }}
+                _hover={{ bg: "purple.700", color: "white" }}
             >
                 <Flex alignItems="center">
                     <Icon fontSize={20} mr={2} as={CgProfile} />
@@ -35,7 +35,7 @@ const UserList: React.FC<UserListProps> = () => {
             <MenuItem
                 fontSize="10pt"
                 fontWeight={700}
-                _hover={{ bg: "blue.500", color: "white" }}
+                _hover={{ bg: "purple.700", color: "white" }}
                 onClick={() => signOut(authentication)}
             >
                 <Flex alignItems="center">

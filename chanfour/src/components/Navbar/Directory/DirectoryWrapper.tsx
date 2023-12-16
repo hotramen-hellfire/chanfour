@@ -23,8 +23,9 @@ const DirectoryWrapper: React.FC = () => {
                 color={"white"}
                 _hover={{ outline: "1px solid", outlineColor: "gray.200", bg: 'gray.100', color: 'purple' }}
                 mr={2}
+                ml={{ md: 4, lg: 0 }}
             >
-                <Flex alignItems="center" justify="space-between" width={{ base: "auto", lg: "200px" }}>
+                <Flex alignItems="center" justify="space-between" width={{ base: "auto", lg: "100px" }}>
                     <Flex alignItems="center">
                         <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TiHome} />
                         <Flex display={{ base: 'none', lg: "flex" }}>
