@@ -31,25 +31,29 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
     }
     const handleCreateCommunity = async () => {
         //validate community
-        if (error !== '') return;
-        setLoading(true);
-        const communityDocRef = doc(firestore, 'communities', communityName);
-        const communityDoc = await getDoc(communityDocRef);
-        if (communityDoc.exists()) {
-            setError('a board with the same name exists :(. . .');
-            setLoading(false);
+        if (communityName.length === 0) {
+            setError("need a positive length to continue. . .");
             return;
         }
-        //create the community doc in firestore
-        await setDoc(communityDocRef, {
-            creatorId: user?.uid,
-            createdAt: serverTimestamp(),
-            numberOfMembers: 1,
-            privacyType: communityType,
-            //createdat
-            //numberofmembers
-            //privacytype
-        })
+        if (error !== '') return;//also safe guards 
+        setLoading(true);
+        try {
+            const communityDocRef = doc(firestore, 'communities', communityName);
+            const communityDoc = await getDoc(communityDocRef);
+            if (communityDoc.exists()) {
+                throw new Error('a board with the same name exists :(. . .');
+            }
+            //create the community doc in firestore
+            await setDoc(communityDocRef, {
+                creatorId: user?.uid,
+                createdAt: serverTimestamp(),
+                numberOfMembers: 1,
+                privacyType: communityType,
+            })
+        } catch (error: any) {
+            console.log('in handleCreateCommunity: ', error);
+            setError(error.message);
+        }
         setLoading(false);
     }
     return (
@@ -80,7 +84,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                             <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'gray.500'}>
                                 {charsRemaining} Characters remaining
                             </Text>
-                            <Text fontSize={12} color={'purple'} display={error === 'fal' ? 'none' : 'flex'}>{error}</Text>
+                            <Text fontSize={12} color={'purple'} display={error === 'false' ? 'none' : 'flex'}>{error}</Text>
                             <Box mt={1} mb={2}>
                                 <Text fontWeight={600} fontSize={15}>
                                     Community Type
@@ -116,7 +120,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                         <Button colorScheme='blue' mr={3} onClick={handleClose}>
                             Close
                         </Button>
-                        <Button onClick={handleCreateCommunity} variant='ghost'>Create Board</Button>
+                        <Button onClick={handleCreateCommunity} variant='ghost' isLoading={loading}>Create Board</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal >
