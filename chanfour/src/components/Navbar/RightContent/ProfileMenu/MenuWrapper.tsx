@@ -9,6 +9,7 @@ import {
     MenuButton,
     MenuList,
     Text,
+    Image
 } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
@@ -53,12 +54,7 @@ const MenuWrapper: React.FC<MenuWrapperProps> = () => {
                     <Flex alignItems="center">
                         {user ? (
                             <>
-                                <Icon
-                                    fontSize={24}
-                                    mr={1}
-                                    color="white"
-                                    as={FaRedditSquare}
-                                />
+                                <Image src="images/spiral.png" height="30px" mr={1} />
                                 <Box
                                     display={{ base: "none", lg: "flex" }}
                                     flexDirection="column"
