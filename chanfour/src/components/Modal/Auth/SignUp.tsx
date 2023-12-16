@@ -1,47 +1,81 @@
 import React, { useState } from "react";
 import { Button, Flex, Text, Input } from "@chakra-ui/react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { authentication } from "../../../firebase/clientApp";
+import { authentication, firestore } from "../../../firebase/clientApp";
 import { authModalState } from '../../atoms/authModalAtom';
 import { useSetRecoilState } from "recoil";
 import { FIREBASE_ERRORS } from '../../../firebase/errors';
+import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, where } from "firebase/firestore";
 type SignUpProps = {
 
 };
 
 const SignUp: React.FC<SignUpProps> = () => {
 
-    const setAuthModalState = useSetRecoilState(authModalState)
+    const setAuthModalState = useSetRecoilState(authModalState);
+    const [charsRemaining, setCharsRemaining] = useState(17);
+    const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     const [signUpForm, setSignUpForm] = useState({
         email: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        UName: ""
     });
     const [error, setError] = useState("");
+    const [uerror, setUError] = useState("");
+    const [loading, setLoading] = useState(false);
     const [
         createUserWithEmailAndPassword,
-        user,
-        loading,
+        _,
+        __,
         userError,
     ] = useCreateUserWithEmailAndPassword(authentication);
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (error) setError("");
-        let domain = "@iitb";
-        if (!signUpForm.email.includes(domain)) {
-            setError("only IITB emails allowed!! :)");
-            return;
+        var etype = '';
+        try {
+            if (error) setError("");
+            if (uerror !== '') return;
+            setLoading(true);
+            let domain = "@iitb";
+            if (!signUpForm.email.includes(domain)) {
+                etype = 'e';
+                throw new Error("only IITB emails allowed!! :)");
+            }
+            const userDocRef = doc(firestore, 'userByID', signUpForm.email.split("@")[0]);
+            const userDoc = await getDoc(userDocRef);
+            if (userDoc.exists()) {
+                etype = 'e';
+                throw new Error('email already in use :(. . .');
+            }
+            if (signUpForm.password.length < 8) {
+                etype = 'e';
+                throw new Error("use passphrase of length>=8 pls. . .")
+            }
+            if (signUpForm.password !== signUpForm.confirmPassword) {
+                etype = 'e';
+                throw new Error("sadly, passes do not match. . .")
+            }
+            //check if an id with the same username exists
+            var snapshot = await getDocs(query(collection(firestore, 'userByID'), where("UName", "==", signUpForm.UName)));
+            if (snapshot.size > 0) {
+                etype = 'u';
+                throw new Error('username is taken, get more creative++ :)');
+            }
+            await createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
+            await setDoc(userDocRef, {
+                uid: signUpForm.email.split("@")[0],
+                UName: signUpForm.UName,
+                joined: serverTimestamp(),
+                activity: 0,
+            })
+        } catch (error: any) {
+            console.log('in handleCreateCommunity: ', error);
+            if (etype === 'e') setError(error.message);
+            if (etype === 'u') setUError(error.message);
         }
-        if (signUpForm.password.length < 8) {
-            setError("use passphrase of length>=8 pls. . .")
-            return;
-        }
-        if (signUpForm.password !== signUpForm.confirmPassword) {
-            setError("sadly, passes do not match. . .")
-            return;
-        }
-        createUserWithEmailAndPassword(signUpForm.email, signUpForm.password);
+        setLoading(false);
     };
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSignUpForm(prev => ({
@@ -49,6 +83,19 @@ const SignUp: React.FC<SignUpProps> = () => {
             [event.target.name]: event.target.value,
         }))
     };
+
+    const onUNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.value.length > 17) {
+            event.target.value = event.target.value.substring(0, 17);
+            return;
+        }
+        setCharsRemaining(17 - event.target.value.length)
+        if (format.test(event.target.value)) {
+            setUError("cannot contain /[ `!@#$%^&*()+\-=\[\]{};':\"\\|,.<>\/?~]/</>");
+            return;
+        }
+        setUError('');
+    }
 
     return (
         <form onSubmit={onSubmit}>
@@ -104,8 +151,31 @@ const SignUp: React.FC<SignUpProps> = () => {
                 name="confirmPassword"
                 placeholder='confirm passphrase, (or STML check?)'
                 type='password'
-                mb={2}
                 onChange={onChange}
+                fontSize={"10pt"}
+                mb={1}
+                bg="gray.50"
+                _placeholder={{ color: "gray.500" }}
+                _hover={{
+                    bg: "white",
+                    border: "1px solid",
+                    borderColor: "purple.500"
+                }}
+                _focus={{
+                    outline: "none",
+                    bg: "white",
+                    border: "1px solid",
+                    borderColor: "purple.500"
+                }}
+            />
+            <Input
+                required
+                textAlign={"center"}
+                name="UName"
+                placeholder='set username'
+                type='text'
+                onInput={onChange}
+                onChange={onUNameChange}
                 fontSize={"10pt"}
                 bg="gray.50"
                 _placeholder={{ color: "gray.500" }}
@@ -121,13 +191,20 @@ const SignUp: React.FC<SignUpProps> = () => {
                     borderColor: "purple.500"
                 }}
             />
-            {error || userError && <Text textAlign="center" color={"blue"} size={"10pt"}>
-                {error || FIREBASE_ERRORS[userError.message as keyof typeof FIREBASE_ERRORS]}
-            </Text>}
+            <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'gray.500'}>
+                {charsRemaining} Characters remaining
+                <Text fontSize={12} color={'purple'} display={uerror === '' ? 'none' : 'flex'}>{uerror}</Text>
+            </Text>
+            <Text fontSize={12} color={'purple'} display={error === '' ? 'none' : 'flex'}>{error}</Text>
+            {
+                userError && <Text textAlign="center" fontSize={12} color={'purple'} display={userError ? 'flex' : 'none'}>
+                    {FIREBASE_ERRORS[userError.message as keyof typeof FIREBASE_ERRORS]}
+                </Text>
+            }
             <Button
                 width="100%"
                 height="36px"
-                mt={"2px"}
+                mt={1}
                 mb={"2px"}
                 isLoading={loading}
                 type="submit">SignUp</Button>

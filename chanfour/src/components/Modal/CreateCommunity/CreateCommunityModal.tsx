@@ -108,7 +108,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                                         <Flex align='center'>
                                             <Icon as={HiLockClosed} color={"gray.500"} />
                                             <Text fontSize={15} >Isolated</Text>
-                                            <Text fontSize={10} color={"gray.500"} ml={5}>Only apporved users can join and submit</Text>
+                                            <Text fontSize={10} color={"gray.500"} ml={5}>Only approved users can join and submit</Text>
                                         </Flex>
                                     </Checkbox>
                                 </Stack>
