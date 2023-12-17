@@ -1,12 +1,14 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React from 'react';
-
+import React, { useState } from 'react';
+import useCommunityData from '@/src/hooks/useCommunityData';
 type HeaderProps = {
     communityData: Community;
 };
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
+    const { commmunityStateValue, onJoinOrLeaveCommunity } = useCommunityData();
+    const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
     var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
     var imageWidth: number = 120;
     if (communityData.imageURL) imageLink = communityData.imageURL;
@@ -67,6 +69,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                             bg='white'
                             ml={5}
                             fontSize={'20px'}
+                            onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
                             _hover={{
                                 bg: 'purple',
                                 color: 'white',
@@ -77,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                                 border: '2px solid white'
                             }}
                         >
-                            Join
+                            {isJoined ? 'Joined' : 'Join'}
                         </Button>
                     </Flex>
                 </Flex>
