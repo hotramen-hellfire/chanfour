@@ -45,7 +45,7 @@ const MenuWrapper: React.FC<MenuWrapperProps> = ({ UName }) => {
                     <Flex alignItems="center">
                         {user ? (
                             <>
-                                <Image src="images/spiral.png" height="30px" mr={1} />
+                                <Image src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/spiral.png" height="30px" mr={1} />
                                 <Box
                                     display={{ base: "none", lg: "flex" }}
                                     flexDirection="column"

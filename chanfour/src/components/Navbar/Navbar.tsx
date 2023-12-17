@@ -23,8 +23,8 @@ const Navbar: React.FC = () => {
     return (
         <Flex bg="#710193" border="1px solid purple" height="44px" padding="6px 12px" overflow={"visible"}>
             <Flex align="center" mr={{ base: 2, md: 6, lg: 2 }}>
-                <Image src="images/leaf.png" height="30px" mr={2} />
-                <Image display={{ base: "none", md: "unset" }} src="images/webname.png" height="46px" />
+                <Image src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/leaf.png" height="30px" mr={2} />
+                <Image display={{ base: "none", md: "unset" }} src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/webname.png" height="46px" />
             </Flex>
             {user && <DirectoryWrapper UName={UName} />}
             <SearchInput user={user} />
