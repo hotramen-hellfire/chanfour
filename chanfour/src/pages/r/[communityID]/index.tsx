@@ -9,7 +9,14 @@ type CommunityPageProps = {
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-    return <div>WELCOME TO {communityData.communityID}, created by {communityData.creatorID}</div>
+    if (!communityData) {
+        return (
+            <>
+                nothign
+            </>
+        )
+    }
+    else return <div>WELCOME TO {communityData.communityID}, created by {communityData.creatorID}</div>
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -19,7 +26,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         console.log(context.query.communityID as string);
         const communityDocRef = doc(firestore, 'communities', context.query.communityID as string);
         const communityDoc = await getDoc(communityDocRef);
-        return {
+        if (!communityDoc.exists()) {
+            return {
+                props: {
+                    communityData: null,
+                }
+            }
+        }
+        else return {
             props: {
                 communityData: JSON.parse(safeJsonStringify({ communityID: communityDoc.id, ...communityDoc.data() })),
             }
