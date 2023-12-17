@@ -3,23 +3,25 @@ import { firestore } from '@/src/firebase/clientApp';
 import { doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
-
+import safeJsonStringify from 'safe-json-stringify';
 type CommunityPageProps = {
     communityData: Community;
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-    return <div>WELCOME TO {communityData.communityID}</div>
+    return <div>WELCOME TO {communityData.communityID}, created by {communityData.creatorID}</div>
 }
 
-export async function GetServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
     //get the document
+    console.log('here');
     try {
+        console.log(context.query.communityID as string);
         const communityDocRef = doc(firestore, 'communities', context.query.communityID as string);
         const communityDoc = await getDoc(communityDocRef);
         return {
             props: {
-                communityData: communityDoc.data()
+                communityData: JSON.parse(safeJsonStringify({ communityID: communityDoc.id, ...communityDoc.data() })),
             }
         }
     } catch (error: any) {
