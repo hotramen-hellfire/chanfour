@@ -1,4 +1,4 @@
-import { Button, Flex, Link, Progress } from "@chakra-ui/react"
+import { Button, Flex, Link, Progress, Text, Card, CardBody } from "@chakra-ui/react"
 import ReactDOM from "react-dom";
 import { createRoot } from 'react-dom/client';
 
@@ -10,13 +10,36 @@ const CommunityNotFound: React.FC = () => {
                 direction='column'
                 justifyContent='center'
                 alignItems="center"
-                minHeight="60vh"
+                height={'100vh'}
+                bgImage={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'}
             >
-                The requested community doesn't exist. . . :(
-                <Link href="/">
-                    <Button mt={4}> Go Home</Button>
-                </Link>
-            </Flex>
+                <Card >
+                    <CardBody
+                        border={'10px solid purple'}
+                        borderRadius={'5px'}
+                        color={'purple'}
+                        _hover={{
+                            border: '10px solid white',
+                            bg: 'purple',
+                            borderRadius: '5px',
+                            color: 'white',
+                            fontSize: '25px'
+                        }}
+                    >
+                        <Text >The requested community doesn't exist. . . :(</Text>
+                        <Link href="/">
+                            <Button
+                                mt={4}
+                                _hover={{
+                                    color: 'purple',
+                                    bg: 'white',
+                                    fontSize: '15px'
+                                }}
+                            > Go Home</Button>
+                        </Link>
+                    </CardBody>
+                </Card>
+            </Flex >
         </>
     )
 }
