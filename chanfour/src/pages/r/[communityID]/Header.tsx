@@ -1,5 +1,5 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { Badge, Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import React from 'react';
 
 type HeaderProps = {

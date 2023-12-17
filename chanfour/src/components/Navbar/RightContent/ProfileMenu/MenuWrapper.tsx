@@ -1,29 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
     Box,
     Flex,
     Icon,
+    Image,
     Menu,
     MenuButton,
     MenuList,
-    Text,
-    Image
+    Text
 } from "@chakra-ui/react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
+import { authentication } from "../../../../firebase/clientApp";
 import { authModalState } from "../../../atoms/authModalAtom";
-import { authentication, firestore } from "../../../../firebase/clientApp";
 
 
-import { FaRedditSquare } from "react-icons/fa";
-import { VscAccount } from "react-icons/vsc";
-import { IoSparkles } from "react-icons/io5";
-import UserList from "./UserList";
-import NoUserList from "./NoUserList";
-import { doc, getDoc } from "firebase/firestore";
 import { TiSpiral } from "react-icons/ti";
+import { VscAccount } from "react-icons/vsc";
+import NoUserList from "./NoUserList";
+import UserList from "./UserList";
 
 type MenuWrapperProps = {
     UName: string

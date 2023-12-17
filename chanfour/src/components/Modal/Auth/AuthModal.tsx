@@ -1,10 +1,10 @@
-import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Flex } from '@chakra-ui/react';
+import { authentication } from '@/src/firebase/clientApp';
+import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState } from 'recoil';
 import { authModalState } from '../../atoms/authModalAtom';
 import AuthInputs from './AuthInputs';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { authentication } from '@/src/firebase/clientApp';
 import ResetPassword from './ResetPassword';
 
 const AuthModal: React.FC = () => {

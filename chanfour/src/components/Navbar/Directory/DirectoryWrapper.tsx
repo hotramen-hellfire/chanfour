@@ -9,9 +9,8 @@ import {
     MenuList,
     Text
 } from "@chakra-ui/react";
-import Communities from "./Communities";
-import { GrAdd } from "react-icons/gr";
 import { TiHome } from "react-icons/ti";
+import Communities from "./Communities";
 
 type DirectoryWrapperProps = {
     UName: string;

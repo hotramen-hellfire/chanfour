@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
-import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
-import { BsDot, BsReddit } from "react-icons/bs";
-import { authModalState } from '../../atoms/authModalAtom';
 import { authentication } from '@/src/firebase/clientApp';
+import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
+import { BsReddit } from "react-icons/bs";
 import { useSetRecoilState } from "recoil";
+import { authModalState } from '../../atoms/authModalAtom';
 
 
 const ResetPassword: React.FC = () => {

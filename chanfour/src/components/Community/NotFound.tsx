@@ -1,6 +1,4 @@
-import { Button, Flex, Link, Progress, Text, Card, CardBody } from "@chakra-ui/react"
-import ReactDOM from "react-dom";
-import { createRoot } from 'react-dom/client';
+import { Button, Card, CardBody, Flex, Link, Progress, Text } from "@chakra-ui/react";
 
 const CommunityNotFound: React.FC = () => {
     return (

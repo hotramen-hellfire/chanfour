@@ -1,7 +1,6 @@
 import NotFound from '@/src/components/Community/NotFound';
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { firestore } from '@/src/firebase/clientApp';
-import { Link, Text } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
