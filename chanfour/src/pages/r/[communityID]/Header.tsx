@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                     <Image src={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'} alt={'just theming'} />
                 </Box>
                 <Flex justify={'center'} bg='white' flexGrow={1}>
-                    <Flex width='95%' maxWidth={'860px'} border='1px solid'>
+                    <Flex width='95%' maxWidth={'1000px'} border='1px solid'>
                         hi
                     </Flex>
                 </Flex>
