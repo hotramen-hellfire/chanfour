@@ -1,9 +1,12 @@
+import NotFound from '@/src/components/Community/NotFound';
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { firestore } from '@/src/firebase/clientApp';
+import { Link, Text } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import React from 'react';
 import safeJsonStringify from 'safe-json-stringify';
+import Header from './Header';
 type CommunityPageProps = {
     communityData: Community;
 };
@@ -11,12 +14,14 @@ type CommunityPageProps = {
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
     if (!communityData) {
         return (
-            <>
-                nothign
-            </>
+            <NotFound />
         )
     }
-    else return <div>WELCOME TO {communityData.communityID}, created by {communityData.creatorID}</div>
+    else return (
+        <>
+            <Header communityData={communityData} />
+        </>
+    )
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
