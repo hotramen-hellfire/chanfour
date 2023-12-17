@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Community, communityState } from '../components/atoms/communitiesAtom';
-import { useRecoilState } from 'recoil';
+import { collection, getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useRecoilState } from 'recoil';
+import "../components/atoms/communitiesAtom";
+import { Community, CommunitySnippet, communityState } from '../components/atoms/communitiesAtom';
 import { authentication, firestore } from '../firebase/clientApp';
-import { getDocs, collection } from 'firebase/firestore';
-
+import '../components/atoms/communitiesAtom';
 const useCommunityData = () => {
     const [commmunityStateValue, setCommunityStateValue] = useRecoilState(communityState)
-    const [leading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [user] = useAuthState(authentication)
     var uid = "";
@@ -25,6 +26,7 @@ const useCommunityData = () => {
             return;
         }
     }
+
     const getMySnippets = async () => {
         setLoading(true);
         if (!uid) {
@@ -33,12 +35,16 @@ const useCommunityData = () => {
         }
         try {
             const snippetDocs = await getDocs(collection(firestore, '/userByID/' + uid + '/communitySnippets'));
-            const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }))
-
+            const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
+            setCommunityStateValue((prev) => ({
+                ...prev,
+                mySnippets: snippets as CommunitySnippet[],
+            }))
         } catch (error: any) {
             console.log('getMySnippets error: ', error);
             setError(error);
         }
+        setLoading(false);
     }
     const joinCommunity = (communityData: Community) => { };
     const leaveCommunity = (communityID: string) => { };
@@ -50,7 +56,8 @@ const useCommunityData = () => {
 
     return {
         commmunityStateValue,
-        onJoinOrLeaveCommunity
+        onJoinOrLeaveCommunity,
+        loading
     }
 }
 export default useCommunityData;

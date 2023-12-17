@@ -7,7 +7,7 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
-    const { commmunityStateValue, onJoinOrLeaveCommunity } = useCommunityData();
+    const { commmunityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
     const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
     var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
     var imageWidth: number = 120;
@@ -68,6 +68,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                             top={'1'}
                             bg='white'
                             ml={5}
+                            isLoading={loading}
                             fontSize={'20px'}
                             onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
                             _hover={{
