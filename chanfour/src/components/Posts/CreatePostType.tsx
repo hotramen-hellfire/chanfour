@@ -1,6 +1,6 @@
-import { Button, Flex, Input, Stack, Textarea, Text } from '@chakra-ui/react';
+import { Button, Flex, Input, Stack, Textarea, Text, Icon } from '@chakra-ui/react';
 import React from 'react';
-
+import { FaLock } from "react-icons/fa";
 type CreatePostTypeProps = {
     textInputs: {
         title: string,
@@ -24,7 +24,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
             <Stack spacing={3} width='100%' >
                 <Input
                     name={textInputs.title}
-                    placeholder="Title"
+                    placeholder="Title(Required!!)"
                     _placeholder={{ color: "pink.400" }}
                     _hover={{
                         bg: "white",
@@ -74,16 +74,15 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                     color={'purple'}
                     onChange={onBodyChange}
                 />
-                <Flex justify={'center'}>
+                <Flex justify={'center'} mb={1}>
                     <Button
                         borderRadius={0}
                         height={'40px'}
-                        width={'80px'}
+                        width={'200px'}
                         border='2px solid purple'
                         variant={'outline'}
                         bg='white'
-                        color='black'
-                        ml={5}
+                        color='purple'
                         _hover={{
                             mt: 5,
                             bg: 'pink',
@@ -91,15 +90,42 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                             fontSize: '40px',
                             top: '-4',
                             height: '80px',
-                            width: '180px',
+                            width: '200px',
                             border: '2px solid white'
                         }}
-                        disabled={false}
+                        display={textInputs.title ? 'unset' : 'none'}
+                        isLoading={loading}
+                        justifyContent='center'
                     >
                         POST XD
                     </Button>
+                    <Button
+                        borderRadius={0}
+                        height={'40px'}
+                        width={'200px'}
+                        border='2px solid black'
+                        variant={'outline'}
+                        bgGradient={'linear(to-b,' + 'gray.700' + ', purple.50)'}
+                        color='black'
+                        _hover={{
+                            mt: 5,
+                            bg: 'black',
+                            color: 'white',
+                            fontSize: '40px',
+                            top: '-4',
+                            height: '80px',
+                            width: '200px',
+                            border: '2px solid white'
+                        }}
+                        display={!textInputs.title ? 'unset' : 'none'}
+                        isLoading={loading}
+                        justifyContent='center'
+                        fontSize={20}
+                    >
+                        <Icon as={FaLock} />
+                    </Button>
                 </Flex>
-            </Stack>
+            </Stack >
         </>
     )
 }
