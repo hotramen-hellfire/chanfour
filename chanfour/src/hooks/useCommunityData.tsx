@@ -16,7 +16,6 @@ const useCommunityData = () => {
     const onJoinOrLeaveCommunity = (communityData: Community, isJoined: boolean) => {
         //is the user signed in
         //if not open auth modal state
-
         if (isJoined) {
             leaveCommunity(communityData.communityID);
             return;
@@ -29,8 +28,10 @@ const useCommunityData = () => {
 
     const getMySnippets = async () => {
         setLoading(true);
+        console.log("h1")
         if (!uid) {
             //do something and return
+            setLoading(false);
             return;
         }
         try {
@@ -46,11 +47,19 @@ const useCommunityData = () => {
         }
         setLoading(false);
     }
-    const joinCommunity = (communityData: Community) => { };
+    const joinCommunity = (communityData: Community) => {
+        //first create a new community snippet
+        //updating the number of members
+        //update community state/ mySnippets
+
+    };
     const leaveCommunity = (communityID: string) => { };
 
     useEffect(() => {
-        if (!user) return;
+        if (!user) {
+            setLoading(false);
+            return;
+        }
         getMySnippets();
     }, [user])
 
