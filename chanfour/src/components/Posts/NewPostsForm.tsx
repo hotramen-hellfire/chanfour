@@ -4,6 +4,7 @@ import { GrDocumentUpdate } from "react-icons/gr";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import CreatePostType from './CreatePostType';
 import CreateMediaType from './CreateMediaType';
+import CreateLinkType from './CreateLinkType';
 type NewPostsFormProps = {
     communityID: string;
 };
@@ -14,7 +15,6 @@ export type TabItem = {
 }
 
 const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
-    const [tabIndex, setTabIndex] = useState(0);
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
@@ -26,6 +26,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const [selectedFile, setSelectedFile] = useState<string>();
     const [loading, setLoading] = useState(false);
     const handleCreatePost = async () => { };
+    const [link, setLink] = useState("");
     const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         const reader = new FileReader();
         if (event.target.files?.[0]) {
@@ -51,6 +52,9 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
             body: event.target.value,
         }))
     };
+    const onSetLink = (url: string) => {
+        setLink(url);
+    }
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
         if (!selectedFile) {
@@ -64,11 +68,11 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                 <Tabs isFitted variant='enclosed' width={'100%'} >
                     <TabList>
                         <Tab
-                            color='purple'
+                            color={textInput.title ? 'green' : 'purple'}
                             bg='white'
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
-                            _hover={{ color: 'purple', bg: hovertabcolor }}
+                            _hover={{ bg: hovertabcolor }}
                             onClick={
                                 () => { setSelectedTab('post') }
                             }
@@ -80,11 +84,11 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             Post
                         </Tab>
                         <Tab
-                            color='purple'
+                            color={fileSize > 0 && fileSize < 5 * 1024 * 1024 ? 'green' : 'purple'}
                             bg='white'
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
-                            _hover={{ color: 'purple', bg: hovertabcolor }}
+                            _hover={{ bg: hovertabcolor }}
                             onClick={
                                 () => { setSelectedTab('media') }
                             }
@@ -96,11 +100,11 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             Image/ Video
                         </Tab>
                         <Tab
-                            color='purple'
+                            color={link ? 'green' : 'purple'}
                             bg='white'
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
-                            _hover={{ color: 'purple', bg: hovertabcolor }}
+                            _hover={{ bg: hovertabcolor }}
                             onClick={
                                 () => { setSelectedTab('link') }
                             }
@@ -120,7 +124,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             <CreateMediaType selectedFile={selectedFile} onSelectImage={onSelectImage} setSelectedFile={setSelectedFile} fileSize={fileSize} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} />
+                            <CreateLinkType onSet={onSetLink} />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
