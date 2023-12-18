@@ -12,10 +12,10 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
             <Flex
                 width={'95%'}
                 maxWidth={'1024px'}
-                border={'2px solid orange'}
+                // border={'2px solid orange'}
                 bg='transparent'>
                 <Flex
-                    border={'2px solid green'}
+                    // border={'2px solid green'}
                     width={{ base: '100%', md: '65%' }}
                     flexDirection={'column'}
                     mr={{ base: 0, md: 6 }}
@@ -26,7 +26,7 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
                     display={{ base: 'none', md: 'flex' }}
                     flexGrow={1}
                     direction={'column'}
-                    border={'2px solid brown'}
+                // border={'2px solid brown'}
                 >
                     {children[1 as keyof typeof children]}
                 </Flex>

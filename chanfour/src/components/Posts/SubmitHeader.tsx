@@ -1,17 +1,19 @@
-import { Community } from '@/src/components/atoms/communitiesAtom';
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import useCommunityData from '@/src/hooks/useCommunityData';
+import { Flex, Box, Image, Text } from '@chakra-ui/react';
+import React from 'react';
 
-const SubmitHeader: React.FC = () => {
+type SubmitHeaderProps = {
+    communityID: string;
+};
+
+const SubmitHeader: React.FC<SubmitHeaderProps> = ({ communityID }) => {
     var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
     var imageWidth: number = 120;
-    if (communityData.imageURL) imageLink = communityData.imageURL;
     return (
         <>
             <Flex
                 flexDirection={'column'}
                 width={'100%'}
+                mb={4}
             >
                 <Box height={'50px'} overflow={'hidden'}>
                     <Image src={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'} alt={'just theming'} />
@@ -51,33 +53,17 @@ const SubmitHeader: React.FC = () => {
                             position={'relative'}
                             top='-4px'
                         >
-                            {communityData.communityID}
+                            {communityID}
                         </Text>
-                        <Button
-                            borderRadius={0}
-                            height={'40px'}
-                            width={'80px'}
-                            border='2px solid purple'
-                            variant={'outline'}
+                        <Text
+                            fontSize={'50px'}
+                            color={'purple.300'}
                             position={'relative'}
-                            top={'1'}
-                            bg='white'
-                            ml={5}
-                            isLoading={loading}
-                            fontSize={'20px'}
-                            onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
-                            _hover={{
-                                bg: 'purple',
-                                color: 'white',
-                                fontSize: '40px',
-                                top: '-4',
-                                height: '80px',
-                                width: '160px',
-                                border: '2px solid white'
-                            }}
+                            top='-14px'
+                            display={{ base: 'none', md: 'unset' }}
                         >
-                            {isJoined ? 'Joined' : 'Join'}
-                        </Button>
+                            /submitPost
+                        </Text>
                     </Flex>
                 </Flex>
             </Flex >
