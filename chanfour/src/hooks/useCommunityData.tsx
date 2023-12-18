@@ -2,11 +2,10 @@ import { collection, doc, getDocs, increment, writeBatch } from 'firebase/firest
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { authModalState } from '../components/atoms/authModalAtom';
 import "../components/atoms/communitiesAtom";
 import { Community, CommunitySnippet, communityState } from '../components/atoms/communitiesAtom';
 import { authentication, firestore } from '../firebase/clientApp';
-import '../components/atoms/communitiesAtom';
-import { authModalState } from '../components/atoms/authModalAtom';
 const useCommunityData = () => {
     const [commmunityStateValue, setCommunityStateValue] = useRecoilState(communityState)
     const [loading, setLoading] = useState(true);
