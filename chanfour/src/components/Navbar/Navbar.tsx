@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Flex, Image } from '@chakra-ui/react';
-import SearchInput from './SearchInput';
-import RightContent from './RightContent/RightContent';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { authentication, firestore } from '@/src/firebase/clientApp';
-import DirectoryWrapper from './Directory/DirectoryWrapper';
+import { Flex, Image } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import DirectoryWrapper from './Directory/DirectoryWrapper';
+import RightContent from './RightContent/RightContent';
+import SearchInput from './SearchInput';
 const Navbar: React.FC = () => {
     const [user, loading, error] = useAuthState(authentication);
     const [UName, setUName] = useState('notfetched');
