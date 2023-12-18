@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { GrDocumentUpdate } from "react-icons/gr";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import CreatePostType from './CreatePostType';
+import CreateMediaType from './CreateMediaType';
 type NewPostsFormProps = {
     communityID: string;
 };
@@ -96,11 +97,11 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} />
                         </TabPanel>
-                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <p>two!</p>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                            <CreateMediaType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} />
                         </TabPanel>
-                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <p>two!</p>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>

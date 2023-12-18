@@ -68,7 +68,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                     }}
                     bg="purple.50 "
                     borderColor="pink.500"
-                    height={'50px'}
+                    height={'250px'}
                     borderRadius={'9px'}
                     mr={5}
                     color={'purple'}
@@ -96,6 +96,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                         display={textInputs.title ? 'unset' : 'none'}
                         isLoading={loading}
                         justifyContent='center'
+                        onClick={handleCreatePost}
                     >
                         POST XD
                     </Button>
