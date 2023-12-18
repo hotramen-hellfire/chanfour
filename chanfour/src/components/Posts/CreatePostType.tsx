@@ -59,8 +59,31 @@ const CreatePostType: React.FC<CreatePostTypeProps> = () => {
                     mr={5}
                     color={'purple'}
                 />
-                <Flex>
-                    <Button>Post</Button>
+                <Flex justify={'center'}>
+                    <Button
+                        borderRadius={0}
+                        height={'40px'}
+                        width={'80px'}
+                        border='2px solid purple'
+                        variant={'outline'}
+                        bg='white'
+                        color='black'
+                        ml={5}
+                        _hover={{
+                            mt: 5,
+                            bg: 'pink',
+                            color: 'white',
+                            fontSize: '40px',
+                            top: '-4',
+                            height: '80px',
+                            width: '180px',
+                            border: '2px solid white'
+                        }}
+                        disabled={false}
+                    // onClick={}
+                    >
+                        POST XD
+                    </Button>
                 </Flex>
             </Stack>
         </>

@@ -14,7 +14,7 @@ export type TabItem = {
 
 const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const [tabIndex, setTabIndex] = useState(0);
-    const tabcolor = 'purple';
+    const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [selectedTab, setSelectedTab] = useState('post');//post, media or link
     const [textInput, setTextInput] = useState({
@@ -34,7 +34,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             color='purple'
                             bg='white'
                             border={'1px solid purple'}
-                            _selected={{ color: 'white', bg: tabcolor }}
+                            _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ color: 'purple', bg: hovertabcolor }}
                             onClick={
                                 () => { setSelectedTab('post') }
@@ -50,7 +50,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             color='purple'
                             bg='white'
                             border={'1px solid purple'}
-                            _selected={{ color: 'white', bg: tabcolor }}
+                            _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ color: 'purple', bg: hovertabcolor }}
                             onClick={
                                 () => { setSelectedTab('media') }
@@ -66,7 +66,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             color='purple'
                             bg='white'
                             border={'1px solid purple'}
-                            _selected={{ color: 'white', bg: tabcolor }}
+                            _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ color: 'purple', bg: hovertabcolor }}
                             onClick={
                                 () => { setSelectedTab('link') }
@@ -80,13 +80,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                         </Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreatePostType />
                         </TabPanel>
-                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <p>two!</p>
                         </TabPanel>
-                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <p>two!</p>
                         </TabPanel>
                     </TabPanels>
