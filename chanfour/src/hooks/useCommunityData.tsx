@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, doc, getDocs, increment, writeBatch } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState } from 'recoil';
@@ -47,11 +47,38 @@ const useCommunityData = () => {
         }
         setLoading(false);
     }
-    const joinCommunity = (communityData: Community) => {
+    const joinCommunity = async (communityData: Community) => {
         //first create a new community snippet
         //updating the number of members
         //update community state/ mySnippets
+        try {
+            const batch = writeBatch(firestore);
 
+            const newSnippet: CommunitySnippet = {
+                communityID: communityData.communityID,
+                imageURL: communityData.imageURL || "",
+            }
+
+            batch.set(
+                doc(
+                    firestore,
+                    'userByID/' + uid + '/communitySnippets',
+                    communityData.communityID
+                ),
+                newSnippet
+            )
+
+            batch.update(doc(firestore, 'communities', communityData.communityID), { numberOfMembers: increment(1) });
+            await batch.commit();
+
+            setCommunityStateValue(prev => ({
+                ...prev,
+                mySnippets: [...prev.mySnippets, newSnippet],
+            }))
+        } catch (error: any) {
+            console.log('joinCommunity eror: ', error);
+            setError(error.message);
+        }
     };
     const leaveCommunity = (communityID: string) => { };
 
