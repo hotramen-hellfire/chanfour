@@ -1,6 +1,6 @@
 import { Flex, Button, Text, Input, Image } from '@chakra-ui/react';
 import React, { useState } from 'react';
-
+import ReactPlayer from 'react-player'
 type CreateLinkTypeProps = {
     onSet: (url: string) => void;
 };
@@ -107,13 +107,35 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                         </Button>
                     </Flex>
                     <Flex maxWidth={"70%"} display={source ? 'unset' : 'none'} mb={4} mt={4}>
-                        {/* <Text fontSize={12} color='purple'>
-                            fileSize:{fileSize / (1024 * 1024)} MB/2 MB
-                        </Text>
-                        <Text fontSize={20} color='purple' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1}>
-                            Pwweasee use Links For Large Files :) (&lt; 5MB)
-                        </Text> */}
-                        <Image src={source} border='4px solid black' />
+                        <Image src={source} border='2px solid black' alt='only images are supported as of now :9' />
+                    </Flex>
+                    <Flex justify={'center'} align='center' mb={1} flexDirection={'row'}>
+                        <Button
+                            borderRadius={0}
+                            height={'40px'}
+                            width={'200px'}
+                            border='2px solid'
+                            borderColor='red'
+                            variant={'outline'}
+                            bg='white'
+                            color='red'
+                            _hover={{
+                                mt: 5,
+                                bg: 'pink',
+                                color: 'RED',
+                                fontSize: '20px',
+                                top: '-4',
+                                height: '60px',
+                                width: '250px',
+                                border: '2px solid white'
+                            }}
+                            display={lastSet ? 'unset' : 'none'}
+                            justifyContent='center'
+                            onClick={() => { setSource(""); onSet(""); setlastSet("") }}
+                            mt={2}
+                        >
+                            Remove Embedding
+                        </Button>
                     </Flex>
                 </Flex>
             </Flex >

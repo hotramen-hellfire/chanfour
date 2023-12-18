@@ -1,5 +1,6 @@
 import { Flex, Button, Image, Text } from '@chakra-ui/react';
 import React, { useRef } from 'react';
+import ReactPlayer from 'react-player';
 
 type CreateMediaTypeProps = {
     selectedFile?: string;
@@ -33,7 +34,7 @@ const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
                         <Text fontSize={20} color='purple' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1}>
                             Pwweasee use Links For Large Files :) (&lt; 5MB)
                         </Text>
-                        <Image src={selectedFile} border='4px solid black' />
+                        <Image src={selectedFile} border='4px solid black' alt='only images are supported as of now' />
                     </Flex>
                     <Flex flexDirection={'row'}>
                         <Button
