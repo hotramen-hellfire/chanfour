@@ -95,7 +95,9 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                                 cannot be changed once put
                             </Text>
                             <Text position='relative' top="28px" left="10px" width="20px" color={charsRemaining !== 21 ? "purple" : "purple.200"}>r/</Text>
-                            <Input position="relative" value={communityName} size={'sm'} pl={'22px'} onChange={handleChange} color={"purple"} />
+                            <Input position="relative" value={communityName} size={'sm'} pl={'22px'} onChange={handleChange} color={"purple"} _focusVisible={{
+                                outline: "none",
+                            }} />
                             <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'gray.500'}>
                                 {charsRemaining} Characters remaining
                             </Text>

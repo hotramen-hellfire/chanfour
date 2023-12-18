@@ -66,6 +66,9 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
                         borderRadius={'18px'}
                         width={{ base: '300px', md: '430px' }}
                         mr={5}
+                        _focusVisible={{
+                            outline: "none",
+                        }}
                     />
                 </Flex>
             </Flex >

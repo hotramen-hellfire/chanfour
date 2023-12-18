@@ -16,6 +16,15 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const [tabIndex, setTabIndex] = useState(0);
     const tabcolor = 'purple';
     const hovertabcolor = 'purple.100';
+    const [selectedTab, setSelectedTab] = useState('post');//post, media or link
+    const [textInput, setTextInput] = useState({
+        title: "",
+        body: ""
+    });
+    const [selectedFile, setSelectedFile] = useState<string>();
+    const handleCreatePost = async () => { };
+    const onSelectImage = () => { };
+    const onTextChange = () => { };
     return (
         <Flex direction={'column'} borderRadius={4} >
             <Flex width='100%'>
@@ -27,6 +36,9 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor }}
                             _hover={{ color: 'purple', bg: hovertabcolor }}
+                            onClick={
+                                () => { setSelectedTab('post') }
+                            }
                         >
                             <Icon
                                 as={GrDocumentUpdate}
@@ -40,6 +52,9 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor }}
                             _hover={{ color: 'purple', bg: hovertabcolor }}
+                            onClick={
+                                () => { setSelectedTab('media') }
+                            }
                         >
                             <Icon
                                 as={BsFileEarmarkImage}
@@ -53,6 +68,9 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor }}
                             _hover={{ color: 'purple', bg: hovertabcolor }}
+                            onClick={
+                                () => { setSelectedTab('link') }
+                            }
                         >
                             <Icon
                                 as={BsLink45Deg}
@@ -62,13 +80,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                         </Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel padding={'0px 0px 0px 0px'}>
+                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'}>
                             <CreatePostType />
                         </TabPanel>
-                        <TabPanel padding={'0px 0px 0px 0px'}>
+                        <TabPanel padding={'10px 5px 5px 5px'}>
                             <p>two!</p>
                         </TabPanel>
-                        <TabPanel padding={'0px 0px 0px 0px'}>
+                        <TabPanel padding={'10px 5px 5px 5px'}>
                             <p>two!</p>
                         </TabPanel>
                     </TabPanels>

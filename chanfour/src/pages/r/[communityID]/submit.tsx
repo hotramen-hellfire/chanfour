@@ -1,10 +1,13 @@
 import PageContent from '@/src/components/Layout/PageContent';
 import NewPostsForm from '@/src/components/Posts/NewPostsForm';
 import SubmitHeader from '@/src/components/Posts/SubmitHeader';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const SubmitPostPage: React.FC = () => {
-    const communityID = window.location.pathname.split('/')[2]
+    var communityID = "loading. . .";
+    const { asPath } = useRouter();
+    if (asPath) communityID = asPath.split('/')[2];
     return (
         <>
             <SubmitHeader communityID={communityID} />

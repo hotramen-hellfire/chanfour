@@ -125,8 +125,14 @@ const SignUp: React.FC<SignUpProps> = () => {
                     border: "1px solid",
                     borderColor: "purple.500"
                 }}
+                _focusVisible={{
+                    outline: "none",
+                }}
             />
             <Input
+                _focusVisible={{
+                    outline: "none",
+                }}
                 required
                 textAlign={"center"}
                 name="password"
@@ -150,6 +156,9 @@ const SignUp: React.FC<SignUpProps> = () => {
                 }}
             />
             <Input
+                _focusVisible={{
+                    outline: "none",
+                }}
                 required
                 textAlign={"center"}
                 name="confirmPassword"
@@ -173,6 +182,9 @@ const SignUp: React.FC<SignUpProps> = () => {
                 }}
             />
             <Input
+                _focusVisible={{
+                    outline: "none",
+                }}
                 required
                 textAlign={"center"}
                 name="UName"

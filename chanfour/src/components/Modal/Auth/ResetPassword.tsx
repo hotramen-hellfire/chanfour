@@ -56,6 +56,9 @@ const ResetPassword: React.FC = () => {
                                 borderColor: "blue.500",
                             }}
                             bg="gray.50"
+                            _focusVisible={{
+                                outline: "none",
+                            }}
                         />
                         <Text textAlign="center" fontSize="10pt" color="red">
                             {error?.message}

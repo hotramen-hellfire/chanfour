@@ -60,6 +60,9 @@ const Login: React.FC<LoginProps> = () => {
                     border: "1px solid",
                     borderColor: "purple.500"
                 }}
+                _focusVisible={{
+                    outline: "none",
+                }}
             />
             <Input
                 required
@@ -82,6 +85,9 @@ const Login: React.FC<LoginProps> = () => {
                     bg: "white",
                     border: "1px solid",
                     borderColor: "purple.500"
+                }}
+                _focusVisible={{
+                    outline: "none",
                 }}
             />
             {error || userError && <Text textAlign="center" color={"purple"} fontSize={12}>

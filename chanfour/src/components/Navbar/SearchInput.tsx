@@ -14,7 +14,9 @@ const SearchInput: React.FC<SearchInputProps> = ({ user }) => {
                 <InputLeftElement pointerEvents='none'>
                     <SearchIcon color='purple.300' mb={1} />
                 </InputLeftElement>
-                <Input fontSize="10pt" textAlign={'center'} placeholder='search' _placeholder={{ color: 'purple.500' }} _hover={{
+                <Input fontSize="10pt" textAlign={'center'} placeholder='search' _focusVisible={{
+                    outline: "none",
+                }} _placeholder={{ color: 'purple.500' }} _hover={{
                     bg: "white",
                     border: "2px solid",
                     borderColor: "purple.200"
