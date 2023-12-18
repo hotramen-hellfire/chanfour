@@ -1,5 +1,5 @@
 import { Flex, Icon, Input, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrDocumentUpdate } from "react-icons/gr";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import CreatePostType from './CreatePostType';
@@ -17,6 +17,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const [tabIndex, setTabIndex] = useState(0);
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
+    const [fileSize, setFileSize] = useState(0);
     const [selectedTab, setSelectedTab] = useState('post');//post, media or link
     const [textInput, setTextInput] = useState({
         title: "",
@@ -25,7 +26,18 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const [selectedFile, setSelectedFile] = useState<string>();
     const [loading, setLoading] = useState(false);
     const handleCreatePost = async () => { };
-    const onSelectImage = () => { };
+    const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const reader = new FileReader();
+        if (event.target.files?.[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+            setFileSize(event.target.files[0].size);
+        }
+        reader.onload = (readerEvent) => {
+            if (readerEvent.target?.result) {
+                setSelectedFile(readerEvent.target.result as string);
+            }
+        }
+    };
 
     const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTextInput(prev => ({
@@ -39,6 +51,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
             body: event.target.value,
         }))
     };
+    //useEffectToClearFileSizeAutomatically
+    useEffect(() => {
+        if (!selectedFile) {
+            setFileSize(0);
+            return;
+        }
+    }, [selectedFile])
     return (
         <Flex direction={'column'} borderRadius={4} >
             <Flex width='100%'>
@@ -95,13 +114,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                     </TabList>
                     <TabPanels>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} />
+                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreateMediaType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} />
+                            <CreateMediaType selectedFile={selectedFile} onSelectImage={onSelectImage} setSelectedFile={setSelectedFile} fileSize={fileSize} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} />
+                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} />
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
