@@ -2,6 +2,7 @@ import { Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue 
 import React, { useState } from 'react';
 import { GrDocumentUpdate } from "react-icons/gr";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
+import CreatePostType from './CreatePostType';
 type NewPostsFormProps = {
     communityID: string;
 };
@@ -61,13 +62,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                         </Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel>
-                            <p>one!</p>
+                        <TabPanel padding={'0px 0px 0px 0px'}>
+                            <CreatePostType />
                         </TabPanel>
-                        <TabPanel>
+                        <TabPanel padding={'0px 0px 0px 0px'}>
                             <p>two!</p>
                         </TabPanel>
-                        <TabPanel>
+                        <TabPanel padding={'0px 0px 0px 0px'}>
                             <p>two!</p>
                         </TabPanel>
                     </TabPanels>

@@ -1,5 +1,5 @@
 import PageContent from '@/src/components/Layout/PageContent';
-import PostBox from '@/src/components/Posts/PostBox';
+import NewPostsForm from '@/src/components/Posts/NewPostsForm';
 import SubmitHeader from '@/src/components/Posts/SubmitHeader';
 import React from 'react';
 
@@ -10,7 +10,7 @@ const SubmitPostPage: React.FC = () => {
             <SubmitHeader communityID={communityID} />
             <PageContent>
                 <>
-                    <PostBox communityID={communityID} />
+                    <NewPostsForm communityID={communityID} />
                 </>
                 <>about</>
             </PageContent>
