@@ -1,16 +1,29 @@
-import { Button, Flex, Input, Stack, Textarea } from '@chakra-ui/react';
+import { Button, Flex, Input, Stack, Textarea, Text } from '@chakra-ui/react';
 import React from 'react';
 
 type CreatePostTypeProps = {
-
+    textInputs: {
+        title: string,
+        body: string
+    };
+    onTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBodyChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleCreatePost: () => void;
+    loading: boolean;
 };
 
-const CreatePostType: React.FC<CreatePostTypeProps> = () => {
-
+const CreatePostType: React.FC<CreatePostTypeProps> = ({
+    textInputs,
+    onTitleChange,
+    onBodyChange,
+    handleCreatePost,
+    loading
+}) => {
     return (
         <>
             <Stack spacing={3} width='100%' >
                 <Input
+                    name={textInputs.title}
                     placeholder="Title"
                     _placeholder={{ color: "pink.400" }}
                     _hover={{
@@ -33,9 +46,10 @@ const CreatePostType: React.FC<CreatePostTypeProps> = () => {
                     borderRadius={'9px'}
                     mr={5}
                     color={'purple'}
-
+                    onChange={onTitleChange}
                 />
                 <Textarea
+                    name={textInputs.body}
                     placeholder="write something here (optional)"
                     _placeholder={{ color: "pink.400" }}
                     _hover={{
@@ -58,6 +72,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = () => {
                     borderRadius={'9px'}
                     mr={5}
                     color={'purple'}
+                    onChange={onBodyChange}
                 />
                 <Flex justify={'center'}>
                     <Button
@@ -80,7 +95,6 @@ const CreatePostType: React.FC<CreatePostTypeProps> = () => {
                             border: '2px solid white'
                         }}
                         disabled={false}
-                    // onClick={}
                     >
                         POST XD
                     </Button>

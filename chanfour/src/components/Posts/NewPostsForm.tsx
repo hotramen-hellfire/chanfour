@@ -1,4 +1,4 @@
-import { Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react';
+import { Flex, Icon, Input, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { GrDocumentUpdate } from "react-icons/gr";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
@@ -24,7 +24,19 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const [selectedFile, setSelectedFile] = useState<string>();
     const handleCreatePost = async () => { };
     const onSelectImage = () => { };
-    const onTextChange = () => { };
+
+    const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTextInput(prev => ({
+            ...prev,
+            title: event.target.value,
+        }))
+    };
+    const onBodyChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setTextInput(prev => ({
+            ...prev,
+            body: event.target.value,
+        }))
+    };
     return (
         <Flex direction={'column'} borderRadius={4} >
             <Flex width='100%'>
@@ -81,7 +93,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                     </TabList>
                     <TabPanels>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreatePostType />
+                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={false} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <p>two!</p>
@@ -91,7 +103,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                         </TabPanel>
                     </TabPanels>
                 </Tabs>
-            </Flex>
+            </Flex >
         </Flex >
     )
 }
