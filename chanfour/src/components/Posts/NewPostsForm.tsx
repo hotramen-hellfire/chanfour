@@ -80,13 +80,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                         </Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'}>
+                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreatePostType />
                         </TabPanel>
-                        <TabPanel padding={'10px 5px 5px 5px'}>
+                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <p>two!</p>
                         </TabPanel>
-                        <TabPanel padding={'10px 5px 5px 5px'}>
+                        <TabPanel padding={'10px 5px 5px 5px'} bg={'purple.50'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <p>two!</p>
                         </TabPanel>
                     </TabPanels>
