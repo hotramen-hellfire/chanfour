@@ -7,6 +7,8 @@ import CreateMediaType from './CreateMediaType';
 import CreateLinkType from './CreateLinkType';
 import { Post } from '../atoms/postsAtom';
 import { User } from 'firebase/auth';
+import { UNameState } from '../atoms/UNameAtom';
+import { useRecoilState } from 'recoil';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -18,6 +20,7 @@ export type TabItem = {
 }
 
 const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
+    const [UNameObj] = useRecoilState(UNameState);
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
@@ -65,11 +68,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
         //check img
         //store in firebase storage
         //redirect user back to community page
-        // const newPost: Post = {
-        //     communityID: communityID,
-        //     creatorID: user?.uid,
-        //     creatorDisplayName
-        // }
+        const newPost: Post = {
+            communityID: communityID,
+            creatorID: user!.email!.split('.')[0],
+            // creatorDisplayName: UNameObj.UName
+
+
+        }
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
