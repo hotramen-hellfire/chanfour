@@ -1,7 +1,7 @@
 import { firestore, storage } from '@/src/firebase/clientApp';
 import { Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { User } from 'firebase/auth';
-import { Timestamp, addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, deleteDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
@@ -69,6 +69,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     }
     const handleCreatePost = async () => {
         if (error) setError("");
+        var routeback = true;
         setLoading(true);
         const newPost: Post = {
             id: '#',
@@ -81,9 +82,12 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
             voteStatus: 0,
             createdAt: serverTimestamp() as Timestamp
         }
-
+        var postDocRef: any = null;
         try {
-            const postDocRef = await addDoc(collection(firestore, "posts"), newPost);
+            postDocRef = await addDoc(collection(firestore, "posts"), newPost);
+            await updateDoc(postDocRef, {
+                id: postDocRef.id
+            })
             if (selectedFile) {
                 const imageRef = ref(storage, 'posts/' + postDocRef.id + '/image');
                 await uploadString(imageRef, selectedFile, 'data_url');
@@ -94,12 +98,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                 })
             }
         } catch (error: any) {
+            routeback = false;
             console.log('handleCreatePost error: ', error.message);
             setError(error.message);
+            await deleteDoc(postDocRef);
         }
         setLoading(false);
-
-        router.back();
+        if (routeback) router.back();
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
