@@ -3,8 +3,8 @@ import type { AppProps } from 'next/app'
 import { ChakraProvider } from '@chakra-ui/react'
 import Layout from '../components/Layout/Layout';
 import { theme } from '../chakra/theme';
-import { RecoilRoot } from 'recoil';
-
+import { RecoilEnv, RecoilRoot } from 'recoil';
+RecoilEnv.RECOIL_DUPLICATE_ATOM_KEY_CHECKING_ENABLED = false;
 function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
@@ -14,7 +14,7 @@ function App({ Component, pageProps }: AppProps) {
         </Layout>
       </ChakraProvider>
     </RecoilRoot>
-  );
+  )
 };
 
 export default App;
