@@ -1,10 +1,11 @@
 import { authentication } from '@/src/firebase/clientApp';
 import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { BsReddit } from "react-icons/bs";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from '../../atoms/authModalAtom';
+import { loadingState } from '../../atoms/loadingAtom';
 
 
 const ResetPassword: React.FC = () => {
@@ -19,6 +20,11 @@ const ResetPassword: React.FC = () => {
         await sendPasswordResetEmail(email);
         setSuccess(true);
     };
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(sending)
+    }, [sending])
+
     return (<>
         <Flex direction="column" alignItems="center" width="100%">
             <Icon as={BsReddit} color="brand.100" fontSize={40} mb={2} />

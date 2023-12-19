@@ -1,7 +1,9 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCommunityData from '@/src/hooks/useCommunityData';
+import { loadingState } from '@/src/components/atoms/loadingAtom';
+import { useSetRecoilState } from 'recoil';
 type HeaderProps = {
     communityData: Community;
 };
@@ -12,6 +14,11 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
     var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
     var imageWidth: number = 120;
     if (communityData.imageURL) imageLink = communityData.imageURL;
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
+
     return (
         <>
             <Flex

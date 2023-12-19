@@ -1,10 +1,12 @@
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import { Box, Button, Checkbox, Divider, Flex, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BsFillEyeFill, BsFillPersonFill } from 'react-icons/bs';
 import { HiLockClosed } from 'react-icons/hi';
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../../atoms/loadingAtom';
 type CreateCommunityModalProps = {
     open: boolean;
     handleClose:
@@ -71,6 +73,11 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
         }
         setLoading(false);
     }
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
+
     return (
         <>
             <Modal isOpen={open} onClose={handleClose}>

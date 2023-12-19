@@ -1,11 +1,12 @@
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, where } from "firebase/firestore";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 import { authentication, firestore } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from '../../../firebase/errors';
 import { authModalState } from '../../atoms/authModalAtom';
+import { loadingState } from "../../atoms/loadingAtom";
 type SignUpProps = {
 
 };
@@ -100,6 +101,10 @@ const SignUp: React.FC<SignUpProps> = () => {
         }
         setUError('');
     }
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
 
     return (
         <form onSubmit={onSubmit}>

@@ -1,5 +1,7 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../atoms/loadingAtom';
 
 type CreateMediaTypeProps = {
     selectedFile?: string;
@@ -17,6 +19,11 @@ const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
     loading }) => {
     const selectedFileRef = useRef<HTMLInputElement>(null);
     const snipColor = 'white';
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
+
     return (
         <>
             <Flex width='100%' minHeight={'354px'} justify='center' align={'center'}>

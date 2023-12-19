@@ -1,10 +1,11 @@
 import { Button, Flex, Input, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { authModalState } from '../../atoms/authModalAtom';
 import { FIREBASE_ERRORS } from '../../../firebase/errors';
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { authentication } from "../../../firebase/clientApp";
+import { loadingState } from '../../atoms/loadingAtom';
 type LoginProps = {
 
 };
@@ -35,6 +36,11 @@ const Login: React.FC<LoginProps> = () => {
             [event.target.name]: event.target.value,
         }))
     };
+
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
 
     return (
         <form onSubmit={onSubmit}>

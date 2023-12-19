@@ -1,6 +1,8 @@
 import { Button, Flex, Input, Stack, Textarea, Text, Icon } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaLock } from "react-icons/fa";
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../atoms/loadingAtom';
 type CreatePostTypeProps = {
     textInput: {
         title: string,
@@ -23,6 +25,11 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
     fileSize,
     error
 }) => {
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
+
     return (
         <>
             <Stack spacing={3} width='100%' >

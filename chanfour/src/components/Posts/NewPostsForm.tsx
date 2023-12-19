@@ -11,6 +11,8 @@ import CreateLinkType from './CreateLinkType';
 import CreateMediaType from './CreateMediaType';
 import CreatePostType from './CreatePostType';
 import router from 'next/router';
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../atoms/loadingAtom';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -106,6 +108,11 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
             return;
         }
     }, [selectedFile])
+    const setLoadingBar = useSetRecoilState(loadingState);
+    useEffect(() => {
+        setLoadingBar(loading)
+    }, [loading])
+
     return (
         <Flex direction={'column'} borderRadius={4} >
             <Flex width='100%'>
