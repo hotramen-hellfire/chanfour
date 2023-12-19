@@ -18,16 +18,15 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
-    const [selectedTab, setSelectedTab] = useState('post');//post, media or link
     const [textInput, setTextInput] = useState({
         title: "",
         body: ""
     });
     const [selectedFile, setSelectedFile] = useState<string>();
     const [loading, setLoading] = useState(false);
-    const handleCreatePost = async () => { };
     const [link, setLink] = useState("");
     const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setLoading(true);
         const reader = new FileReader();
         if (event.target.files?.[0]) {
             reader.readAsDataURL(event.target.files[0]);
@@ -38,6 +37,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                 setSelectedFile(readerEvent.target.result as string);
             }
         }
+        setLoading(false);
     };
 
     const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +55,14 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
     const onSetLink = (url: string) => {
         setLink(url);
     }
+    const handleCreatePost = async () => {
+        setLoading(true);
+        //create new post object
+        //store in db
+        //check img
+        //store in firebase storage
+
+    };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
         if (!selectedFile) {
@@ -73,9 +81,6 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ bg: hovertabcolor }}
-                            onClick={
-                                () => { setSelectedTab('post') }
-                            }
                         >
                             <Icon
                                 as={GrDocumentUpdate}
@@ -89,9 +94,6 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ bg: hovertabcolor }}
-                            onClick={
-                                () => { setSelectedTab('media') }
-                            }
                         >
                             <Icon
                                 as={BsFileEarmarkImage}
@@ -105,9 +107,6 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             border={'1px solid purple'}
                             _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ bg: hovertabcolor }}
-                            onClick={
-                                () => { setSelectedTab('link') }
-                            }
                         >
                             <Icon
                                 as={BsLink45Deg}
@@ -121,7 +120,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
                             <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreateMediaType selectedFile={selectedFile} onSelectImage={onSelectImage} setSelectedFile={setSelectedFile} fileSize={fileSize} />
+                            <CreateMediaType selectedFile={selectedFile} onSelectImage={onSelectImage} setSelectedFile={setSelectedFile} fileSize={fileSize} loading={loading} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreateLinkType onSet={onSetLink} />

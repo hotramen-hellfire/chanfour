@@ -1,19 +1,20 @@
-import { Flex, Button, Image, Text } from '@chakra-ui/react';
+import { Button, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useRef } from 'react';
-import ReactPlayer from 'react-player';
 
 type CreateMediaTypeProps = {
     selectedFile?: string;
     onSelectImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
     setSelectedFile: (value: string) => void;
     fileSize: number;
+    loading: boolean;
 };
 
 const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
     selectedFile,
     onSelectImage,
     setSelectedFile,
-    fileSize }) => {
+    fileSize,
+    loading }) => {
     const selectedFileRef = useRef<HTMLInputElement>(null);
     return (
         <>
@@ -55,7 +56,7 @@ const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
                                 width: '400px',
                                 border: '2px solid white'
                             }}
-                            isLoading={false}
+                            isLoading={loading}
                             justifyContent='center'
                             onClick={() => selectedFileRef.current?.click()}
                             mr={2}
@@ -80,7 +81,7 @@ const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
                                 width: '400px',
                                 border: '2px solid white'
                             }}
-                            isLoading={false}
+                            isLoading={loading}
                             justifyContent='center'
                             display={selectedFile ? 'unset' : 'none'}
                             onClick={() => setSelectedFile("")}
