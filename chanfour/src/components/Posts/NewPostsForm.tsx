@@ -10,6 +10,7 @@ import { Post } from '../atoms/postsAtom';
 import CreateLinkType from './CreateLinkType';
 import CreateMediaType from './CreateMediaType';
 import CreatePostType from './CreatePostType';
+import router from 'next/router';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -21,7 +22,9 @@ export type TabItem = {
 }
 
 const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
-    const tabcolor = 'pink.200';
+    const tabcolor = 'purple';
+    const selectedFontColor = 'white';
+    const gradEnd = 'purple.100';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
     const [error, setError] = useState("");
@@ -65,11 +68,6 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     const handleCreatePost = async () => {
         if (error) setError("");
         setLoading(true);
-        //create new post object
-        //store in db
-        //check img
-        //store in firebase storage
-        //redirect user back to community page
         const newPost: Post = {
             id: '#',
             communityID: communityID,
@@ -99,7 +97,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
         }
         setLoading(false);
 
-        // router.back();
+        router.back();
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
@@ -117,7 +115,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                             color={textInput.title ? 'green' : 'purple'}
                             bg='white'
                             border={'1px solid purple'}
-                            _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
+                            _selected={{ color: selectedFontColor, bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ bg: hovertabcolor }}
                         >
                             <Icon
@@ -130,7 +128,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                             color={fileSize > 0 && fileSize < 5 * 1024 * 1024 ? 'green' : 'purple'}
                             bg='white'
                             border={'1px solid purple'}
-                            _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
+                            _selected={{ color: selectedFontColor, bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ bg: hovertabcolor }}
                         >
                             <Icon
@@ -143,7 +141,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                             color={link ? 'green' : 'purple'}
                             bg='white'
                             border={'1px solid purple'}
-                            _selected={{ color: 'white', bg: tabcolor, borderBottomColor: tabcolor }}
+                            _selected={{ color: selectedFontColor, bg: tabcolor, borderBottomColor: tabcolor }}
                             _hover={{ bg: hovertabcolor }}
                         >
                             <Icon
@@ -154,13 +152,13 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                         </Tab>
                     </TabList>
                     <TabPanels>
-                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', ' + gradEnd + ')'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreatePostType textInput={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} error={error} />
                         </TabPanel>
-                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', ' + gradEnd + ')'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreateMediaType selectedFile={selectedFile} onSelectImage={onSelectImage} setSelectedFile={setSelectedFile} fileSize={fileSize} loading={loading} />
                         </TabPanel>
-                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
+                        <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', ' + gradEnd + ')'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreateLinkType onSet={onSetLink} />
                         </TabPanel>
                     </TabPanels>

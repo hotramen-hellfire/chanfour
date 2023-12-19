@@ -16,13 +16,14 @@ const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
     fileSize,
     loading }) => {
     const selectedFileRef = useRef<HTMLInputElement>(null);
+    const snipColor = 'white';
     return (
         <>
             <Flex width='100%' minHeight={'354px'} justify='center' align={'center'}>
                 <Flex
                     width='100%' minHeight={'354px'} justify='center' align={'center'}
                     border='2px dashed'
-                    borderColor='pink.500'
+                    borderColor={snipColor}
                     borderRadius={5}
                     flexDirection={'column'}
                     padding={'16px 16px 16px 16px'}

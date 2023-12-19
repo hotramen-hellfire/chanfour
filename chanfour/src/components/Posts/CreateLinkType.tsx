@@ -12,13 +12,14 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUrl(event.target.value);
     };
+    const snipColor = 'white';
     return (
         <>
             <Flex width='100%' minHeight={'354px'} justify='center' align={'center'}>
                 <Flex
                     width='100%' minHeight={'354px'} justify='center' align={'center'}
                     border='2px dashed'
-                    borderColor='pink.500'
+                    borderColor={snipColor}
                     borderRadius={5}
                     flexDirection={'column'}
                     padding={'16px 16px 16px 16px'}
