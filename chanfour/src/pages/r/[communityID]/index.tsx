@@ -43,7 +43,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     //get the document
-    console.log('here');
+    console.log('getSS read/ writes');
     try {
         console.log(context.query.communityID as string);
         const communityDocRef = doc(firestore, 'communities', context.query.communityID as string);
@@ -63,5 +63,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     } catch (error: any) {
         console.log('GetServerSideProps error: ', error);
     }
+    console.log('fetched serverside props')
 }
 export default CommunityPage;

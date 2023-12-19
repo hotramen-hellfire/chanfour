@@ -18,7 +18,6 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
     useEffect(() => {
         setLoadingBar(loading)
     }, [loading])
-
     return (
         <>
             <Flex

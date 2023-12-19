@@ -12,7 +12,6 @@ type SignUpProps = {
 };
 
 const SignUp: React.FC<SignUpProps> = () => {
-
     const setAuthModalState = useSetRecoilState(authModalState);
     const [charsRemaining, setCharsRemaining] = useState(17);
     const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -34,6 +33,7 @@ const SignUp: React.FC<SignUpProps> = () => {
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log("signup write request + read check!!");
         var etype = 'n';
         try {
             if (error) setError("");

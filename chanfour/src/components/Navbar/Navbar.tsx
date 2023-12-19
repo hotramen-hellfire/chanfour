@@ -15,20 +15,20 @@ const Navbar: React.FC = () => {
     const [user, _, __] = useAuthState(authentication);
     const setUNameState = useSetRecoilState(UNameState);
     const [UNameObj] = useRecoilState(UNameState);
-    const getUName = async () => {
-        if (!user) { return; }//will never be invoked
-        var uid = user.email!.split(".")[0];
-        const userDocRef = doc(firestore, 'userByID', uid);
-        const userDoc = await getDoc(userDocRef);
-        setUNameState({
-            UName: userDoc.data()!['UName'],
-            isValid: true,
-        })
-        return;
-    }
     useEffect(() => {
-        if (user) { getUName() };
-    }, [user, UNameObj])
+        const getUName = async () => {
+            if (!user) { return; }//will never be invoked
+            var uid = user.email!.split(".")[0];
+            const userDocRef = await doc(firestore, 'userByID', uid);
+            const userDoc = await getDoc(userDocRef);
+            await setUNameState({
+                UName: userDoc.data()!['UName'],
+                isValid: true,
+            })
+            return;
+        }
+        getUName();
+    }, [user])
 
     return (
         <>

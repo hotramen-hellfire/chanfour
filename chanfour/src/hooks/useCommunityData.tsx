@@ -17,6 +17,7 @@ const useCommunityData = () => {
     const onJoinOrLeaveCommunity = async (communityData: Community, isJoined: boolean) => {
         //is the user signed in
         //if not open auth modal state
+        console.log("join/ leave community read/ write");
         if (!user) {
             setAuthModalState({ open: true, view: 'login' });
             return;
@@ -35,21 +36,6 @@ const useCommunityData = () => {
         }
     }
 
-    const getMySnippets = async () => {
-        setLoading(true);
-        try {
-            const snippetDocs = await getDocs(collection(firestore, '/userByID/' + uid + '/communitySnippets'));
-            const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
-            setCommunityStateValue((prev) => ({
-                ...prev,
-                mySnippets: snippets as CommunitySnippet[],
-            }))
-        } catch (error: any) {
-            console.log('getMySnippets error: ', error);
-            setError(error);
-        }
-        setLoading(false);
-    }
     const joinCommunity = async (communityData: Community) => {
         //first create a new community snippet
         //updating the number of members
@@ -107,14 +93,23 @@ const useCommunityData = () => {
             setLoading(false);
             return;
         }
+        const getMySnippets = async () => {
+            setLoading(true);
+            try {
+                const snippetDocs = await getDocs(collection(firestore, '/userByID/' + uid + '/communitySnippets'));
+                const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
+                setCommunityStateValue((prev) => ({
+                    ...prev,
+                    mySnippets: snippets as CommunitySnippet[],
+                }))
+            } catch (error: any) {
+                console.log('getMySnippets error: ', error);
+                setError(error);
+            }
+            setLoading(false);
+        }
         getMySnippets();
     }, [user])
-
-    // const setLoadingBar = useSetRecoilState(loadingState);
-    // useEffect(() => {
-    //     setLoadingBar(loading)
-    // }, [loading])
-
 
     return {
         commmunityStateValue,

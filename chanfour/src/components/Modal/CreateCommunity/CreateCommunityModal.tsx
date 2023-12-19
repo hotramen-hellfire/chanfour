@@ -34,7 +34,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
     }
     const handleCreateCommunity = async () => {
         //validate community
-
+        console.log("create community read/ write!!");
         if (communityName.length === 0) {
             setError("need a positive length to continue. . .");
             return;
