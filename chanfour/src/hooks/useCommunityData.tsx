@@ -15,7 +15,7 @@ const useCommunityData = () => {
     const setAuthModalState = useSetRecoilState(authModalState);
     var uid = "";
     if (user && user.email) uid = user?.email.split('.')[0];
-    const onJoinOrLeaveCommunity = (communityData: Community, isJoined: boolean) => {
+    const onJoinOrLeaveCommunity = async (communityData: Community, isJoined: boolean) => {
         //is the user signed in
         //if not open auth modal state
         if (!user) {
@@ -24,13 +24,13 @@ const useCommunityData = () => {
         }
         if (isJoined) {
             setLoading(true);
-            leaveCommunity(communityData.communityID);
+            await leaveCommunity(communityData.communityID);
             setLoading(false);
             return;
         }
         else {
             setLoading(true);
-            joinCommunity(communityData);
+            await joinCommunity(communityData);
             setLoading(false);
             return;
         }
@@ -111,10 +111,10 @@ const useCommunityData = () => {
         getMySnippets();
     }, [user])
 
-    const setLoadingBar = useSetRecoilState(loadingState);
-    useEffect(() => {
-        setLoadingBar(loading)
-    }, [loading])
+    // const setLoadingBar = useSetRecoilState(loadingState);
+    // useEffect(() => {
+    //     setLoadingBar(loading)
+    // }, [loading])
 
 
     return {
