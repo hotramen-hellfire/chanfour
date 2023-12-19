@@ -72,11 +72,11 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                     }}
                     bg="purple.50 "
                     borderColor="pink.500"
-                    min-height={'250px'}
                     borderRadius={'9px'}
                     mr={5}
                     color={'purple'}
                     onChange={onBodyChange}
+                    minHeight={'245px'}
                 />
                 <Flex justify={'center'} align='center' mb={1} flexDirection={'column'}>
                     <Button

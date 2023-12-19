@@ -16,7 +16,7 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
         <>
             <Flex width='100%' minHeight={'354px'} justify='center' align={'center'}>
                 <Flex
-                    width='100%' minHeight={'354px'} align={'center'}
+                    width='100%' minHeight={'354px'} justify='center' align={'center'}
                     border='2px dashed'
                     borderColor='pink.500'
                     borderRadius={5}
@@ -45,7 +45,6 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                         bg="purple.50 "
                         height="36px"
                         borderRadius={'9px'}
-                        mr={5}
                         borderColor={url === lastSet && url ? 'green' : 'purple'}
                         color={url === source ? 'green' : 'purple'}
                         type='url'

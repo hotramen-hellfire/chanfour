@@ -4,13 +4,13 @@ export type Post = {
     id: string,
     communityID: string,
     creatorID: string,
-    // UName: string,better to get UName at render as it might change
     title: string,
     body: string,
+    createdAt: Timestamp,
     numberOfComments: number,
     voteStatus: number,
     imageURL?: string,
-    createdAt: Timestamp,
+    embedURL?: string,
     communityImageURL?: string;
 }
 

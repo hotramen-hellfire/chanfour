@@ -1,17 +1,15 @@
-import { Flex, Icon, Input, Tab, TabList, TabPanel, TabPanels, Tabs, useColorModeValue } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { GrDocumentUpdate } from "react-icons/gr";
-import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
-import CreatePostType from './CreatePostType';
-import CreateMediaType from './CreateMediaType';
-import CreateLinkType from './CreateLinkType';
-import { Post } from '../atoms/postsAtom';
-import { User } from 'firebase/auth';
-import { UNameState } from '../atoms/UNameAtom';
-import { useRecoilState } from 'recoil';
-import { Timestamp, addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { firestore, storage } from '@/src/firebase/clientApp';
+import { Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { User } from 'firebase/auth';
+import { Timestamp, addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import React, { useEffect, useState } from 'react';
+import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
+import { GrDocumentUpdate } from "react-icons/gr";
+import { Post } from '../atoms/postsAtom';
+import CreateLinkType from './CreateLinkType';
+import CreateMediaType from './CreateMediaType';
+import CreatePostType from './CreatePostType';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -23,7 +21,6 @@ export type TabItem = {
 }
 
 const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
-    const [UNameObj] = useRecoilState(UNameState);
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
@@ -77,7 +74,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
             id: '#',
             communityID: communityID,
             creatorID: user!.email!.split('.')[0],
-            // creatorDisplayName: UNameObj.UName
+            embedURL: link,
             title: textInput.title,
             body: textInput.body,
             numberOfComments: 0,
