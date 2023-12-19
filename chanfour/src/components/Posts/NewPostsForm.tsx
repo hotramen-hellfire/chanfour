@@ -9,9 +9,9 @@ import { Post } from '../atoms/postsAtom';
 import { User } from 'firebase/auth';
 import { UNameState } from '../atoms/UNameAtom';
 import { useRecoilState } from 'recoil';
-import { Timestamp, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { firestore, storage } from '@/src/firebase/clientApp';
-import { ref, uploadString } from 'firebase/storage';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -90,12 +90,19 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
             if (selectedFile) {
                 const imageRef = ref(storage, 'posts/' + postDocRef.id + '/image');
                 await uploadString(imageRef, selectedFile, 'data_url');
+                const downloadURL = await getDownloadURL(imageRef);
+                await updateDoc(postDocRef, {
+                    imageURL: downloadURL,
+                    id: postDocRef.id
+                })
             }
         } catch (error: any) {
             console.log('handleCreatePost error: ', error.message);
             setError(error.message);
         }
         setLoading(false);
+
+        // router.back();
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
