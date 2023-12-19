@@ -2,7 +2,7 @@ import { Button, Flex, Input, Stack, Textarea, Text, Icon } from '@chakra-ui/rea
 import React from 'react';
 import { FaLock } from "react-icons/fa";
 type CreatePostTypeProps = {
-    textInputs: {
+    textInput: {
         title: string,
         body: string
     };
@@ -11,21 +11,23 @@ type CreatePostTypeProps = {
     handleCreatePost: () => void;
     loading: boolean;
     fileSize: number,
+    error: string,
 };
 
 const CreatePostType: React.FC<CreatePostTypeProps> = ({
-    textInputs,
+    textInput,
     onTitleChange,
     onBodyChange,
     handleCreatePost,
     loading,
-    fileSize
+    fileSize,
+    error
 }) => {
     return (
         <>
             <Stack spacing={3} width='100%' >
                 <Input
-                    name={textInputs.title}
+                    name={textInput.title}
                     placeholder="Title(Required!!)"
                     _placeholder={{ color: "pink.400" }}
                     _hover={{
@@ -51,7 +53,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                     onChange={onTitleChange}
                 />
                 <Textarea
-                    name={textInputs.body}
+                    name={textInput.body}
                     placeholder={fileSize <= 1024 * 1024 * 5 ? "Write something here (optional)" : 'hidden tip: try using  https://oshi.at/ for files>5MB or if you want them to be permanent use git etc... '}
                     _placeholder={{ color: "pink.400" }}
                     _hover={{
@@ -95,7 +97,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                             width: '200px',
                             border: '2px solid white'
                         }}
-                        display={textInputs.title && fileSize < 1024 * 1024 * 5 ? 'unset' : 'none'}
+                        display={textInput.title && fileSize < 1024 * 1024 * 5 ? 'unset' : 'none'}
                         isLoading={loading}
                         justifyContent='center'
                         onClick={handleCreatePost}
@@ -120,7 +122,7 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                             width: '200px',
                             border: '2px solid white'
                         }}
-                        display={!textInputs.title ? 'unset' : 'none'}
+                        display={!textInput.title ? 'unset' : 'none'}
                         isLoading={loading}
                         justifyContent='center'
                         fontSize={20}
@@ -129,6 +131,9 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                     </Button>
                     <Text fontSize={12} color='purple' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1} mt={2}>
                         The file selected has size&lt;5MB, please use a link, best to use github  or https://oshi.at/ :)
+                    </Text>
+                    <Text fontSize={12} color='purple' display={error ? 'unset' : 'none'} mb={1} mt={2}>
+                        SSerror: {error}
                     </Text>
                 </Flex>
             </Stack >

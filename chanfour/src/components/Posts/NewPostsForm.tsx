@@ -9,6 +9,9 @@ import { Post } from '../atoms/postsAtom';
 import { User } from 'firebase/auth';
 import { UNameState } from '../atoms/UNameAtom';
 import { useRecoilState } from 'recoil';
+import { Timestamp, addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { firestore, storage } from '@/src/firebase/clientApp';
+import { ref, uploadString } from 'firebase/storage';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -24,6 +27,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
+    const [error, setError] = useState("");
     const [textInput, setTextInput] = useState({
         title: "",
         body: ""
@@ -62,6 +66,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
         setLink(url);
     }
     const handleCreatePost = async () => {
+        if (error) setError("");
         setLoading(true);
         //create new post object
         //store in db
@@ -69,12 +74,28 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
         //store in firebase storage
         //redirect user back to community page
         const newPost: Post = {
+            id: '#',
             communityID: communityID,
             creatorID: user!.email!.split('.')[0],
             // creatorDisplayName: UNameObj.UName
-
-
+            title: textInput.title,
+            body: textInput.body,
+            numberOfComments: 0,
+            voteStatus: 0,
+            createdAt: serverTimestamp() as Timestamp
         }
+
+        try {
+            const postDocRef = await addDoc(collection(firestore, "posts"), newPost);
+            if (selectedFile) {
+                const imageRef = ref(storage, 'posts/' + postDocRef.id + '/image');
+                await uploadString(imageRef, selectedFile, 'data_url');
+            }
+        } catch (error: any) {
+            console.log('handleCreatePost error: ', error.message);
+            setError(error.message);
+        }
+        setLoading(false);
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
@@ -130,7 +151,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                     </TabList>
                     <TabPanels>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
-                            <CreatePostType textInputs={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} />
+                            <CreatePostType textInput={textInput} onTitleChange={onTitleChange} onBodyChange={onBodyChange} handleCreatePost={handleCreatePost} loading={loading} fileSize={fileSize} error={error} />
                         </TabPanel>
                         <TabPanel bgGradient={'linear(to-b,' + tabcolor + ', purple.50)'} padding={'10px 5px 5px 5px'} border={'1px solid purple'} borderBottomRadius={'5px'}>
                             <CreateMediaType selectedFile={selectedFile} onSelectImage={onSelectImage} setSelectedFile={setSelectedFile} fileSize={fileSize} loading={loading} />
