@@ -46,7 +46,7 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                         height="36px"
                         borderRadius={'9px'}
                         mr={5}
-                        borderColor={url === lastSet ? 'green' : 'purple'}
+                        borderColor={url === lastSet && url ? 'green' : 'purple'}
                         color={url === source ? 'green' : 'purple'}
                         type='url'
                     />
@@ -59,8 +59,8 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                             border='2px solid'
                             variant={'outline'}
                             bg='white'
-                            borderColor={url === source ? 'green' : 'purple'}
-                            color={url === source ? 'green' : 'purple'}
+                            borderColor={url === source && url ? 'green' : 'purple'}
+                            color={url === source && url ? 'green' : 'purple'}
                             _hover={{
                                 mt: 5,
                                 bg: 'pink',
@@ -84,10 +84,10 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                             height={'40px'}
                             width={'200px'}
                             border='2px solid'
-                            borderColor={url === lastSet ? 'green' : 'purple'}
+                            borderColor={url === lastSet && url ? 'green' : 'purple'}
                             variant={'outline'}
                             bg='white'
-                            color={url === lastSet ? 'green' : 'purple'}
+                            color={url === lastSet && url ? 'green' : 'purple'}
                             _hover={{
                                 mt: 5,
                                 bg: 'pink',
