@@ -5,8 +5,11 @@ import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import CreatePostType from './CreatePostType';
 import CreateMediaType from './CreateMediaType';
 import CreateLinkType from './CreateLinkType';
+import { Post } from '../atoms/postsAtom';
+import { User } from 'firebase/auth';
 type NewPostsFormProps = {
     communityID: string;
+    user: User | null;
 };
 
 export type TabItem = {
@@ -14,7 +17,7 @@ export type TabItem = {
     icon: typeof Icon.arguments,
 }
 
-const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
+const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     const tabcolor = 'pink.200';
     const hovertabcolor = 'purple.100';
     const [fileSize, setFileSize] = useState(0);
@@ -61,7 +64,12 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID }) => {
         //store in db
         //check img
         //store in firebase storage
-
+        //redirect user back to community page
+        // const newPost: Post = {
+        //     communityID: communityID,
+        //     creatorID: user?.uid,
+        //     creatorDisplayName
+        // }
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {

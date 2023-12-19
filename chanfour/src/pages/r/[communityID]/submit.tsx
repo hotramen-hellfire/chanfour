@@ -24,7 +24,7 @@ const SubmitPostPage: React.FC = () => {
             <SubmitHeader communityID={communityID} />
             <PageContent>
                 <>
-                    <NewPostsForm communityID={communityID} />
+                    <NewPostsForm communityID={communityID} user={user} />
                 </>
                 <>about</>
             </PageContent>
