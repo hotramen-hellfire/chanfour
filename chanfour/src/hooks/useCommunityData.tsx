@@ -6,7 +6,6 @@ import { authModalState } from '../components/atoms/authModalAtom';
 import "../components/atoms/communitiesAtom";
 import { Community, CommunitySnippet, communityState } from '../components/atoms/communitiesAtom';
 import { authentication, firestore } from '../firebase/clientApp';
-import { loadingState } from '../components/atoms/loadingAtom';
 const useCommunityData = () => {
     const [commmunityStateValue, setCommunityStateValue] = useRecoilState(communityState)
     const [loading, setLoading] = useState(true);

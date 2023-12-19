@@ -1,18 +1,27 @@
 import NotFound from '@/src/components/Community/NotFound';
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { firestore } from '@/src/firebase/clientApp';
+import { authentication, firestore } from '@/src/firebase/clientApp';
 import { doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
 import PageContent from '@/src/components/Layout/PageContent';
 import CreatePostLink from '@/src/components/Community/CreatePostLink';
+import Posts from '@/src/components/Posts/Posts';
+import { useAuthState } from 'react-firebase-hooks/auth';
 type CommunityPageProps = {
     communityData: Community;
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
+    const [user] = useAuthState(authentication);
+    var uid = "";
+    if (user) uid = user.email!.split(".")[0];
+    useEffect(() => {
+        if (user) uid = user.email!.split(".")[0];
+        else uid = "";
+    }, [user])
     if (!communityData) {
         return (
             <NotFound />
@@ -24,6 +33,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
             <PageContent>
                 <>
                     <CreatePostLink />
+                    <Posts communityData={communityData} uid={uid} />
                 </>
                 <>rhs</>
             </PageContent>

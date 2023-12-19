@@ -3,16 +3,16 @@ import { Flex, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/
 import { User } from 'firebase/auth';
 import { Timestamp, addDoc, collection, deleteDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import { GrDocumentUpdate } from "react-icons/gr";
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../atoms/loadingAtom';
 import { Post } from '../atoms/postsAtom';
 import CreateLinkType from './CreateLinkType';
 import CreateMediaType from './CreateMediaType';
 import CreatePostType from './CreatePostType';
-import router from 'next/router';
-import { useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
