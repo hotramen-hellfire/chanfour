@@ -94,6 +94,7 @@ const useCommunityData = () => {
             return;
         }
         const getMySnippets = async () => {
+            console.log('getting snippets read');
             setLoading(true);
             try {
                 const snippetDocs = await getDocs(collection(firestore, '/userByID/' + uid + '/communitySnippets'));

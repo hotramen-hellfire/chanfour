@@ -69,6 +69,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     }
     const handleCreatePost = async () => {
         if (error) setError("");
+        console.log('post write start');
         var routeback = true;
         setLoading(true);
         const newPost: Post = {
@@ -104,6 +105,7 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
             await deleteDoc(postDocRef);
         }
         setLoading(false);
+        console.log('post write end');
         if (routeback) router.back();
     };
     //useEffectToClearFileSizeAutomatically

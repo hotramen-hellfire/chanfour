@@ -1,15 +1,15 @@
+import CreatePostLink from '@/src/components/Community/CreatePostLink';
 import NotFound from '@/src/components/Community/NotFound';
+import PageContent from '@/src/components/Layout/PageContent';
+import Posts from '@/src/components/Posts/Posts';
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { authentication, firestore } from '@/src/firebase/clientApp';
-import { doc, getDoc } from 'firebase/firestore';
+import { Timestamp, doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import React, { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
-import PageContent from '@/src/components/Layout/PageContent';
-import CreatePostLink from '@/src/components/Community/CreatePostLink';
-import Posts from '@/src/components/Posts/Posts';
-import { useAuthState } from 'react-firebase-hooks/auth';
 type CommunityPageProps = {
     communityData: Community;
 };
@@ -45,24 +45,27 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     //get the document
     console.log('getSS read/ writes');
     try {
-        console.log(context.query.communityID as string);
+        console.log(context.query.communityID as string, ' at ', Timestamp);
         const communityDocRef = doc(firestore, 'communities', context.query.communityID as string);
         const communityDoc = await getDoc(communityDocRef);
         if (!communityDoc.exists()) {
+            console.log('fetched getServerSide props')
             return {
                 props: {
                     communityData: null,
                 }
             }
         }
-        else return {
-            props: {
-                communityData: JSON.parse(safeJsonStringify({ communityID: communityDoc.id, ...communityDoc.data() })),
+        else {
+            console.log('fetched getServerSide props')
+            return {
+                props: {
+                    communityData: JSON.parse(safeJsonStringify({ communityID: communityDoc.id, ...communityDoc.data() })),
+                }
             }
         }
     } catch (error: any) {
         console.log('GetServerSideProps error: ', error);
     }
-    console.log('fetched serverside props')
 }
 export default CommunityPage;

@@ -1,8 +1,8 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import useCommunityData from '@/src/hooks/useCommunityData';
 import { loadingState } from '@/src/components/atoms/loadingAtom';
+import useCommunityData from '@/src/hooks/useCommunityData';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 type HeaderProps = {
     communityData: Community;

@@ -1,11 +1,8 @@
 import { Button, Card, CardBody, Flex, Link, Progress, Text } from "@chakra-ui/react";
-import { useSetRecoilState } from "recoil";
-import { loadingState } from "../atoms/loadingAtom";
 const CommunityNotFound: React.FC = () => {
-    const setLoadingBar = useSetRecoilState(loadingState);
-    setLoadingBar(true);
     return (
         <>
+            <Progress size='xs' isIndeterminate colorScheme='pink' />
             <Flex
                 direction='column'
                 justifyContent='center'
