@@ -15,7 +15,7 @@ export interface CommunitySnippet {
 }
 export interface CommunityState {
     mySnippets: CommunitySnippet[];
-    //visiterCommunities: communitySnippets[]
+    currentCommunity?: Community;
 }
 
 export const communityState = atom<CommunityState>({
