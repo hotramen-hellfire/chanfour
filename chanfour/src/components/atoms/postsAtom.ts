@@ -4,6 +4,7 @@ export type Post = {
     id: string,
     communityID: string,
     creatorID: string,
+    creatorUName: string,
     title: string,
     body: string,
     createdAt: Timestamp,

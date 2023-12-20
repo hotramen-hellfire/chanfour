@@ -7,12 +7,13 @@ import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import { GrDocumentUpdate } from "react-icons/gr";
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { loadingState } from '../atoms/loadingAtom';
 import { Post } from '../atoms/postsAtom';
 import CreateLinkType from './CreateLinkType';
 import CreateMediaType from './CreateMediaType';
 import CreatePostType from './CreatePostType';
+import { UNameState } from '../atoms/UNameAtom';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;
@@ -25,6 +26,7 @@ export type TabItem = {
 
 const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     const tabcolor = 'purple';
+    const [UNameObj] = useRecoilState(UNameState);
     const selectedFontColor = 'white';
     const gradEnd = 'purple.100';
     const hovertabcolor = 'purple.100';
@@ -81,7 +83,8 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
             body: textInput.body,
             numberOfComments: 0,
             voteStatus: 0,
-            createdAt: serverTimestamp() as Timestamp
+            createdAt: serverTimestamp() as Timestamp,
+            creatorUName: UNameObj.UName
         }
         var postDocRef: any = null;
         try {

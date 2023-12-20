@@ -27,8 +27,13 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                 <Box height={'50px'} overflow={'hidden'}>
                     <Image src={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'} alt={'just theming'} />
                 </Box>
-                <Flex justify={'center'} bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'}>
-                    <Flex height='50px' width='95%' maxWidth={'1000px'} flexDirection={'row'}>
+                <Flex justify={'center'} bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'} boxShadow={'dark-lg'}>
+                    <Flex
+                        height='50px'
+                        width='95%'
+                        maxWidth={'1000px'}
+                        flexDirection={'row'}
+                    >
                         <Flex
                             height={imageWidth}
                             width={imageWidth}

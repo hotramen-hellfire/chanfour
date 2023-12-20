@@ -16,7 +16,7 @@ export const theme = extendTheme({
     global: () => (
       {
         body: {
-          bg: "purple.200",
+          bg: "#e684f9",
           height: "100%",
           overflow: "visible"
         },
