@@ -1,8 +1,15 @@
 import { Box, Code, Divider, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Post } from '../atoms/postsAtom';
+import { CiHeart } from "react-icons/ci";
+import { TfiCommentAlt } from "react-icons/tfi";
+import { IoShareSocialOutline } from "react-icons/io5";
 import { BsThreeDots } from "react-icons/bs";
-
+import moment from 'moment';
+import { BiSolidSave } from "react-icons/bi";
+import { FaHeart } from "react-icons/fa";
+import { FaHeartCircleBolt } from "react-icons/fa6";
+import { FaHeartCrack } from "react-icons/fa6";
 
 type PostItemProps = {
     post: Post;
@@ -18,6 +25,10 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
     const [embed, setPostEmbed] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [heartValue, setHeartValue] = useState(0);
+    const updateHeartValue = () => {
+        setHeartValue((heartValue + 1) % 4);
+    }
     const on3Dots = () => { };
     useEffect(() => {
         if (post.imageURL) setPostImage(post.imageURL);
@@ -58,13 +69,29 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                 >
                     {/* this is title box */}
                     <Flex width={'100%'} mb={1}>
-                        <Box borderRadius={5} bg='white' width={"95%"} white-space='nowrap'>
-                            <Text fontWeight={600} mr={2} white-space='nowrap'>{post.title}<Text color="grey.200" fontSize={12} >by {post.creatorUName}</Text><Text color="grey" fontWeight={5} fontSize={12}>&gt;_&lt;{post.creatorID}</Text></Text>
+                        <Box borderRadius={5} bg='white' width={"80%"} white-space='nowrap'>
+                            <Text fontWeight={600} mr={2} white-space='nowrap'>
+                                {post.title}
+                                <Text color="grey.200" fontSize={12} >
+                                    by {post.creatorUName}, {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
+                                    <Text color="grey" fontWeight={5} fontSize={12}>
+                                        &gt;_&lt;{post.creatorID}
+                                    </Text>
+                                </Text>
+                            </Text>
                         </Box >
                         <Flex
-                            width={'5%'}
+                            width={'10%'}
                             justify={'center'}
                             align='center'
+                        >
+                            {post.voteStatus !== 0 && <Text>post.voteStatus</Text>}
+                        </Flex>
+                        <Flex
+                            width={'10%'}
+                            justify={'center'}
+                            align='center'
+                            float={'left'}
                         >
                             <Icon as={BsThreeDots} onClick={on3Dots} />
                         </Flex>
@@ -118,6 +145,103 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                         >
                             <Image maxHeight={'100%'} maxWidth={'100%'} display={embed ? 'flex' : 'none'} src={embed} border='4px solid black' alt='only images are supported as of now' />
                         </Flex>
+                    </Flex>
+                    <Flex
+                        height={'1px'}
+                        border={'0.5px solid black'}
+                        boxShadow={'dark-lg'}
+                        mt={1}
+                    />
+                    <Flex
+                        mt={2}
+                        width={'100%'}
+                        height={'40px'}
+                        flexDirection={'row'}
+                        justify={'center'}
+                        align={'center'}
+                    >
+                        <Icon
+                            as={CiHeart}
+                            fontSize={'40px'}
+                            mr={1}
+                            ml={1}
+                            onClick={updateHeartValue}
+                            display={heartValue === 0 ? 'unset' : 'none'}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+                        <Icon
+                            as={FaHeart}
+                            fontSize={'40px'}
+                            mr={1}
+                            ml={1}
+                            onClick={updateHeartValue}
+                            display={heartValue === 1 ? 'unset' : 'none'}
+                            color={'red'}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+                        <Icon
+                            as={FaHeartCircleBolt}
+                            fontSize={'40px'}
+                            mr={1}
+                            ml={1}
+                            onClick={updateHeartValue}
+                            display={heartValue === 2 ? 'unset' : 'none'}
+                            color={'red'}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+                        <Icon
+                            as={FaHeartCrack}
+                            fontSize={'40px'}
+                            mr={1}
+                            onClick={updateHeartValue}
+                            ml={1}
+                            display={heartValue === 3 ? 'unset' : 'none'}
+                            color={'purple'}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+                        <Icon
+                            as={TfiCommentAlt}
+                            fontSize={'30px'}
+                            mr={1}
+                            ml={1}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+                        <Icon
+                            as={IoShareSocialOutline}
+                            fontSize={'30px'}
+                            mr={1}
+                            ml={1}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+                        <Icon
+                            as={BiSolidSave}
+                            fontSize={'30px'}
+                            mr={1}
+                            ml={1}
+                            _hover={{
+                                border: '1px solid gray',
+                                borderRadius: '4'
+                            }}
+                        />
+
                     </Flex>
                 </Flex >
             </Flex >
