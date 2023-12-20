@@ -10,7 +10,6 @@ import { UNameState } from '../atoms/UNameAtom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { loadingState } from '../atoms/loadingAtom';
 const Navbar: React.FC = () => {
-    const setLoadingBar = useSetRecoilState(loadingState);
     const [loadingBar] = useRecoilState(loadingState);
     const [user, _, __] = useAuthState(authentication);
     const setUNameState = useSetRecoilState(UNameState);

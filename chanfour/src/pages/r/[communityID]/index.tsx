@@ -3,11 +3,10 @@ import NotFound from '@/src/components/Community/NotFound';
 import PageContent from '@/src/components/Layout/PageContent';
 import Posts from '@/src/components/Posts/Posts';
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { authentication, firestore } from '@/src/firebase/clientApp';
+import { firestore } from '@/src/firebase/clientApp';
 import { Timestamp, doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
-import React, { useEffect } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React from 'react';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
 type CommunityPageProps = {
@@ -15,13 +14,13 @@ type CommunityPageProps = {
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-    const [user] = useAuthState(authentication);
-    var uid = "";
-    if (user) uid = user.email!.split(".")[0];
-    useEffect(() => {
-        if (user) uid = user.email!.split(".")[0];
-        else uid = "";
-    }, [user])
+    // const [user] = useAuthState(authentication);
+    // var uid = "";
+    // if (user) uid = user.email!.split(".")[0];
+    // useEffect(() => {
+    //     if (user) uid = user.email!.split(".")[0];
+    //     else uid = "";
+    // }, [user])
     if (!communityData) {
         return (
             <NotFound />
@@ -33,7 +32,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
             <PageContent>
                 <>
                     <CreatePostLink />
-                    <Posts communityData={communityData} uid={uid} />
+                    <Posts communityData={communityData} />
                 </>
                 <>rhs</>
             </PageContent>
