@@ -45,7 +45,6 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
                     height="56px"
                     flexDirection={'row'}
                     width={'100%'}
-                    border={'2px '}
                 >
                     <Icon as={RiAddBoxLine} fontSize={24} color="pink.500" cursor="pointer" mr={3} _hover={{ color: 'purple' }} />
                     <Input
@@ -80,7 +79,6 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
                 justify={'space-between'}
                 align={'center'}
                 flexDirection={'row'}
-                border={'1px'}
             >
                 <Icon
                     as={BsFileEarmarkImage}

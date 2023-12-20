@@ -24,7 +24,7 @@ const usePosts = () => {
                 ...prev,
                 posts: prev.posts.filter((item) => item.id !== post.id)
             }))
-            return false;
+            return true;
         } catch (error: any) {
             console.log("onDeletePost error: ", error.message)
             return false;
