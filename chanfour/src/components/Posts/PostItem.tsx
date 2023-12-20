@@ -1,6 +1,6 @@
-import { Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Spinner, Text } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Spinner, Text } from '@chakra-ui/react';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BiSolidSave } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
@@ -10,16 +10,16 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { VscReport } from 'react-icons/vsc';
-import { Post } from '../atoms/postsAtom';
 import { useSetRecoilState } from 'recoil';
 import { loadingState } from '../atoms/loadingAtom';
+import { Post } from '../atoms/postsAtom';
 
 type PostItemProps = {
     post: Post;
     userIsCreator: boolean;
     userVoteValue?: number;
     onVote: () => {};
-    onDeletePost: (post: Post) => Promise<boolean>;
+    onDeletePost: (post: Post) => Promise<[boolean, string]>;
     onSelectPost: () => void;
     uid: string;
 };
@@ -27,6 +27,7 @@ type PostItemProps = {
 const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
     const [loading, setLoading] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const [deleteError, setDeleteError] = useState("");
     const [heartValue, setHeartValue] = useState(0);
     const [imageLoading1, setImageLoading1] = useState(true)
     const [imageLoading2, setImageLoading2] = useState(true)
@@ -41,14 +42,16 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
             setLoading(true);
             setLoadingBar(true);
             setDeleting(true);
-            const success = await onDeletePost(post);
-            if (!success) throw new Error("Failed to delete post!!");
+            const [success, error] = await onDeletePost(post);
+            if (!success) throw new Error(error);
             console.log("post was successfully deleted :)");
+            setDeleteError(error);//
             setLoading(false);
             setLoadingBar(false);
             setDeleting(false);
         } catch (error: any) {
             console.log("handleDelete: ", error.message);
+            setDeleteError(error.message);
             setLoading(false);
             setLoadingBar(false);
             setDeleting(false);
@@ -71,6 +74,12 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     width={'100%'}
                     flexDir={'column'}
                 >
+                    {true &&
+                        <Alert status='error' minHeight={'20px'} border={'2px solid brown'} borderRadius={'5px'}>
+                            <AlertIcon />
+                            <Text mr={2} fontSize={12} fontWeight={600}>Deletion failed :( <br /> {deleteError}</Text>
+                        </Alert>
+                    }
                     {/* this is title box */}
                     <Flex width={'100%'} mb={1}>
                         <Box borderRadius={5} bg='white' width={"80%"} white-space='nowrap'>

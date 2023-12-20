@@ -8,7 +8,7 @@ const usePosts = () => {
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const onVote = async () => { }
     const onSelectPost = () => { }
-    const onDeletePost = async (post: Post): Promise<boolean> => {
+    const onDeletePost = async (post: Post): Promise<[boolean, string]> => {
         //check image
         //check postDoc
         //update recoil state
@@ -24,10 +24,10 @@ const usePosts = () => {
                 ...prev,
                 posts: prev.posts.filter((item) => item.id !== post.id)
             }))
-            return true;
+            return [true, ""]
         } catch (error: any) {
             console.log("onDeletePost error: ", error.message)
-            return false;
+            return [false, error.message];
         }
     }
     return {
