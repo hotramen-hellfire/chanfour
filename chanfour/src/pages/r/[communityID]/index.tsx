@@ -14,13 +14,6 @@ type CommunityPageProps = {
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-    // const [user] = useAuthState(authentication);
-    // var uid = "";
-    // if (user) uid = user.email!.split(".")[0];
-    // useEffect(() => {
-    //     if (user) uid = user.email!.split(".")[0];
-    //     else uid = "";
-    // }, [user])
     if (!communityData) {
         return (
             <NotFound />

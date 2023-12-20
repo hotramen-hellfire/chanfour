@@ -3,24 +3,40 @@ import { Community } from '../atoms/communitiesAtom';
 import { useSetRecoilState } from 'recoil';
 import { loadingState } from '../atoms/loadingAtom';
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
-import { firestore } from '@/src/firebase/clientApp';
-
+import { authentication, firestore } from '@/src/firebase/clientApp';
+import { Post, PostState } from '../atoms/postsAtom';
+import usePosts from '@/src/hooks/usePosts';
+import PostItem from './PostItem';
+import { useAuthState } from 'react-firebase-hooks/auth';
 type PostsProps = {
     communityData: Community;
-    uid?: string;//creatorID
 };
-
 const Posts: React.FC<PostsProps> = ({ communityData }) => {
     const [loading, setLoading] = useState(false);
     const setLoadingBar = useSetRecoilState(loadingState);
+    const { postStateValue,
+        setPostStateValue,
+        onVote,
+        onSelectPost,
+        onDeletePost } = usePosts();
+    const [user] = useAuthState(authentication);
+    var uid = "";
+    if (user) uid = user.email!.split(".")[0];
+    useEffect(() => {
+        if (user) uid = user.email!.split(".")[0];
+        else uid = "";
+    }, [user])
     useEffect(() => {
         const getPosts = async () => {
             try {
-                //get posts for this community
                 const postQuery = query(collection(firestore, 'posts'), where('communityID', '==', communityData.communityID), orderBy("createdAt", 'desc'));
                 const postDocs = await getDocs(postQuery);
                 const posts = postDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
                 console.log("posts: ", posts);
+                setPostStateValue(prev => ({
+                    ...prev,
+                    posts: posts as Post[],
+                }))
             } catch (error: any) {
                 console.log('getPosts error', error.message)
             }
@@ -32,7 +48,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     }, [loading]);
     return (
         <>
-            communityData
+            {postStateValue.posts.map((item) => <PostItem post={item} userIsCreator={item.creatorID === uid} userVoteValue={undefined} onVote={onVote} onSelectPost={onSelectPost} onDeletePost={onDeletePost} />)}
         </>
     )
 }
