@@ -1,19 +1,16 @@
-import { Box, Code, Divider, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
-import { Post } from '../atoms/postsAtom';
-import { CiHeart } from "react-icons/ci";
-import { TfiCommentAlt } from "react-icons/tfi";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { BsThreeDots } from "react-icons/bs";
+import { Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 import { BiSolidSave } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
+import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
-import { FaHeartCircleBolt } from "react-icons/fa6";
-import { FaHeartCrack } from "react-icons/fa6";
-import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from '@chakra-ui/icons';
+import { FaHeartCircleBolt, FaHeartCrack } from "react-icons/fa6";
+import { IoShareSocialOutline } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { MdOutlineReportGmailerrorred } from "react-icons/md"
+import { TfiCommentAlt } from "react-icons/tfi";
 import { VscReport } from 'react-icons/vsc';
+import { Post } from '../atoms/postsAtom';
 
 type PostItemProps = {
     post: Post;

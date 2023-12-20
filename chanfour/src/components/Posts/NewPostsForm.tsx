@@ -72,7 +72,6 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
     const handleCreatePost = async () => {
         if (error) setError("");
         console.log('post write start');
-        var routeback = true;
         setLoading(true);
         const newPost: Post = {
             id: '#',
@@ -101,15 +100,14 @@ const NewPostsForm: React.FC<NewPostsFormProps> = ({ communityID, user }) => {
                     id: postDocRef.id
                 })
             }
+            router.back();
         } catch (error: any) {
-            routeback = false;
             console.log('handleCreatePost error: ', error.message);
             setError(error.message);
             await deleteDoc(postDocRef);
         }
         setLoading(false);
         console.log('post write end');
-        if (routeback) router.back();
     };
     //useEffectToClearFileSizeAutomatically
     useEffect(() => {
