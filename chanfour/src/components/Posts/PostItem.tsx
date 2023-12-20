@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Spinner, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { BiSolidSave } from "react-icons/bi";
@@ -25,38 +25,36 @@ type PostItemProps = {
 };
 
 const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
-    const [image, setPostImage] = useState("");
-    const [embed, setPostEmbed] = useState("");
-    const [loadCount, setLoadCount] = useState(0);
     const [loading, setLoading] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [heartValue, setHeartValue] = useState(0);
+    const [imageLoading1, setImageLoading1] = useState(true)
+    const [imageLoading2, setImageLoading2] = useState(true)
     const setLoadingBar = useSetRecoilState(loadingState);
+
     const updateHeartValue = () => {
         setHeartValue((heartValue + 1) % 4);
     }
 
     const handleDelete = async () => {
         try {
-            setDeleteLoading(true);
+            setLoading(true);
+            setLoadingBar(true);
+            setDeleting(true);
             const success = await onDeletePost(post);
             if (!success) throw new Error("Failed to delete post!!");
             console.log("post was successfully deleted :)");
-            setDeleteLoading(false);
+            setLoading(false);
+            setLoadingBar(false);
+            setDeleting(false);
         } catch (error: any) {
             console.log("handleDelete: ", error.message);
-            setDeleteLoading(false);
+            setLoading(false);
+            setLoadingBar(false);
+            setDeleting(false);
         }
 
-    };
-    useEffect(() => {
-        if (loading || deleteLoading) setLoadingBar(true);
-        else setLoadingBar(false);
-    }, [loading, deleteLoading]);
-    useEffect(() => {
-        if (post.imageURL) { setPostImage(post.imageURL); setLoadCount(loadCount + 1) }
-        if (post.embedURL) { setPostEmbed(post.embedURL); setLoadCount(loadCount + 1) }
-    }, []);
+    }
     return (
         <>
             {/* //parent of postitem */}
@@ -100,21 +98,29 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             float={'left'}
                         >
                             <Menu>
-                                <MenuButton
-                                    as={IconButton}
-                                    aria-label='Options'
-                                    icon={<BsThreeDots />}
-                                    color={'black'}
-                                    bg={'transparent'}
-                                    _hover={{}}
+                                {!deleting ?
+                                    <MenuButton
+                                        as={IconButton}
+                                        aria-label='Options'
+                                        icon={<BsThreeDots />}
+                                        color={'black'}
+                                        bg={'transparent'}
+                                        _hover={{}}
 
-                                />
+                                    /> :
+                                    <MenuButton
+                                        as={Spinner}
+                                        aria-label='Options'
+                                        color={'black'}
+                                        bg={'transparent'}
+                                        _hover={{}}
+                                    />}
                                 <MenuList>
                                     <MenuItem icon={<VscReport />} >
                                         Report
                                     </MenuItem>
                                     <MenuItem onClick={handleDelete} color="red" icon={<RiDeleteBinLine />} display={post.creatorID === uid ? 'unset' : 'none'}>
-                                        {!deleteLoading ? 'Delete' : 'Deleting post :('}
+                                        Delete
                                     </MenuItem>
                                 </MenuList>
                             </Menu>
@@ -148,7 +154,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                         </Flex>
                         {/* image box */}
                         <Flex
-                            display={image ? 'flex' : 'none'}
+                            display={!imageLoading1 ? 'flex' : 'none'}
                             align={'center'}
                             justify={'center'}
                             padding={'8px'}
@@ -157,10 +163,11 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             border={'0.1px solid black'}
                             mb={2}
                         >
-                            <Image maxHeight={'100%'} onLoad={() => { setLoadCount(loadCount - 1) }} maxWidth={'100%'} display={image ? 'flex' : 'none'} src={image} border='4px solid black' alt='only images are supported as of now' />
+                            <Image maxHeight={'100%'} onLoad={() => setImageLoading1(false)} display={!imageLoading1 ? 'unset' : 'none'} maxWidth={'100%'} src={post.imageURL} border='4px solid black' alt='only images are supported as of now' />
                         </Flex>
+                        <Skeleton height={"300px"} width={"90%"} display={(imageLoading1 && post.imageURL) || (imageLoading2 && post.embedURL) ? 'unset' : 'none'} mb={2} mt={2} />
                         <Flex
-                            display={embed ? 'flex' : 'none'}
+                            display={!imageLoading2 ? 'flex' : 'none'}
                             align={'center'}
                             justify={'center'}
                             padding={'8px'}
@@ -168,9 +175,8 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             boxShadow={'2xl'}
                             border={'0.1px solid black'}
                         >
-                            <Image maxHeight={'100%'} onLoad={() => { setLoadCount(loadCount - 1) }} maxWidth={'100%'} display={embed ? 'flex' : 'none'} src={embed} border='4px solid black' alt='only images are supported as of now' />
+                            <Image maxHeight={'100%'} onLoad={() => setImageLoading2(false)} display={!imageLoading2 ? 'unset' : 'none'} maxWidth={'100%'} src={post.embedURL} border='4px solid black' alt='only images are supported as of now' />
                         </Flex>
-                        <Skeleton height={"300px"} width={"90%"} display={loadCount > 0 ? 'unset' : 'none'} mb={2} mt={2} />
                     </Flex>
                     <Flex
                         height={'1px'}
