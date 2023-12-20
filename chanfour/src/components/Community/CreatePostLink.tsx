@@ -30,11 +30,12 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
             bg="white"
             height="56px"
             borderRadius={'28px'}
-            border="1px solid"
+            border="2px solid"
             borderColor="pink.300"
             p={2}
             mb={4}
             flexDirection={'row'}
+            boxShadow={'dark-lg'}
         >
             <Flex onClick={onClick}>
                 <Flex

@@ -1,6 +1,8 @@
-import { Code, Divider, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Code, Divider, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Post } from '../atoms/postsAtom';
+import { BsThreeDots } from "react-icons/bs";
+
 
 type PostItemProps = {
     post: Post;
@@ -16,6 +18,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
     const [embed, setPostEmbed] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const on3Dots = () => { };
     useEffect(() => {
         if (post.imageURL) setPostImage(post.imageURL);
         const fetchImage = async () => {
@@ -54,19 +57,27 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     flexDir={'column'}
                 >
                     {/* this is title box */}
-                    <Flex flexDirection='row' borderRadius={5} bg='white' width={"100%"} >
-                        <Text fontWeight={600} mr={2}>{post.title}</Text>
-                        <Text position="relative" top={1.5} color="grey.200" fontSize={12}>by {post.creatorUName}</Text>
-                        <Text position="relative" top={1.5} color="grey" fontWeight={5} fontSize={12}>&gt;_&lt;{post.creatorID}</Text>
+                    <Flex width={'100%'} mb={1}>
+                        <Box borderRadius={5} bg='white' width={"95%"} white-space='nowrap'>
+                            <Text fontWeight={600} mr={2} white-space='nowrap'>{post.title}<Text color="grey.200" fontSize={12} >by {post.creatorUName}</Text><Text color="grey" fontWeight={5} fontSize={12}>&gt;_&lt;{post.creatorID}</Text></Text>
+                        </Box >
+                        <Flex
+                            width={'5%'}
+                            justify={'center'}
+                            align='center'
+                        >
+                            <Icon as={BsThreeDots} onClick={on3Dots} />
+                        </Flex>
                     </Flex >
                     <Flex
                         height={'1px'}
                         border={'0.5px solid black'}
                         boxShadow={'dark-lg'}
-                    ></Flex>
+                    />
                     {/* <Divider orientation='horizontal' bg='black' /> */}
                     {/* content box */}
-                    <Flex borderRadius={5}
+                    <Flex
+                        borderRadius={5}
                         bg='white'
                         border={'2px solid'}
                         borderColor={'white'}
