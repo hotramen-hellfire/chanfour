@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
+import About from '@/src/components/Community/About';
 type CommunityPageProps = {
     communityData: Community;
 };
@@ -38,7 +39,9 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
                     <CreatePostLink />
                     <Posts communityData={communityData} />
                 </>
-                <>rhs</>
+                <>
+                    <About communityData={communityData} />
+                </>
             </PageContent>
         </>
     )

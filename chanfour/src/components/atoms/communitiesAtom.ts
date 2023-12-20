@@ -6,7 +6,11 @@ export interface Community {
     numberOfMembers: number,
     privacyType: 'public' | 'restricted' | 'private'
     createdAt?: Timestamp,
-    imageURL?: string;
+    description?: string,
+    rules?: string,
+    imageURL?: string,
+    numberOfPosts: number,
+    activity: number,
 }
 export interface CommunitySnippet {
     communityID: string,

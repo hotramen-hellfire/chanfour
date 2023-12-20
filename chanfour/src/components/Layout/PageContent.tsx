@@ -26,6 +26,7 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
                     display={{ base: 'none', md: 'flex' }}
                     flexGrow={1}
                     direction={'column'}
+                    maxWidth={'30%'}
                 // border={'2px solid brown'}
                 >
                     {children[1 as keyof typeof children]}

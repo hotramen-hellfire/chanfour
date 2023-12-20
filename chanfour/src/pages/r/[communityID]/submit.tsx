@@ -22,6 +22,7 @@ const SubmitPostPage: React.FC = () => {
     }, [user])
     return (
         <>
+            {/* //temporary sol */}
             <SubmitHeader communityID={communityID} />
             <PageContent>
                 <>

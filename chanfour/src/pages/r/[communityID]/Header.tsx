@@ -1,7 +1,7 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { loadingState } from '@/src/components/atoms/loadingAtom';
 import useCommunityData from '@/src/hooks/useCommunityData';
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Code, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 type HeaderProps = {
@@ -27,12 +27,21 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                 <Box height={'50px'} overflow={'hidden'}>
                     <Image src={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'} alt={'just theming'} />
                 </Box>
-                <Flex justify={'center'} bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'} boxShadow={'dark-lg'}>
+                <Flex bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'} boxShadow={'dark-lg'}>
                     <Flex
                         height='50px'
-                        width='95%'
+                        width='9%'
                         maxWidth={'1000px'}
                         flexDirection={'row'}
+                    // border={'2px solid red'}
+                    >
+                    </Flex>
+                    <Flex
+                        height='50px'
+                        width='60%'
+                        maxWidth={'1000px'}
+                        flexDirection={'row'}
+                    // border={'2px solid green'}
                     >
                         <Flex
                             height={imageWidth}
@@ -95,6 +104,35 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                             {isJoined ? 'Joined' : 'Join'}
                         </Button>
                     </Flex>
+                    {/* <Flex
+                        height='50px'
+                        minWidth='9%'
+                        maxWidth={'1000px'}
+                        flexDirection={'column'}
+                        // border={'2px solid red'}
+                        display={{ base: 'none', md: 'flex' }}
+                        color={'green'}
+                        justify={'center'}
+                        align={'center'}
+                    >
+                        <Stack spacing={'2px'} width={'100%'}>
+                            <Code colorScheme='green' width={'100%'}>#Members: {communityData.numberOfMembers}</Code>
+                            <Code colorScheme='yellow' width={'100%'}>#Posts: {communityData.numberOfPosts}</Code>
+                        </Stack>
+                    </Flex>
+                    <Flex
+                        height='50px'
+                        minWidth='9%'
+                        maxWidth={'1000px'}
+                        flexDirection={'column'}
+                        // border={'2px solid red'}
+                        display={{ base: 'none', md: 'flex' }}
+                        color={'green'}
+                        justify={'center'}
+                        align={'center'}
+                    >
+                        <Code colorScheme='pink'>#Activity: {communityData.activity}</Code>
+                    </Flex> */}
                 </Flex>
             </Flex >
         </>
