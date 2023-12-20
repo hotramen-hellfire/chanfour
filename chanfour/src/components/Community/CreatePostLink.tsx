@@ -36,13 +36,16 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
             mb={4}
             flexDirection={'row'}
             boxShadow={'dark-lg'}
+            width={'100%'}
         >
-            <Flex onClick={onClick}>
+            <Flex onClick={onClick} width={'80%'}>
                 <Flex
                     ml={5}
                     align="center"
                     height="56px"
                     flexDirection={'row'}
+                    width={'100%'}
+                    border={'2px '}
                 >
                     <Icon as={RiAddBoxLine} fontSize={24} color="pink.500" cursor="pointer" mr={3} _hover={{ color: 'purple' }} />
                     <Input
@@ -65,7 +68,6 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
                         borderColor="pink.500"
                         height="36px"
                         borderRadius={'18px'}
-                        width={{ base: '300px', md: '430px' }}
                         mr={5}
                         _focusVisible={{
                             outline: "none",
@@ -73,18 +75,25 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
                     />
                 </Flex>
             </Flex >
-            <Icon
-                as={BsFileEarmarkImage}
-                fontSize={24}
-                mr={5}
-                color="pink.500"
-                cursor="pointer"
-                _hover={{ color: 'purple' }}
-                onClick={onClick}
-            />
-            <Icon as={BsLink45Deg} fontSize={24} color="pink.500" cursor="pointer" mr={5} _hover={{ color: 'purple' }} onClick={onClick} />
-            <Icon as={LiaPagerSolid} fontSize={24} color="pink.500" cursor="pointer" _hover={{ color: 'purple' }} onClick={onClick} />
-        </Flex >
+            <Flex
+                width="20%"
+                justify={'space-between'}
+                align={'center'}
+                flexDirection={'row'}
+                border={'1px'}
+            >
+                <Icon
+                    as={BsFileEarmarkImage}
+                    fontSize={24}
+                    color="pink.500"
+                    cursor="pointer"
+                    _hover={{ color: 'purple' }}
+                    onClick={onClick}
+                />
+                <Icon as={BsLink45Deg} fontSize={24} color="pink.500" cursor="pointer" _hover={{ color: 'purple' }} onClick={onClick} />
+                <Icon as={LiaPagerSolid} fontSize={24} color="pink.500" cursor="pointer" _hover={{ color: 'purple' }} onClick={onClick} />
+            </Flex >
+        </Flex>
     );
 };
 export default CreatePostLink;

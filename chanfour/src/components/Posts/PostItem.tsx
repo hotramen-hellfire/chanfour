@@ -11,6 +11,8 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { VscReport } from 'react-icons/vsc';
 import { Post } from '../atoms/postsAtom';
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../atoms/loadingAtom';
 
 type PostItemProps = {
     post: Post;
@@ -26,8 +28,10 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
     const [image, setPostImage] = useState("");
     const [embed, setPostEmbed] = useState("");
     const [loadCount, setLoadCount] = useState(0);
+    const [loading, setLoading] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [heartValue, setHeartValue] = useState(0);
+    const setLoadingBar = useSetRecoilState(loadingState);
     const updateHeartValue = () => {
         setHeartValue((heartValue + 1) % 4);
     }
@@ -45,7 +49,10 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
         }
 
     };
-
+    useEffect(() => {
+        if (loading || deleteLoading) setLoadingBar(true);
+        else setLoadingBar(false);
+    }, [loading, deleteLoading]);
     useEffect(() => {
         if (post.imageURL) { setPostImage(post.imageURL); setLoadCount(loadCount + 1) }
         if (post.embedURL) { setPostEmbed(post.embedURL); setLoadCount(loadCount + 1) }
