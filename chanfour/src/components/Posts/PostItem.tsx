@@ -38,6 +38,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
     }
 
     const handleDelete = async () => {
+        setDeleteError("");
         try {
             setLoading(true);
             setLoadingBar(true);
@@ -74,7 +75,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     width={'100%'}
                     flexDir={'column'}
                 >
-                    {true &&
+                    {deleteError &&
                         <Alert status='error' minHeight={'20px'} border={'2px solid brown'} borderRadius={'5px'}>
                             <AlertIcon />
                             <Text mr={2} fontSize={12} fontWeight={600}>Deletion failed :( <br /> {deleteError}</Text>
