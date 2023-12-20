@@ -1,4 +1,4 @@
-import { Box, Code, Divider, Flex, Icon, Image, Text } from '@chakra-ui/react';
+import { Box, Code, Divider, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Post } from '../atoms/postsAtom';
 import { CiHeart } from "react-icons/ci";
@@ -10,6 +10,10 @@ import { BiSolidSave } from "react-icons/bi";
 import { FaHeart } from "react-icons/fa";
 import { FaHeartCircleBolt } from "react-icons/fa6";
 import { FaHeartCrack } from "react-icons/fa6";
+import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from '@chakra-ui/icons';
+import { RiDeleteBinLine } from "react-icons/ri";
+import { MdOutlineReportGmailerrorred } from "react-icons/md"
+import { VscReport } from 'react-icons/vsc';
 
 type PostItemProps = {
     post: Post;
@@ -18,9 +22,10 @@ type PostItemProps = {
     onVote: () => {};
     onDeletePost: () => {};
     onSelectPost: () => void;
+    uid: string;
 };
 
-const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost }) => {
+const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
     const [image, setPostImage] = useState("");
     const [embed, setPostEmbed] = useState("");
     const [loading, setLoading] = useState(false);
@@ -93,7 +98,25 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             align='center'
                             float={'left'}
                         >
-                            <Icon as={BsThreeDots} onClick={on3Dots} />
+                            <Menu>
+                                <MenuButton
+                                    as={IconButton}
+                                    aria-label='Options'
+                                    icon={<BsThreeDots />}
+                                    color={'black'}
+                                    bg={'transparent'}
+                                    _hover={{}}
+
+                                />
+                                <MenuList>
+                                    <MenuItem icon={<VscReport />} >
+                                        Report
+                                    </MenuItem>
+                                    <MenuItem color="red" icon={<RiDeleteBinLine />} display={post.creatorID === uid ? 'unset' : 'none'}>
+                                        Delete
+                                    </MenuItem>
+                                </MenuList>
+                            </Menu>
                         </Flex>
                     </Flex >
                     <Flex
@@ -160,6 +183,9 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                         justify={'center'}
                         align={'center'}
                     >
+                        <Text color={heartValue === 3 ? 'purple' : heartValue === 2 ? 'red' : heartValue === 1 ? 'red' : 'white'}>
+                            +{heartValue}
+                        </Text>
                         <Icon
                             as={CiHeart}
                             fontSize={'40px'}
