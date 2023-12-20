@@ -1,18 +1,42 @@
-import { Flex, Button, Text, Input, Image } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import ReactPlayer from 'react-player'
+import { Button, Text, Flex, Image, Input } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { loadingState } from '../atoms/loadingAtom';
 type CreateLinkTypeProps = {
     onSet: (url: string) => void;
 };
 
 const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
+    const setLoadingBar = useSetRecoilState(loadingState)
     const [source, setSource] = useState("");
     const [url, setUrl] = useState("");
+    const [img, setImg] = useState("");
     const [lastSet, setlastSet] = useState("")
+    const [error, setError] = useState("");
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setUrl(event.target.value);
     };
     const snipColor = 'white';
+    useEffect(() => {
+        const fetchImage = async () => {
+            setLoadingBar(true);
+            setError("");
+            try {
+                const fetchAdd = source;
+                console.log("fetching from ", fetchAdd)
+                const res = await fetch(fetchAdd);
+                const imageBlob = await res.blob();
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                setImg(imageObjectURL);
+                console.log(imageObjectURL);
+            } catch (error: any) {
+                setError(error.message);
+                console.log('fetchImage error: ', error.message);
+            }
+            setLoadingBar(false);
+        };
+        if (source) fetchImage();
+    }, [source]);
     return (
         <>
             <Flex width='100%' minHeight={'354px'} justify='center' align={'center'}>
@@ -50,6 +74,9 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                         color={url === source ? 'green' : 'purple'}
                         type='url'
                     />
+                    <Text color="white" fontSize={20} display={error ? 'flex' : 'none'} >
+                        {error} :(
+                    </Text>
 
                     <Flex justify={'center'} align='center' mb={1} flexDirection={'row'}>
                         <Button
@@ -106,9 +133,7 @@ const CreateLinkType: React.FC<CreateLinkTypeProps> = ({ onSet }) => {
                             Embed
                         </Button>
                     </Flex>
-                    <Flex maxWidth={"70%"} display={source ? 'unset' : 'none'} mb={4} mt={4}>
-                        <Image src={source} border='2px solid black' alt='only images are supported as of now :9' />
-                    </Flex>
+                    <Image minWidth={'90%'} display={source && !error ? 'unset' : 'none'} mb={4} mt={4} src={img} border='2px solid black' alt='only images are supported as of now :9' />
                     <Flex justify={'center'} align='center' mb={1} flexDirection={'row'}>
                         <Button
                             borderRadius={0}
