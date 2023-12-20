@@ -5,7 +5,7 @@ const usePosts = () => {
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const onVote = async () => { }
     const onSelectPost = () => { }
-    const onDeletePost = async () => { }
+    const onDeletePost = async () => { return true; }
     return {
         postStateValue,
         setPostStateValue,

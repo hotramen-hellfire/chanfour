@@ -16,18 +16,19 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
 
     const [loading, setLoading] = useState(false);
     const setLoadingBar = useSetRecoilState(loadingState);
+    const [user] = useAuthState(authentication);
     const { postStateValue,
         setPostStateValue,
         onVote,
         onSelectPost,
         onDeletePost } = usePosts();
-    const [user] = useAuthState(authentication);
     var uid = "";
     if (user) uid = user.email!.split(".")[0];
     useEffect(() => {
         if (user) uid = user.email!.split(".")[0];
         else uid = "";
     }, [user])
+
     useEffect(() => {
         const getPosts = async () => {
             try {
@@ -49,9 +50,11 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
         };
         getPosts();
     }, []);
+
     useEffect(() => {
         setLoadingBar(loading);
     }, [loading]);
+
     return (
         <>
             {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <PostItem key={item.id} post={item} userIsCreator={item.creatorID === uid} userVoteValue={undefined} onVote={onVote} onSelectPost={onSelectPost} onDeletePost={onDeletePost} uid={uid} />)}

@@ -17,7 +17,7 @@ type PostItemProps = {
     userIsCreator: boolean;
     userVoteValue?: number;
     onVote: () => {};
-    onDeletePost: () => {};
+    onDeletePost: (post: Post) => Promise<boolean>;
     onSelectPost: () => void;
     uid: string;
 };
@@ -26,10 +26,26 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
     const [image, setPostImage] = useState("");
     const [embed, setPostEmbed] = useState("");
     const [loadCount, setLoadCount] = useState(0);
+    const [deleteLoading, setDeleteLoading] = useState(false);
     const [heartValue, setHeartValue] = useState(0);
     const updateHeartValue = () => {
         setHeartValue((heartValue + 1) % 4);
     }
+
+    const handleDelete = async () => {
+        try {
+            setDeleteLoading(true);
+            const success = await onDeletePost(post);
+            if (!success) throw new Error("Failed to delete post!!");
+            console.log("post was successfully deleted :)");
+            setDeleteLoading(false);
+        } catch (error: any) {
+            console.log("handleDelete: ", error.message);
+            setDeleteLoading(false);
+        }
+
+    };
+
     useEffect(() => {
         if (post.imageURL) { setPostImage(post.imageURL); setLoadCount(loadCount + 1) }
         if (post.embedURL) { setPostEmbed(post.embedURL); setLoadCount(loadCount + 1) }
@@ -90,8 +106,8 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                     <MenuItem icon={<VscReport />} >
                                         Report
                                     </MenuItem>
-                                    <MenuItem color="red" icon={<RiDeleteBinLine />} display={post.creatorID === uid ? 'unset' : 'none'}>
-                                        Delete
+                                    <MenuItem onClick={handleDelete} color="red" icon={<RiDeleteBinLine />} display={post.creatorID === uid ? 'unset' : 'none'}>
+                                        {!deleteLoading ? 'Delete' : 'Deleting post :('}
                                     </MenuItem>
                                 </MenuList>
                             </Menu>
