@@ -14,11 +14,6 @@ type PostsProps = {
 };
 const Posts: React.FC<PostsProps> = ({ communityData }) => {
 
-    // 
-    function timeout(delay: number) {
-        return new Promise(res => setTimeout(res, delay));
-    }
-    // 
     const [loading, setLoading] = useState(false);
     const setLoadingBar = useSetRecoilState(loadingState);
     const { postStateValue,
@@ -38,7 +33,6 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
             try {
                 setLoading(true);
                 console.log("loadstate: ", loading)
-                await timeout(4000);
                 const postQuery = query(collection(firestore, 'posts'), where('communityID', '==', communityData.communityID), orderBy("createdAt", 'desc'));
                 const postDocs = await getDocs(postQuery);
                 const posts = postDocs.docs.map((doc) => ({ id: doc.id, ...doc.data() }));

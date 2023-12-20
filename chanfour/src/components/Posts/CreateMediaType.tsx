@@ -37,10 +37,10 @@ const CreateMediaType: React.FC<CreateMediaTypeProps> = ({
                 >
 
                     <Flex maxWidth={"70%"} display={selectedFile ? 'unset' : 'none'} mb={4} mt={4}>
-                        <Text fontSize={12} color='purple'>
+                        <Text fontSize={12} color='white'>
                             fileSize:{fileSize / (1024 * 1024)} MB/2 MB
                         </Text>
-                        <Text fontSize={20} color='purple' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1}>
+                        <Text fontSize={20} color='white' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1}>
                             Pwweasee use Links For Large Files :) (&lt; 5MB)
                         </Text>
                         <Image src={selectedFile} border='4px solid black' alt='only images are supported as of now' />

@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react';
+import { Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { BiSolidSave } from "react-icons/bi";
@@ -25,34 +25,15 @@ type PostItemProps = {
 const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
     const [image, setPostImage] = useState("");
     const [embed, setPostEmbed] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const [loadCount, setLoadCount] = useState(0);
     const [heartValue, setHeartValue] = useState(0);
     const updateHeartValue = () => {
         setHeartValue((heartValue + 1) % 4);
     }
-    const on3Dots = () => { };
     useEffect(() => {
-        if (post.imageURL) setPostImage(post.imageURL);
-        const fetchImage = async () => {
-            setLoading(true);
-            setError("");
-            try {
-                const fetchAdd = post.embedURL as string;
-                console.log("fetching from ", fetchAdd)
-                const res = await fetch(fetchAdd);
-                const imageBlob = await res.blob();
-                const imageObjectURL = URL.createObjectURL(imageBlob);
-                setPostEmbed(imageObjectURL);
-                console.log(imageObjectURL);
-            } catch (error: any) {
-                setError(error.message);
-                console.log('fetchImage error: ', error.message);
-            }
-            setLoading(false);
-        };
-        if (post.embedURL) fetchImage();
-    }, [post.embedURL, post.imageURL]);
+        if (post.imageURL) { setPostImage(post.imageURL); setLoadCount(loadCount + 1) }
+        if (post.embedURL) { setPostEmbed(post.embedURL); setLoadCount(loadCount + 1) }
+    }, []);
     return (
         <>
             {/* //parent of postitem */}
@@ -151,8 +132,9 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             maxHeight={'400px'}
                             boxShadow={'2xl'}
                             border={'0.1px solid black'}
+                            mb={2}
                         >
-                            <Image maxHeight={'100%'} maxWidth={'100%'} display={image ? 'flex' : 'none'} src={image} border='4px solid black' alt='only images are supported as of now' />
+                            <Image maxHeight={'100%'} onLoad={() => { setLoadCount(loadCount - 1) }} maxWidth={'100%'} display={image ? 'flex' : 'none'} src={image} border='4px solid black' alt='only images are supported as of now' />
                         </Flex>
                         <Flex
                             display={embed ? 'flex' : 'none'}
@@ -163,8 +145,9 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             boxShadow={'2xl'}
                             border={'0.1px solid black'}
                         >
-                            <Image maxHeight={'100%'} maxWidth={'100%'} display={embed ? 'flex' : 'none'} src={embed} border='4px solid black' alt='only images are supported as of now' />
+                            <Image maxHeight={'100%'} onLoad={() => { setLoadCount(loadCount - 1) }} maxWidth={'100%'} display={embed ? 'flex' : 'none'} src={embed} border='4px solid black' alt='only images are supported as of now' />
                         </Flex>
+                        <Skeleton height={"300px"} width={"90%"} display={loadCount > 0 ? 'unset' : 'none'} mb={2} mt={2} />
                     </Flex>
                     <Flex
                         height={'1px'}
