@@ -87,12 +87,12 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                         <Box borderRadius={5} bg='white' width={"80%"} white-space='nowrap'>
                             <Text fontWeight={600} mr={2} white-space='nowrap'>
                                 {post.title}
-                                <Text color="grey.200" fontSize={12} >
-                                    by {post.creatorUName}, {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
-                                    <Text color="grey" fontWeight={5} fontSize={12}>
-                                        &gt;_&lt;{post.creatorID}
-                                    </Text>
-                                </Text>
+                            </Text>
+                            <Text color="grey.200" fontSize={12} >
+                                by {post.creatorUName}, {moment(new Date(post.createdAt?.seconds * 1000)).fromNow()}
+                            </Text>
+                            <Text color="grey" fontWeight={5} fontSize={12}>
+                                &gt;_&lt;{post.creatorID}
                             </Text>
                         </Box >
                         <Flex
