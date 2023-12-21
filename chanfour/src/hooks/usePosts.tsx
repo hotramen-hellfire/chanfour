@@ -23,16 +23,17 @@ const usePosts = () => {
             let updatedPostVotes = [...postStateValue.postVotes]
             let voteChange = vote;
             if (!existingVote) {
-                const postVoteRef = doc(collection(firestore, 'userByID/', uid + '/votesByCommunity/'), '/', post.id);
+                const postVoteRef = doc(collection(firestore, 'userByID/', uid + '/votesByUser/'), '/', post.id);
                 const newVote: PostVote = {
                     postID: post.id!,
                     voteValue: vote,
+                    communityID: communityID
                 };
                 batch.set(postVoteRef, newVote)
                 updatedPost.voteStatus = voteStatus + vote;
                 updatedPostVotes = [...updatedPostVotes, newVote];
             } else {
-                const postVoteRef = doc(firestore, 'userByID/', uid + '/votesByCommunity/' + post.id);
+                const postVoteRef = doc(firestore, 'userByID/', uid + '/votesByUser/' + post.id);
                 voteChange = -existingVote.voteValue + vote;
                 updatedPost.voteStatus = voteStatus + voteChange;
                 const voteIdx = postStateValue.postVotes.findIndex((vote) => vote.postID === existingVote.postID);

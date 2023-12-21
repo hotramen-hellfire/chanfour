@@ -24,6 +24,7 @@ interface PostState {
 export type PostVote = {
     postID: string,
     voteValue: number;
+    communityID: string,
 }
 
 const defaultPostState: PostState = {
