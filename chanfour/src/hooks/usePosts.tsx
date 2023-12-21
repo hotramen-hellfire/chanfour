@@ -1,10 +1,12 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Post, PostState, PostVote } from '../components/atoms/postsAtom';
 import { authentication, firestore, storage } from '../firebase/clientApp';
 import { deleteObject, ref } from 'firebase/storage';
-import { collection, deleteDoc, doc, writeBatch } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, where, writeBatch } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { authModalState } from '../components/atoms/authModalAtom';
+import { useEffect } from 'react';
+import { communityState } from '../components/atoms/communitiesAtom';
 
 const usePosts = () => {
     const [user] = useAuthState(authentication)
@@ -12,6 +14,7 @@ const usePosts = () => {
     var uid = "";
     if (user) { uid = user.email!.split(".")[0] }
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
+    const currentCommunity = useRecoilValue(communityState).currentCommunity;
     const onSelectPost = () => { }
     const onVote = async (post: Post, vote: number, communityID: string) => {
         if (!uid) {
@@ -90,6 +93,23 @@ const usePosts = () => {
             return [false, error.message];
         }
     }
+
+    useEffect(() => {
+        const getCommunityPostVotes = async (communityID: string) => {
+            const postVotesQuery = query(collection(firestore, "userByID", uid + '/votesByUser/'), where("communityID", '==', communityID));
+            const postVoteDocs = await getDocs(postVotesQuery);
+            const postVotes = postVoteDocs.docs.map((doc) => ({
+                ...doc.data()
+            }));
+            setPostStateValue(prev => ({
+                ...prev,
+                postVotes: postVotes as PostVote[]
+            }))
+            console.log("postVotes: ", postVotes);
+        }
+        if (currentCommunity && user) getCommunityPostVotes(currentCommunity.communityID);
+    }, [currentCommunity, user])
+
     return {
         postStateValue,
         setPostStateValue,
