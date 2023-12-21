@@ -96,19 +96,33 @@ const usePosts = () => {
 
     useEffect(() => {
         const getCommunityPostVotes = async (communityID: string) => {
-            const postVotesQuery = query(collection(firestore, "userByID", uid + '/votesByUser/'), where("communityID", '==', communityID));
-            const postVoteDocs = await getDocs(postVotesQuery);
-            const postVotes = postVoteDocs.docs.map((doc) => ({
-                ...doc.data()
-            }));
-            setPostStateValue(prev => ({
-                ...prev,
-                postVotes: postVotes as PostVote[]
-            }))
-            console.log("postVotes: ", postVotes);
+            try {
+                const postVotesQuery = query(collection(firestore, "userByID", uid + '/votesByUser/'), where("communityID", '==', communityID));
+                const postVoteDocs = await getDocs(postVotesQuery);
+                const postVotes = postVoteDocs.docs.map((doc) => ({
+                    ...doc.data()
+                }));
+                setPostStateValue(prev => ({
+                    ...prev,
+                    postVotes: postVotes as PostVote[]
+                }))
+                console.log("postVotes: ", postVotes);
+            } catch (error: any) {
+                console.log("getCommunityPostVotes error: ", error.message)
+            }
         }
+        console.log(currentCommunity)
         if (currentCommunity && user) getCommunityPostVotes(currentCommunity.communityID);
-    }, [currentCommunity, user])
+    }, [user])
+
+    useEffect(() => {
+        if (!user) {
+            setPostStateValue((prev) => ({
+                ...prev,
+                postVotes: [],
+            }))
+        }
+    }, [user])
 
     return {
         postStateValue,

@@ -1,6 +1,6 @@
 import { Alert, AlertIcon, Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Spinner, Text } from '@chakra-ui/react';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSolidSave } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
@@ -10,9 +10,11 @@ import { IoShareSocialOutline } from "react-icons/io5";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { VscReport } from 'react-icons/vsc';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { loadingState } from '../atoms/loadingAtom';
-import { Post } from '../atoms/postsAtom';
+import { Post, PostState } from '../atoms/postsAtom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { authentication } from '@/src/firebase/clientApp';
 
 type PostItemProps = {
     post: Post;
@@ -27,16 +29,23 @@ type PostItemProps = {
 
 const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
     const [loading, setLoading] = useState(false);
+    const [user] = useAuthState(authentication);
     const [deleting, setDeleting] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [heartValue, setHeartValue] = useState(userVoteValue ? userVoteValue : 0);
     const [imageLoading1, setImageLoading1] = useState(true)
     const [imageLoading2, setImageLoading2] = useState(true)
+    const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const setLoadingBar = useSetRecoilState(loadingState);
 
     const updateHeartValue = () => {
-        if (uid) setHeartValue((heartValue + 1) % 4);
+        if (user) setHeartValue((heartValue + 1) % 4);
     }
+
+    useEffect(() => {
+        if (!user) setHeartValue(0);
+        else setHeartValue(userVoteValue ? userVoteValue : 0);
+    }, [user, postStateValue.postVotes])
 
     const handleDelete = async () => {
         setDeleteError("");
@@ -212,7 +221,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                             mr={1}
                             ml={1}
                             onClick={() => { updateHeartValue(); onVote(post, 1, post.communityID); }}
-                            display={heartValue === 0 ? 'unset' : 'none'}
+                            display={!user || heartValue === 0 ? 'unset' : 'none'}
                             _hover={{
                                 border: '1px solid gray',
                                 borderRadius: '4'
@@ -224,7 +233,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                             mr={1}
                             ml={1}
                             onClick={() => { updateHeartValue(); onVote(post, 2, post.communityID); }}
-                            display={heartValue === 1 ? 'unset' : 'none'}
+                            display={user && heartValue === 1 ? 'unset' : 'none'}
                             color={'red'}
                             _hover={{
                                 border: '1px solid gray',
@@ -237,7 +246,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                             mr={1}
                             ml={1}
                             onClick={() => { updateHeartValue(); onVote(post, 3, post.communityID); }}
-                            display={heartValue === 2 ? 'unset' : 'none'}
+                            display={user && heartValue === 2 ? 'unset' : 'none'}
                             color={'red'}
                             _hover={{
                                 border: '1px solid gray',
@@ -250,7 +259,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                             mr={1}
                             onClick={() => { updateHeartValue(); onVote(post, 0, post.communityID); }}
                             ml={1}
-                            display={heartValue === 3 ? 'unset' : 'none'}
+                            display={user && heartValue === 3 ? 'unset' : 'none'}
                             color={'purple'}
                             _hover={{
                                 border: '1px solid gray',

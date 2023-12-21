@@ -108,6 +108,10 @@ const useCommunityData = () => {
     useEffect(() => {
         if (!user) {
             setLoading(false);
+            setCommunityStateValue(prev => ({
+                ...prev,
+                mySnippets: [],
+            }));
             return;
         }
         const getMySnippets = async () => {
@@ -127,7 +131,9 @@ const useCommunityData = () => {
             setLoading(false);
         }
         getMySnippets();
-    }, [user])
+    }, [user]);
+
+
 
     return {
         commmunityStateValue,
