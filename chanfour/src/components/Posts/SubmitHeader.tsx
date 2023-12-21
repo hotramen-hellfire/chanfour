@@ -2,11 +2,12 @@ import { Flex, Box, Image, Text } from '@chakra-ui/react';
 import React from 'react';
 
 type SubmitHeaderProps = {
-    communityID: string;
+    communityID: string,
+    imageLink: string,
+    backLink: string,
 };
 
-const SubmitHeader: React.FC<SubmitHeaderProps> = ({ communityID }) => {
-    var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
+const SubmitHeader: React.FC<SubmitHeaderProps> = ({ communityID, imageLink, backLink }) => {
     var imageWidth: number = 120;
     return (
         <>
@@ -16,7 +17,7 @@ const SubmitHeader: React.FC<SubmitHeaderProps> = ({ communityID }) => {
                 mb={4}
             >
                 <Box height={'50px'} overflow={'hidden'}>
-                    <Image src={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'} alt={'just theming'} />
+                    <Image src={backLink} alt={'just theming'} />
                 </Box>
                 <Flex justify={'center'} bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'}>
                     <Flex height='50px' width='95%' maxWidth={'1000px'} flexDirection={'row'}>

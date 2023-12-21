@@ -9,22 +9,21 @@ import { useSetRecoilState } from 'recoil';
 import CommunityAdminModal from './CommunityAdminModal';
 type HeaderProps = {
     communityData: Community;
+    imageLink: string;
+    backLink: string;
 };
 
-const Header: React.FC<HeaderProps> = ({ communityData }) => {
+const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) => {
     const [user] = useAuthState(authentication);
     const [camodalState, setCAModalState] = useState(false);
     const { commmunityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
     const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
-    var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
     var imageWidth: number = 120;
-    var backLink: string = 'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg';
-    if (communityData.imageURL) imageLink = communityData.imageURL;
-    if (communityData.backURL) backLink = communityData.backURL;
     const setLoadingBar = useSetRecoilState(loadingState);
     useEffect(() => {
         setLoadingBar(loading)
     }, [loading])
+
     return (
         <>
             <CommunityAdminModal camodalState={camodalState} setCAModalState={setCAModalState} commmunityData={communityData} />
@@ -32,8 +31,8 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                 flexDirection={'column'}
                 width={'100%'}
             >
-                <Box height={'50px'} overflow={'hidden'}>
-                    <Image src={backLink} alt={'just theming'} />
+                <Box height={'50px'} overflow={'hidden'} width={'100%'}>
+                    <Image src={backLink} alt={'just theming'} width={'100%'} />
                 </Box>
                 <Flex bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'} boxShadow={'dark-lg'}>
                     <Flex
@@ -46,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                     </Flex>
                     <Flex
                         height='50px'
-                        width='60%'
+                        width={{ base: '81%', md: '60%' }}
                         maxWidth={'1000px'}
                         flexDirection={'row'}
                     // border={'2px solid green'}
@@ -65,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                         >
                             <Image
                                 src={imageLink}
-                                borderRadius={imageWidth / 4}
+                                // borderRadius={imageWidth / 4}
                                 objectFit={'cover'}
                                 minWidth={imageWidth}
                                 minHeight={imageWidth}

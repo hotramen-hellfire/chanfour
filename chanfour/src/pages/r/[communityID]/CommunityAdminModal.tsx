@@ -1,6 +1,7 @@
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import useCommunityData from '@/src/hooks/useCommunityData';
+import Router from "next/router";
 import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Spinner, Text, Textarea } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
@@ -18,6 +19,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
     const [textInput, setTextInput] = useState({
         description: commmunityData.description,
     });
+    const [change, setChange] = useState(false);
     const [url, setUrl] = useState(commmunityData.imageURL)
     const [backURL, setBackURL] = useState(commmunityData.backURL)
 
@@ -40,6 +42,14 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
     };
     const handleBIDCommit = async () => {
         await updateBID(commmunityData, { description: textInput.description, imageURL: url, backURL: backURL });
+        setChange(true);
+    }
+
+    const exitModal = () => {
+        setCAModalState(false);
+        if (change) {
+            Router.reload();
+        }
     }
     return (
         <>
@@ -78,7 +88,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                                 fontSize={20}
                                 color={'purple'}
                                 _hover={{ fontSize: 30 }}
-                                onClick={() => setCAModalState(false)}
+                                onClick={exitModal}
                             />
                         </Flex>
                     </Flex>
@@ -197,7 +207,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             mr={1}
                             fontSize={20}
                             cursor={'pointer'}
-                            onClick={() => setCAModalState(false)}
+                            onClick={exitModal}
                             _hover={{ fontSize: 30 }}
                             colorScheme={backURL === commmunityData.backURL && url === commmunityData.imageURL && textInput.description === commmunityData.description ? 'green' : 'red'}>
                             CLOSE

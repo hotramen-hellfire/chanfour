@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
 import React from 'react';
 
 type PageContentProps = {
@@ -7,8 +7,8 @@ type PageContentProps = {
 
 const PageContent: React.FC<PageContentProps> = ({ children }) => {
 
-    return (
-        <Flex bg='transparent' justify='center' p='40px 0px'>
+    return (<>
+        <Flex justify='center' p='40px 0px'>
             <Flex
                 width={'95%'}
                 maxWidth={'1024px'}
@@ -33,6 +33,7 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
                 </Flex>
             </Flex>
         </Flex>
+    </>
     )
 }
 export default PageContent;

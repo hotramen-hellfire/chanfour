@@ -4,12 +4,14 @@ import NewPostsForm from '@/src/components/Posts/NewPostsForm';
 import SubmitHeader from '@/src/components/Posts/SubmitHeader';
 import { authModalState } from '@/src/components/atoms/authModalAtom';
 import { communityState } from '@/src/components/atoms/communitiesAtom';
+import { communityImageState } from '@/src/components/atoms/communityImageAtom';
 import { authentication } from '@/src/firebase/clientApp';
 import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 const SubmitPostPage: React.FC = () => {
     const communityStateValue = useRecoilValue(communityState);
+    const communityImageValue = useRecoilValue(communityImageState);
     if (!communityStateValue.currentCommunity) return <SubmitRedirect />;
     const communityID = communityStateValue.currentCommunity?.communityID;
     const [user] = useAuthState(authentication);
@@ -22,8 +24,11 @@ const SubmitPostPage: React.FC = () => {
     }, [user])
     return (
         <>
+            <style jsx global>
+                {`body {background-image: url(${communityImageValue.backImg}); background-attachment:fixed; background-size:cover; background-repeat: no-repeat;background-position: center center}`}
+            </style>
             {/* //temporary sol */}
-            <SubmitHeader communityID={communityID} />
+            <SubmitHeader communityID={communityID} imageLink={communityImageValue.icon} backLink={communityImageValue.backImg} />
             <PageContent>
                 <>
                     <NewPostsForm communityID={communityID} user={user ? user : null} />
