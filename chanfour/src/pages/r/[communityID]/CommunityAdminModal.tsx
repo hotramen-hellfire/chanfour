@@ -1,6 +1,7 @@
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Text, Textarea } from '@chakra-ui/react';
+import useCommunityData from '@/src/hooks/useCommunityData';
+import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Spinner, Text, Textarea } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
 type CommunityAdminModalProps = {
@@ -11,6 +12,7 @@ type CommunityAdminModalProps = {
 
 const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData, camodalState, setCAModalState }) => {
     if (!commmunityData) <SubmitRedirect />;
+    const { updateBID, loading } = useCommunityData();
     const descLength = 800;
     const [charsRemaining, setCharsRemaining] = useState(descLength - commmunityData.description.length);
     const [textInput, setTextInput] = useState({
@@ -36,6 +38,9 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
     const onBackURLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setBackURL(event.target.value);
     };
+    const handleBIDCommit = async () => {
+        await updateBID(commmunityData, { description: textInput.description, imageURL: url, backURL: backURL });
+    }
     return (
         <>
             <Modal isOpen={camodalState} onClose={() => { }} size={'xl'}>
@@ -202,10 +207,13 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             mr={1}
                             fontSize={20}
                             cursor={'pointer'}
+                            onClick={handleBIDCommit}
+                            display={loading ? 'none' : 'flex'}
                             _hover={{ fontSize: 30 }}
                             colorScheme='purple'>
                             UPDATE
                         </Code>
+                        <Spinner display={loading ? 'unset' : 'none'} />
                     </ModalFooter>
                 </ModalContent>
             </Modal>

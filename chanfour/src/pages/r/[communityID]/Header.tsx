@@ -58,16 +58,17 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                             justifyContent={'center'}
                             position={'relative'}
                             top={"-35px"}
-                            borderBottom={'2px solid pink'}
                             borderRadius={imageWidth / 4}
+                            overflow={"hidden"}
+                            border={'3px solid white'}
                             mr={5}
                         >
                             <Image
                                 src={imageLink}
-                                height={imageWidth}
-                                width={imageWidth}
                                 borderRadius={imageWidth / 4}
-                                border='4px solid white'
+                                objectFit={'cover'}
+                                minWidth={imageWidth}
+                                minHeight={imageWidth}
                             />
                         </Flex>
                         <Text

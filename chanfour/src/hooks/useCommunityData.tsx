@@ -88,6 +88,23 @@ const useCommunityData = () => {
         }
     };
 
+    const updateBID = async (communityData: Community, updates: { description: string, imageURL: string, backURL: string }) => {
+        //first create a new community snippet
+        //updating the number of members
+        //update community state/ mySnippets
+        setLoading(true);
+        try {
+            const batch = writeBatch(firestore);
+            batch.update(doc(firestore, 'communities', communityData.communityID), { description: updates.description, imageURL: updates.imageURL, backURL: updates.backURL })
+            await batch.commit();
+            setLoading(false);
+        } catch (error: any) {
+            console.log('updateBID eror: ', error);
+            setError(error.message);
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         if (!user) {
             setLoading(false);
@@ -115,7 +132,8 @@ const useCommunityData = () => {
     return {
         commmunityStateValue,
         onJoinOrLeaveCommunity,
-        loading
+        loading,
+        updateBID
     }
 }
 export default useCommunityData;
