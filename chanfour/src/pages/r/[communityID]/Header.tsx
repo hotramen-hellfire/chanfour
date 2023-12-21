@@ -3,7 +3,7 @@ import { loadingState } from '@/src/components/atoms/loadingAtom';
 import { authentication } from '@/src/firebase/clientApp';
 import useCommunityData from '@/src/hooks/useCommunityData';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
 import CommunityAdminModal from './CommunityAdminModal';
@@ -13,24 +13,27 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
     const [user] = useAuthState(authentication);
+    const [camodalState, setCAModalState] = useState(false);
     const { commmunityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
     const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
     var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
     var imageWidth: number = 120;
+    var backLink: string = 'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg';
     if (communityData.imageURL) imageLink = communityData.imageURL;
+    if (communityData.backURL) backLink = communityData.backURL;
     const setLoadingBar = useSetRecoilState(loadingState);
     useEffect(() => {
         setLoadingBar(loading)
     }, [loading])
     return (
         <>
-            <CommunityAdminModal commmunityData={communityData} />
+            <CommunityAdminModal camodalState={camodalState} setCAModalState={setCAModalState} commmunityData={communityData} />
             <Flex
                 flexDirection={'column'}
                 width={'100%'}
             >
                 <Box height={'50px'} overflow={'hidden'}>
-                    <Image src={'https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg'} alt={'just theming'} />
+                    <Image src={backLink} alt={'just theming'} />
                 </Box>
                 <Flex bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'} boxShadow={'dark-lg'}>
                     <Flex
@@ -120,7 +123,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                             ml={5}
                             isLoading={loading}
                             fontSize={'20px'}
-                            onClick={() => { }}
+                            onClick={() => { setCAModalState(true) }}
                             display={user?.email?.split(".")[0] === communityData.creatorID ? 'flex' : 'none'}
                             _hover={{
                                 bg: 'purple',

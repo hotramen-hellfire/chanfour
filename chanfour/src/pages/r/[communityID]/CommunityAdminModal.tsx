@@ -1,21 +1,23 @@
-import { Community, communityState } from '@/src/components/atoms/communitiesAtom';
-import { Button, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Code, Textarea, Icon, Flex } from '@chakra-ui/react';
-import router from 'next/router';
-import React, { useState } from 'react';
-import { FaRegWindowClose } from "react-icons/fa";
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
+import { Community } from '@/src/components/atoms/communitiesAtom';
+import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Text, Textarea } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
 type CommunityAdminModalProps = {
     commmunityData: Community;
+    camodalState: boolean,
+    setCAModalState: (state: boolean) => void;
 };
 
-const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData }) => {
+const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData, camodalState, setCAModalState }) => {
     if (!commmunityData) <SubmitRedirect />;
     const descLength = 800;
     const [charsRemaining, setCharsRemaining] = useState(descLength - commmunityData.description.length);
     const [textInput, setTextInput] = useState({
         description: commmunityData.description,
     });
+    const [url, setUrl] = useState(commmunityData.imageURL)
+    const [backURL, setBackURL] = useState(commmunityData.backURL)
 
     const onDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         if (event.target.value.length > descLength) {
@@ -27,21 +29,22 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
             ...prev,
             description: event.target.value,
         }))
-        console.log(textInput.description);
+    };
+    const onURLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUrl(event.target.value);
+    };
+    const onBackURLChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setBackURL(event.target.value);
     };
     return (
         <>
-            <Modal isOpen={true} onClose={() => { }} size={'xl'}>
+            <Modal isOpen={camodalState} onClose={() => { }} size={'xl'}>
                 <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
-                <ModalContent alignItems={'center'} border={'1px solid black'} boxShadow={'large-xl'}>
+                <ModalContent alignItems={'center'} border={'1px solid black'}>
                     <Flex
                         textAlign={'center'}
                         width={'100%'}
                         mt={1}
-                    // alignItems={'center'}
-                    // alignContent={'center'}
-                    // justifyContent={'center'}
-                    // justifyItems={'center'}
                     >
                         <Flex
                             width={'10%'}
@@ -70,6 +73,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                                 fontSize={20}
                                 color={'purple'}
                                 _hover={{ fontSize: 30 }}
+                                onClick={() => setCAModalState(false)}
                             />
                         </Flex>
                     </Flex>
@@ -97,12 +101,13 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                                 placeholder={'Set Board Description'}
                                 _placeholder={{ color: "purple.500" }}
                                 _hover={{
-                                    border: '1px solid purple'
+                                    border: '1px solid purple',
+                                    boxShadow: '2xl'
                                 }}
                                 _focus={{
                                     outline: "none",
-                                    border: '1px solid purple'
-
+                                    border: '1px solid purple',
+                                    boxShadow: 'dark-lg'
                                 }}
                                 _focusVisible={{
                                     outline: "none",
@@ -114,19 +119,96 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                                 boxShadow={'xl'}
                             />
                         </Flex>
-
-
-
+                        <Flex
+                            mt={2}
+                            flexDirection={'column'}
+                            textAlign={'center'}
+                        >
+                            <Text color={'purple'} fontSize={20}>
+                                Board Icon
+                                <Text fontSize={11} color={'gray.500'}>
+                                    tip: use oshi.at
+                                </Text>
+                            </Text>
+                            <Input
+                                name={url}
+                                value={url}
+                                placeholder={'Set Icon URL'}
+                                _placeholder={{ color: "purple.500" }}
+                                _hover={{
+                                    border: '1px solid purple',
+                                    boxShadow: '2xl'
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    border: '1px solid purple',
+                                    boxShadow: 'dark-lg'
+                                }}
+                                _focusVisible={{
+                                    outline: "none",
+                                }}
+                                borderRadius={'9px'}
+                                onChange={onURLChange}
+                                boxShadow={'xl'}
+                            />
+                        </Flex>
+                        <Flex
+                            mt={2}
+                            flexDirection={'column'}
+                            textAlign={'center'}
+                        >
+                            <Text color={'purple'} fontSize={20}>
+                                Background Image
+                                <Text fontSize={11} color={'gray.500'}>
+                                    tip: use oshi.at
+                                </Text>
+                            </Text>
+                            <Input
+                                name={backURL}
+                                value={backURL}
+                                placeholder={'Set Icon URL'}
+                                _placeholder={{ color: "purple.500" }}
+                                _hover={{
+                                    border: '1px solid purple',
+                                    boxShadow: '2xl'
+                                }}
+                                _focus={{
+                                    outline: "none",
+                                    border: '1px solid purple',
+                                    boxShadow: 'dark-lg'
+                                }}
+                                _focusVisible={{
+                                    outline: "none",
+                                }}
+                                borderRadius={'9px'}
+                                onChange={onBackURLChange}
+                                boxShadow={'xl'}
+                            />
+                        </Flex>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={() => { }}>
-                            Close
-                        </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
+                        <Code
+                            ml={1}
+                            mr={1}
+                            fontSize={20}
+                            cursor={'pointer'}
+                            onClick={() => setCAModalState(false)}
+                            _hover={{ fontSize: 30 }}
+                            colorScheme={backURL === commmunityData.backURL && url === commmunityData.imageURL && textInput.description === commmunityData.description ? 'green' : 'red'}>
+                            CLOSE
+                        </Code>
+                        <Code
+                            ml={1}
+                            mr={1}
+                            fontSize={20}
+                            cursor={'pointer'}
+                            _hover={{ fontSize: 30 }}
+                            colorScheme='purple'>
+                            UPDATE
+                        </Code>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-            hi
         </>
     )
 }
