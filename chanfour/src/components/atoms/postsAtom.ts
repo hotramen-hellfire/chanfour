@@ -18,12 +18,19 @@ export type Post = {
 interface PostState {
     selectedPost: Post | null;
     posts: Post[];
+    postVotes: PostVote[];
+}
+
+export type PostVote = {
+    postID: string,
+    voteValue: number;
 }
 
 const defaultPostState: PostState = {
     selectedPost: null,
     posts: [],
-}
+    postVotes: [],
+};
 
 export const PostState = atom<PostState>({
     key: "postState",
