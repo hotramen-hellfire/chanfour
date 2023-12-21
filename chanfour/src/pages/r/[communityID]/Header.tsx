@@ -1,14 +1,18 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { loadingState } from '@/src/components/atoms/loadingAtom';
+import { authentication } from '@/src/firebase/clientApp';
 import useCommunityData from '@/src/hooks/useCommunityData';
-import { Box, Button, Code, Flex, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
+import CommunityAdminModal from './CommunityAdminModal';
 type HeaderProps = {
     communityData: Community;
 };
 
 const Header: React.FC<HeaderProps> = ({ communityData }) => {
+    const [user] = useAuthState(authentication);
     const { commmunityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
     const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
     var imageLink: string = "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg"
@@ -20,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
     }, [loading])
     return (
         <>
+            <CommunityAdminModal commmunityData={communityData} />
             <Flex
                 flexDirection={'column'}
                 width={'100%'}
@@ -103,36 +108,33 @@ const Header: React.FC<HeaderProps> = ({ communityData }) => {
                         >
                             {isJoined ? 'Joined' : 'Join'}
                         </Button>
+                        <Button
+                            borderRadius={0}
+                            height={'40px'}
+                            width={'80px'}
+                            border='2px solid purple'
+                            variant={'outline'}
+                            position={'relative'}
+                            top={'1'}
+                            bg='white'
+                            ml={5}
+                            isLoading={loading}
+                            fontSize={'20px'}
+                            onClick={() => { }}
+                            display={user?.email?.split(".")[0] === communityData.creatorID ? 'flex' : 'none'}
+                            _hover={{
+                                bg: 'purple',
+                                color: 'white',
+                                fontSize: '40px',
+                                top: '-4',
+                                height: '80px',
+                                width: '160px',
+                                border: '2px solid white'
+                            }}
+                        >
+                            Admin
+                        </Button>
                     </Flex>
-                    {/* <Flex
-                        height='50px'
-                        minWidth='9%'
-                        maxWidth={'1000px'}
-                        flexDirection={'column'}
-                        // border={'2px solid red'}
-                        display={{ base: 'none', md: 'flex' }}
-                        color={'green'}
-                        justify={'center'}
-                        align={'center'}
-                    >
-                        <Stack spacing={'2px'} width={'100%'}>
-                            <Code colorScheme='green' width={'100%'}>#Members: {communityData.numberOfMembers}</Code>
-                            <Code colorScheme='yellow' width={'100%'}>#Posts: {communityData.numberOfPosts}</Code>
-                        </Stack>
-                    </Flex>
-                    <Flex
-                        height='50px'
-                        minWidth='9%'
-                        maxWidth={'1000px'}
-                        flexDirection={'column'}
-                        // border={'2px solid red'}
-                        display={{ base: 'none', md: 'flex' }}
-                        color={'green'}
-                        justify={'center'}
-                        align={'center'}
-                    >
-                        <Code colorScheme='pink'>#Activity: {communityData.activity}</Code>
-                    </Flex> */}
                 </Flex>
             </Flex >
         </>

@@ -6,8 +6,7 @@ export interface Community {
     numberOfMembers: number,
     privacyType: 'public' | 'restricted' | 'private'
     createdAt?: Timestamp,
-    description?: string,
-    rules?: string,
+    description: string,
     imageURL?: string,
     numberOfPosts: number,
     activity: number,

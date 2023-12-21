@@ -56,7 +56,8 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                     numberOfMembers: 1,
                     privacyType: communityType,
                     numberOfPosts: 0,
-                    activity: 0
+                    activity: 0,
+                    description: ""
                     //fetchusernames as display properties
                 })
                 //add this community to the user

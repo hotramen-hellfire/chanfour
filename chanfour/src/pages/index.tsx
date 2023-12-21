@@ -4,7 +4,7 @@ export default function Home() {
     <>
       <div>
         add username utility<br />implement pageranks<br />shorten board name size to 12<br />validate communityId on the submit page
-        <br />set up community description and rules prompts
+        <br />set up community description<br /> handle navigating back to community page from submit or post
       </div>
     </>
   )

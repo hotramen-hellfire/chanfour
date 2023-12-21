@@ -19,6 +19,8 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 flexDirection={'column'}
                 boxShadow={'dark-lg'}
                 maxWidth={'100%'}
+                position={'sticky'}
+                top={'14px'}
             >
                 <Flex width={'100%'} justify={'center'} align={'center'} flexDirection={'column'}>
                     <Code color={'pink.500'} bg={'pink.100'} width={'100%'}>ABOUT COMMUNITY</Code>
@@ -33,6 +35,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                     border={'0.5px solid black'}
                     boxShadow={'dark-lg'}
                     mt={1}
+                    width={'100%'}
                 />
                 <Flex width={'100%'} padding="2px 4px 4px 2px" fontSize={14}>
                     {communityData.description}
