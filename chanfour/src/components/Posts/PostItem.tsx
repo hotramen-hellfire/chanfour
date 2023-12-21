@@ -35,7 +35,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
     const setLoadingBar = useSetRecoilState(loadingState);
 
     const updateHeartValue = () => {
-        setHeartValue((heartValue + 1) % 4);
+        if (uid) setHeartValue((heartValue + 1) % 4);
     }
 
     const handleDelete = async () => {
