@@ -18,17 +18,18 @@ type PostItemProps = {
     post: Post;
     userIsCreator: boolean;
     userVoteValue?: number;
-    onVote: () => {};
+    onVote: (post: Post, vote: number, communityID: string) => void;
     onDeletePost: (post: Post) => Promise<[boolean, string]>;
     onSelectPost: () => void;
     uid: string;
+    communityID: string;
 };
 
-const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
+const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
     const [loading, setLoading] = useState(false);
     const [deleting, setDeleting] = useState(false);
     const [deleteError, setDeleteError] = useState("");
-    const [heartValue, setHeartValue] = useState(0);
+    const [heartValue, setHeartValue] = useState(userVoteValue ? userVoteValue : 0);
     const [imageLoading1, setImageLoading1] = useState(true)
     const [imageLoading2, setImageLoading2] = useState(true)
     const setLoadingBar = useSetRecoilState(loadingState);
@@ -99,7 +100,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             justify={'center'}
                             align='center'
                         >
-                            {post.voteStatus !== 0 && <Text>post.voteStatus</Text>}
+                            {post.voteStatus !== 0 && <Text>{post.voteStatus}</Text>}
                         </Flex>
                         <Flex
                             width={'10%'}
@@ -210,7 +211,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             fontSize={'40px'}
                             mr={1}
                             ml={1}
-                            onClick={updateHeartValue}
+                            onClick={() => { updateHeartValue(); onVote(post, 1, post.communityID); }}
                             display={heartValue === 0 ? 'unset' : 'none'}
                             _hover={{
                                 border: '1px solid gray',
@@ -222,7 +223,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             fontSize={'40px'}
                             mr={1}
                             ml={1}
-                            onClick={updateHeartValue}
+                            onClick={() => { updateHeartValue(); onVote(post, 2, post.communityID); }}
                             display={heartValue === 1 ? 'unset' : 'none'}
                             color={'red'}
                             _hover={{
@@ -235,7 +236,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             fontSize={'40px'}
                             mr={1}
                             ml={1}
-                            onClick={updateHeartValue}
+                            onClick={() => { updateHeartValue(); onVote(post, 3, post.communityID); }}
                             display={heartValue === 2 ? 'unset' : 'none'}
                             color={'red'}
                             _hover={{
@@ -247,7 +248,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             as={FaHeartCrack}
                             fontSize={'40px'}
                             mr={1}
-                            onClick={updateHeartValue}
+                            onClick={() => { updateHeartValue(); onVote(post, 0, post.communityID); }}
                             ml={1}
                             display={heartValue === 3 ? 'unset' : 'none'}
                             color={'purple'}
