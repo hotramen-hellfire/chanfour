@@ -111,31 +111,6 @@ const CreatePostType: React.FC<CreatePostTypeProps> = ({
                     >
                         POST XD
                     </Button>
-                    <Button
-                        borderRadius={0}
-                        height={'40px'}
-                        width={'200px'}
-                        border='2px solid black'
-                        variant={'outline'}
-                        bgGradient={'linear(to-b,' + 'gray.700' + ', purple.50)'}
-                        color='black'
-                        _hover={{
-                            mt: 5,
-                            bg: 'black',
-                            color: 'white',
-                            fontSize: '40px',
-                            top: '-4',
-                            height: '80px',
-                            width: '200px',
-                            border: '2px solid white'
-                        }}
-                        display={!textInput.title ? 'unset' : 'none'}
-                        isLoading={loading}
-                        justifyContent='center'
-                        fontSize={20}
-                    >
-                        <Icon as={FaLock} />
-                    </Button>
                     <Text fontSize={12} color='purple' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1} mt={2}>
                         The file selected has size&lt;5MB, please use a link, best to use github  or https://oshi.at/ :)
                     </Text>

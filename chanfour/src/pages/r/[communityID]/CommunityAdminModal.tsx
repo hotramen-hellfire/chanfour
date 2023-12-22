@@ -134,16 +134,19 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                                 boxShadow={'xl'}
                             />
                         </Flex>
+
                         <Flex
                             mt={2}
                             flexDirection={'column'}
                             textAlign={'center'}
                         >
+                            <Text fontSize={11} color={'gray.500'}>
+                                (smaller image sizes make loading faster)
+                                compress at: www.img2go.com/compress-image<br />
+                                upload: use oshi.at
+                            </Text>
                             <Text color={'purple'} fontSize={20}>
                                 Board Icon
-                                <Text fontSize={11} color={'gray.500'}>
-                                    tip: use oshi.at
-                                </Text>
                             </Text>
                             <Input
                                 name={url}
@@ -174,9 +177,6 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                         >
                             <Text color={'purple'} fontSize={20}>
                                 Background Image
-                                <Text fontSize={11} color={'gray.500'}>
-                                    tip: use oshi.at
-                                </Text>
                             </Text>
                             <Input
                                 name={backURL}
