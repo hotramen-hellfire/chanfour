@@ -84,6 +84,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
             createdAt: serverTimestamp() as Timestamp,
             creatorUName: UNameObj.UName
         }
+        newPost.createdAt = { seconds: Date.now() / 1000 } as Timestamp;
         var postDocRef: any = null;
         try {
             postDocRef = await addDoc(collection(firestore, "posts"), newPost);

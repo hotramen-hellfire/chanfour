@@ -207,6 +207,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             mr={1}
                             fontSize={20}
                             cursor={'pointer'}
+                            display={loading ? 'none' : 'flex'}
                             onClick={exitModal}
                             _hover={{ fontSize: 30 }}
                             colorScheme={backURL === commmunityData.backURL && url === commmunityData.imageURL && textInput.description === commmunityData.description ? 'green' : 'red'}>

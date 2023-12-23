@@ -5,7 +5,7 @@ import { CommentObject, Post } from '@/src/components/atoms/postsAtom';
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
 import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';
-import { Timestamp, collection, doc, increment, serverTimestamp, writeBatch } from 'firebase/firestore';
+import { Timestamp, collection, doc, getDocs, increment, orderBy, query, serverTimestamp, where, writeBatch } from 'firebase/firestore';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -13,6 +13,7 @@ import { MdOutlineCloseFullscreen } from 'react-icons/md';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import CommentsStack from './CommentsStack';
 import CreateComment from './CreateComment';
+import firebase from 'firebase/compat/app';
 
 type PostPageProps = {
     communityData: Community;
@@ -37,19 +38,21 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             const j = creatorID[i];
             sum += j.charCodeAt(0);
         }
-        const k = postStateValue.selectedPost?.createdAt.seconds! % 5;
+        const sec = Math.floor(postStateValue.selectedPost?.createdAt.seconds!)
+        const k = sec % 5;
         sum = (sum + k) % 6
         return sum;
     }
     const onModalClose = () => {
         setCommentsModalStateValue(false)
+        setComments([])
         setCommentText("")
         setPostStateValue(prev => ({
             ...prev,
             selectedPost: null
         }))
     }
-    const onCreateComment = async (majhaComment: string) => {
+    const onCreateComment = async () => {
         //create a comment document
         //update post numberOfComments
         //update client recoil state
@@ -104,7 +107,14 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
 
     useEffect(() => {
         const getPostComments = async () => {
-            setComments([]);
+            try {
+                const commentsQuery = query(collection(firestore, "posts/" + postStateValue.selectedPost!.id + '/comments'), where("createdAt", "!=", ""), orderBy('createdAt', 'desc'));
+                const commentDocs = await getDocs(commentsQuery);
+                const newComments = commentDocs.docs.map(doc => ({ ...doc.data() }))
+                setComments(newComments as CommentObject[])
+            } catch (error: any) {
+                console.log("getPostComments error: ", error);
+            }
         };
         if (commentsModalState) getPostComments();
     }, [commentsModalState])
