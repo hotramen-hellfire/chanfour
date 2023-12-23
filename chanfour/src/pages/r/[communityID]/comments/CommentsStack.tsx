@@ -1,13 +1,14 @@
-import { Flex, Stack } from '@chakra-ui/react';
+import { Flex, Spinner, Stack } from '@chakra-ui/react';
 import React from 'react';
 import CommentItem from '../CommentItem';
 import { CommentObject } from '@/src/components/atoms/postsAtom';
 
 type CommentsStackProps = {
     comments: CommentObject[];
+    fetchLoading: boolean;
 };
 
-const CommentsStack: React.FC<CommentsStackProps> = ({ comments }) => {
+const CommentsStack: React.FC<CommentsStackProps> = ({ comments, fetchLoading }) => {
 
     return (
         <>
@@ -27,6 +28,7 @@ const CommentsStack: React.FC<CommentsStackProps> = ({ comments }) => {
             // maxHeight={'500px'}
             // overflow={'scroll-hidden'}
             >
+                <Spinner display={fetchLoading ? 'flex' : 'none'} />
                 <Stack width={'100%'} display={'flex'}>
                     {comments.map(item => <CommentItem key={item.id} comment={item} />)}
                 </Stack>

@@ -109,12 +109,15 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
     useEffect(() => {
         const getPostComments = async () => {
             try {
+                setFetchLoading(true);
                 const commentsQuery = query(collection(firestore, "posts/" + postStateValue.selectedPost!.id + '/comments'), where("createdAt", "!=", ""), orderBy('createdAt', 'desc'));
                 const commentDocs = await getDocs(commentsQuery);
                 const newComments = commentDocs.docs.map(doc => ({ ...doc.data() }))
                 setComments(newComments as CommentObject[])
+                setFetchLoading(false);
             } catch (error: any) {
                 console.log("getPostComments error: ", error);
+                setFetchLoading(false);
             }
         };
         if (commentsModalState) getPostComments();
@@ -174,7 +177,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                     />
                     <ModalBody width={'100%'}>
                         <CreateComment commentText={commentText} setCommentText={setCommentText} user={user} createLoading={createLoading} onCreateComment={onCreateComment} />
-                        <CommentsStack comments={comments} />
+                        <CommentsStack comments={comments} fetchLoading={fetchLoading} />
                     </ModalBody>
                     <ModalFooter>
                         <Code mb={1} fontSize={12} colorScheme='grey'>&lt;/COMMENTS&gt;</Code>
