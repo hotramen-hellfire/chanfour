@@ -13,19 +13,21 @@ const CommentsStack: React.FC<CommentsStackProps> = ({ comments }) => {
         <>
             <Flex
                 width={'100%'}
-                border={'1px solid purple'}
+                // border={'1px solid purple'}
                 flexDirection={'column'}
                 mt={2}
                 bg={'white'}
                 justify={'center'}
                 align={'center'}
                 boxShadow={'2xl'}
-                p={2}
+                padding={'8px 0px 8px 0px '}
                 _hover={{
                     boxShadow: 'dark-lg'
                 }}
+            // maxHeight={'500px'}
+            // overflow={'scroll-hidden'}
             >
-                <Stack width={'90%'} border={'1px solid orange'} display={'flex'}>
+                <Stack width={'100%'} display={'flex'}>
                     {comments.map(item => <CommentItem key={item.id} comment={item} />)}
                 </Stack>
             </Flex>

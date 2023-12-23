@@ -29,6 +29,7 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                 </Text> */}
                 <Textarea
                     name={props.commentText}
+                    value={props.commentText}
                     placeholder="Write something here"
                     _placeholder={{ color: "purple.200" }}
                     _hover={{
@@ -43,7 +44,6 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                     _focusVisible={{
                         outline: "none",
                     }}
-                    borderRadius={'9px'}
                     onChange={onChange}
                     boxShadow={'xl'}
                     width={'100%'}
@@ -64,7 +64,7 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                     }}
                     display={props.commentText ? 'unset' : 'none'}
                     justifyContent='center'
-                    onClick={() => { props.onCreateComment(props.commentText) }}
+                    onClick={() => { props.onCreateComment(props.commentText); }}
                     mt={2}
                     mr={2}
                 >

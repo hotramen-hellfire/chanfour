@@ -4,7 +4,7 @@ import { Community } from '@/src/components/atoms/communitiesAtom';
 import { CommentObject, Post } from '@/src/components/atoms/postsAtom';
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
-import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';
 import { Timestamp, collection, doc, increment, serverTimestamp, writeBatch } from 'firebase/firestore';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
@@ -72,7 +72,6 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                 color: colors[getColor(creatorID)],
             }
             batch.set(commentDocRef, newComment);
-
             const postDocRef = doc(firestore, 'posts', postStateValue.selectedPost?.id!);
             batch.update(postDocRef, {
                 numberOfComments: increment(1),
@@ -135,7 +134,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                             align={'center'}
                             flexDirection={'column'}
                         >
-                            <Code mb={1} fontSize={30} colorScheme='purple'>r/{communityData.communityID}</Code>
+                            <Code mb={1} fontSize={30} colorScheme='purple'>&lt;COMMENTS&gt;</Code>
                             <Code mb={1} fontSize={15} colorScheme='purple'>#/{postStateValue.selectedPost?.title} by {postStateValue.selectedPost?.creatorUName}</Code>
                             <Code mb={1} fontSize={12} colorScheme='white'>&gt;_&lt;{postStateValue.selectedPost?.creatorID}, {isTime && moment(new Date(postStateValue.selectedPost!.createdAt.seconds * 1000)).fromNow()} </Code>
                         </Flex>
@@ -165,6 +164,9 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                         <CreateComment commentText={commentText} setCommentText={setCommentText} user={user} createLoading={createLoading} onCreateComment={onCreateComment} />
                         <CommentsStack comments={comments} />
                     </ModalBody>
+                    <ModalFooter>
+                        <Code mb={1} fontSize={12} colorScheme='grey'>&lt;/COMMENTS&gt;</Code>
+                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
