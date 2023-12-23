@@ -1,11 +1,11 @@
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
 import { UNameState } from '@/src/components/atoms/UNameAtom';
-import { Community } from '@/src/components/atoms/communitiesAtom';
+import { Community, communityState } from '@/src/components/atoms/communitiesAtom';
 import { loadingState } from '@/src/components/atoms/loadingAtom';
 import { Post, PostState } from '@/src/components/atoms/postsAtom';
 import { authentication, firestore, storage } from '@/src/firebase/clientApp';
 import { Button, Code, Flex, Icon, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Skeleton, Spinner, Text, Textarea } from '@chakra-ui/react';
-import { Timestamp, addDoc, collection, deleteDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, deleteDoc, doc, increment, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -20,6 +20,7 @@ type CommunityAdminModalProps = {
 const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData, submitModalState, setSubmitModalState }) => {
     if (!commmunityData) <SubmitRedirect />;
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
+    const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [fileSize, setFileSize] = useState(0);
     const [selectedFile, setSelectedFile] = useState<string>();
     const [UNameObj] = useRecoilState(UNameState);
@@ -108,6 +109,17 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                 ...prev,
                 posts: updatedPosts,
             }))
+            const communityDocRef = doc(firestore, 'communities', commmunityData.communityID);
+            await updateDoc(communityDocRef, { numberOfPosts: increment(1) })
+            let updatedCommunity = {
+                ...communityStateValue.currentCommunity!,
+                numberOfPosts: communityStateValue.currentCommunity!.numberOfPosts + 1
+            };
+            setCommunityStateValue(prev => ({
+                ...prev,
+                currentCommunity: updatedCommunity as Community
+            }));
+            console.log('post write end,', communityStateValue.currentCommunity?.numberOfPosts);
             setSubmitModalState(false);
         } catch (error: any) {
             console.log('handleCreatePost error: ', error.message);
@@ -115,7 +127,6 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
             await deleteDoc(postDocRef);
         }
         setLoading(false);
-        console.log('post write end');
     };
     const exitModal = () => {
         setSubmitModalState(false);

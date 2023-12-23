@@ -1,14 +1,19 @@
-import React from 'react';
-import { Community } from '../atoms/communitiesAtom';
+import React, { useEffect, useState } from 'react';
+import { Community, communityState } from '../atoms/communitiesAtom';
 import { Code, Flex, Stack, Text } from '@chakra-ui/react';
 import moment from 'moment';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 type AboutProps = {
     communityData: Community
 };
 
 const About: React.FC<AboutProps> = ({ communityData }) => {
-
+    const communityStateValue = useRecoilValue(communityState);
+    const [numPosts, setNumPosts] = useState(communityData.numberOfPosts);
+    useEffect(() => {
+        if (communityStateValue.currentCommunity) setNumPosts(communityStateValue.currentCommunity!.numberOfPosts);
+    }, [communityStateValue])
     return (
         <>
             <Flex border='2px solid purple'
@@ -29,8 +34,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                     <Code color={'pink.500'} bg={'pink.100'} width={'100%'}>ABOUT COMMUNITY</Code>
                     <Stack spacing={'2px'} width={'100%'}>
                         <Code colorScheme='green' width={'100%'}>#Members: {communityData.numberOfMembers}</Code>
-                        <Code colorScheme='yellow' width={'100%'}>#Posts: {communityData.numberOfPosts}</Code>
-                        <Code colorScheme='pink'>#Activity: {communityData.activity}</Code>
+                        <Code colorScheme='yellow' width={'100%'}>#Posts: {numPosts}</Code>
                     </Stack>
                 </Flex>
                 <Flex

@@ -13,7 +13,6 @@ import { MdOutlineCloseFullscreen } from 'react-icons/md';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import CommentsStack from './CommentsStack';
 import CreateComment from './CreateComment';
-import firebase from 'firebase/compat/app';
 
 type PostPageProps = {
     communityData: Community;
@@ -22,7 +21,7 @@ type PostPageProps = {
 };
 
 const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, setCommentsModalStateValue }) => {
-    const { postStateValue, setPostStateValue, onDeletePost, onVote } = usePosts();
+    const { postStateValue, setPostStateValue } = usePosts();
     const [user] = useAuthState(authentication);
     const UNameObj = useRecoilValue(UNameState);
     const setAuthModalState = useSetRecoilState(authModalState);
