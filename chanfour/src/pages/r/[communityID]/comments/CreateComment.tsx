@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Textarea } from '@chakra-ui/react';
+import { Button, Flex, Icon, Spinner, Textarea } from '@chakra-ui/react';
 import { User } from 'firebase/auth';
 import React from 'react';
 import { FaPaperPlane } from "react-icons/fa";
@@ -65,11 +65,22 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                         color: 'green'
                     }}
                     display={props.commentText ? 'unset' : 'none'}
-                    justifyContent='center'
+                    justifyContent={'center'}
+                    justifyItems={'center'}
+                    alignContent={'center'}
+                    alignItems={'center'}
                     onClick={() => { props.onCreateComment(props.commentText); }}
                     ml={1}
                 >
-                    <Icon as={FaPaperPlane} />
+                    <Icon
+                        display={!props.createLoading ? 'flex' : 'none'}
+                        as={FaPaperPlane}
+                    />
+                    <Spinner
+                        justifySelf={'center'}
+                        alignSelf={'center'}
+                        display={props.createLoading ? 'flex' : 'none'}
+                    />
                 </Button>
             </Flex>
         </>

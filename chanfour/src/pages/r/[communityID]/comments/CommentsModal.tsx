@@ -63,6 +63,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             })
             return;
         }
+        setCreateLoading(true);
         try {
             const creatorID = user.email!.split('.')[0];
             const batch = writeBatch(firestore);
@@ -99,9 +100,10 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                 selectedPost: updatedPost,
                 posts: updatedPosts
             }))
-
+            setCreateLoading(false);
         } catch (error: any) {
             console.log("onCreateComment error: ", error);
+            setCreateLoading(false);
         }
     }
 
