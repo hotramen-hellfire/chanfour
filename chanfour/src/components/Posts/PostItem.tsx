@@ -270,7 +270,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             color={'purple'}
                             position={'relative'}
                             top={2}
-                            left={-2}
+                            left={-1}
                         >
                             {post.voteStatus !== 0 && <Text>{post.voteStatus}</Text>}
                         </Flex>
