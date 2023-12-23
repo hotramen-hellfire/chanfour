@@ -2,28 +2,21 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { Post, PostState, PostVote } from '../components/atoms/postsAtom';
 import { authentication, firestore, storage } from '../firebase/clientApp';
 import { deleteObject, ref } from 'firebase/storage';
-import { collection, deleteDoc, doc, getDocs, query, where, writeBatch } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, increment, query, updateDoc, where, writeBatch } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { authModalState } from '../components/atoms/authModalAtom';
 import { useEffect } from 'react';
-import { communityState } from '../components/atoms/communitiesAtom';
+import { Community, communityState } from '../components/atoms/communitiesAtom';
 import { useRouter } from 'next/router';
 
 const usePosts = () => {
-    const [user] = useAuthState(authentication)
-    const setAuthModalState = useSetRecoilState(authModalState);
-    const router = useRouter();
     var uid = "";
+    const [user] = useAuthState(authentication)
     if (user) { uid = user.email!.split(".")[0] }
+    const setAuthModalState = useSetRecoilState(authModalState);
+    const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const currentCommunity = useRecoilValue(communityState).currentCommunity;
-    // const onSelectPost = (post: Post) => {
-    //     setPostStateValue(prev => ({
-    //         ...prev,
-    //         selectedPost: post
-    //     }));
-    //     router.push('/r/' + post.communityID + '/comments/' + post.id);
-    // }
     const onVote = async (post: Post, vote: number, communityID: string) => {
         if (!uid) {
             setAuthModalState({
@@ -74,6 +67,16 @@ const usePosts = () => {
                 posts: updatedPosts,
                 postVotes: updatedPostVotes
             }))
+            const communityDocRef = doc(firestore, 'communities', communityID);
+            await updateDoc(communityDocRef, { numberOfPosts: increment(-1) })
+            let updatedCommunity = {
+                ...communityStateValue.currentCommunity!,
+                numberOfPosts: communityStateValue.currentCommunity!.numberOfPosts + 1
+            };
+            setCommunityStateValue(prev => ({
+                ...prev,
+                currentCommunity: updatedCommunity as Community
+            }));
 
         } catch (error: any) {
             console.log('onVote error: ', error.message);
