@@ -22,10 +22,10 @@ type PostItemProps = {
     userVoteValue?: number;
     onVote: (post: Post, vote: number, communityID: string) => void;
     onDeletePost: (post: Post) => Promise<[boolean, string]>;
-    onSelectPost?: (post: Post) => void;
+    openComments?: (post: Post) => void;
 };
 
-const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost }) => {
+const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, openComments }) => {
     const [loading, setLoading] = useState(false);
     const [user] = useAuthState(authentication);
     const [deleting, setDeleting] = useState(false);
@@ -273,7 +273,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                 border: '1px solid gray',
                                 borderRadius: '4'
                             }}
-                            onClick={() => onSelectPost!(post)}
+                            onClick={() => openComments!(post)}
                         />
                         <Icon
                             as={IoShareSocialOutline}

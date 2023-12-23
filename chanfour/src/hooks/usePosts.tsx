@@ -17,13 +17,13 @@ const usePosts = () => {
     if (user) { uid = user.email!.split(".")[0] }
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const currentCommunity = useRecoilValue(communityState).currentCommunity;
-    const onSelectPost = (post: Post) => {
-        setPostStateValue(prev => ({
-            ...prev,
-            selectedPost: post
-        }));
-        router.push('/r/' + post.communityID + '/comments/' + post.id);
-    }
+    // const onSelectPost = (post: Post) => {
+    //     setPostStateValue(prev => ({
+    //         ...prev,
+    //         selectedPost: post
+    //     }));
+    //     router.push('/r/' + post.communityID + '/comments/' + post.id);
+    // }
     const onVote = async (post: Post, vote: number, communityID: string) => {
         if (!uid) {
             setAuthModalState({
@@ -136,7 +136,6 @@ const usePosts = () => {
         postStateValue,
         setPostStateValue,
         onVote,
-        onSelectPost,
         onDeletePost
     }
 }
