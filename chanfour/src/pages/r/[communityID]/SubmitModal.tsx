@@ -11,7 +11,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import Posts from '../../../components/Posts/Posts';
 type CommunityAdminModalProps = {
     commmunityData: Community;
     submitModalState: boolean

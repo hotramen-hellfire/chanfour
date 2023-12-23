@@ -37,3 +37,11 @@ export const PostState = atom<PostState>({
     key: "postState",
     default: defaultPostState,
 })
+
+export type CommentObject = {
+    id: string,
+    creatorID: string,
+    creatorUName: string,
+    text: string,
+    createdAt: Timestamp
+}

@@ -1,11 +1,17 @@
+import { UNameState } from '@/src/components/atoms/UNameAtom';
+import { authModalState } from '@/src/components/atoms/authModalAtom';
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { authentication } from '@/src/firebase/clientApp';
+import { CommentObject } from '@/src/components/atoms/postsAtom';
+import { authentication, firestore } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
-import { Button, Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';
+import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import { Timestamp, collection, doc, increment, serverTimestamp, writeBatch } from 'firebase/firestore';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdOutlineCloseFullscreen } from 'react-icons/md';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import CreateComment from './CreateComment';
 
 type PostPageProps = {
     communityData: Community;
@@ -16,6 +22,12 @@ type PostPageProps = {
 const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, setCommentsModalStateValue }) => {
     const { postStateValue, setPostStateValue, onDeletePost, onVote } = usePosts();
     const [user] = useAuthState(authentication);
+    const UNameObj = useRecoilValue(UNameState);
+    const setAuthModalState = useSetRecoilState(authModalState);
+    const [comments, setComments] = useState<CommentObject[]>([]);
+    const [commentText, setCommentText] = useState("");
+    const [fetchLoading, setFetchLoading] = useState(false);
+    const [createLoading, setCreateLoading] = useState(false);
     let isTime = false;
     const onModalClose = () => {
         setCommentsModalStateValue(false)
@@ -24,10 +36,49 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             selectedPost: null
         }))
     }
+    const onCreateComment = async (majhaComment: string) => {
+        //create a comment document
+        //update post numberOfComments
+        //update client recoil state
+        if (!user) {
+            setAuthModalState({
+                open: true,
+                view: 'login'
+            })
+            return;
+        }
+        try {
+            const batch = writeBatch(firestore);
+            const commentDocRef = doc(collection(firestore, 'posts/' + postStateValue.selectedPost?.id + '/comments'));
+            const newComment: CommentObject = {
+                id: commentDocRef.id as string,
+                creatorID: user.email!.split('.')[0],
+                creatorUName: UNameObj.UName,
+                text: commentText,
+                createdAt: serverTimestamp() as Timestamp
+            }
+            batch.set(commentDocRef, newComment);
+
+            const postDocRef = doc(firestore, 'posts', postStateValue.selectedPost?.id!);
+            batch.update(postDocRef, {
+                numberOfComments: increment(1),
+            })
+            await batch.commit();
+            setCommentText("");
+            setComments((prev) => [newComment, ...prev]);
+        } catch (error: any) {
+            console.log("onCreateComment error: ", error);
+        }
+    }
+
+    useEffect(() => {
+        const getPostComments = async () => { };
+        getPostComments();
+    }, [])
+
     if (postStateValue.selectedPost?.creatorID) isTime = true;
     return (
         <>
-            {/* {postStateValue.selectedPost && <PostItem post={postStateValue.selectedPost} onVote={onVote} onDeletePost={onDeletePost} userVoteValue={postStateValue.postVotes.find(item => item.postID === postStateValue.selectedPost?.id)?.voteValue} userIsCreator={user?.email?.split(".")[0] === postStateValue.selectedPost?.creatorID} />} */}
             <Modal onClose={() => { onModalClose() }} size={'xl'} isOpen={commentsModalState}>
                 <ModalOverlay />
                 <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
@@ -77,12 +128,9 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                         width={'80%'}
                         mt={1}
                     />
-                    <ModalBody>
-                        noen
+                    <ModalBody width={'100%'}>
+                        <CreateComment commentText={commentText} setCommentText={setCommentText} user={user} createLoading={createLoading} onCreateComment={onCreateComment} />
                     </ModalBody>
-                    <ModalFooter>
-                        <Button onClick={onModalClose}>Close</Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
