@@ -205,7 +205,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                         justify={'center'}
                         align={'center'}
                     >
-                        <Text color={heartValue === 3 ? 'purple' : heartValue === 2 ? 'red' : heartValue === 1 ? 'red' : 'white'}>
+                        <Text position='relative' top={-2} fontSize={12} color={heartValue === 3 ? 'purple' : heartValue === 2 ? 'red' : heartValue === 1 ? 'red' : 'white'}>
                             +{heartValue}
                         </Text>
                         <Icon
@@ -263,6 +263,11 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             justify={'center'}
                             align='center'
                             display={post.voteStatus ? 'flex' : 'none'}
+                            fontSize={15}
+                            color={'purple'}
+                            position={'relative'}
+                            top={2}
+                            left={-2}
                         >
                             {post.voteStatus !== 0 && <Text>{post.voteStatus}</Text>}
                         </Flex>
@@ -281,6 +286,11 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             justify={'center'}
                             align='center'
                             display={post.numberOfComments ? 'flex' : 'none'}
+                            fontSize={15}
+                            color={'purple'}
+                            position={'relative'}
+                            top={2}
+                            left={-0.5}
                         >
                             {post.numberOfComments !== 0 && <Text>{post.numberOfComments}</Text>}
                         </Flex>
