@@ -56,9 +56,9 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
 
     return (
         <>
-            {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <PostItem key={item.id} communityID={communityData.communityID} post={item} userIsCreator={item.creatorID === uid}
+            {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <PostItem key={item.id} post={item} userIsCreator={item.creatorID === uid}
                 userVoteValue={postStateValue.postVotes.find((vote) => vote.postID === item.id)?.voteValue}
-                onVote={onVote} onSelectPost={onSelectPost} onDeletePost={onDeletePost} uid={uid} />)}
+                onVote={onVote} onSelectPost={onSelectPost} onDeletePost={onDeletePost} />)}
         </>
     )
 }

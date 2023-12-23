@@ -1,30 +1,34 @@
 import { authentication } from "@/src/firebase/clientApp";
+import SubmitModal from "@/src/pages/r/[communityID]/SubmitModal";
 import { Flex, Icon, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import { LiaPagerSolid } from "react-icons/lia";
 import { RiAddBoxLine } from "react-icons/ri";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "../atoms/authModalAtom";
+import { Community } from "../atoms/communitiesAtom";
 
-type CreatePostProps = {};
+type CreatePostProps = {
+    communityData: Community;
+};
 
-const CreatePostLink: React.FC<CreatePostProps> = () => {
-    const router = useRouter();
+const CreatePostLink: React.FC<CreatePostProps> = (props) => {
     const [user] = useAuthState(authentication);
+    const [openSubmit, setOpenSubmit] = useState(false);
     const setAuthModalState = useSetRecoilState(authModalState);
     const onClick = () => {
         if (!user) {
             setAuthModalState({ open: true, view: 'login' });
             return;
         }
-        const { communityID } = router.query;
-        router.push('/r/' + communityID + '/submit');
+        setOpenSubmit(true);
     }
 
-    return (
+    return (<>
+        <SubmitModal submitModalState={openSubmit} setSubmitModalState={setOpenSubmit} commmunityData={props.communityData} />
         <Flex
             align="center"
             bg="white"
@@ -92,6 +96,7 @@ const CreatePostLink: React.FC<CreatePostProps> = () => {
                 <Icon as={LiaPagerSolid} fontSize={24} color="pink.500" cursor="pointer" _hover={{ color: 'purple' }} onClick={onClick} />
             </Flex >
         </Flex>
+    </>
     );
 };
 export default CreatePostLink;

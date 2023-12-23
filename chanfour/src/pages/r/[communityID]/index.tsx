@@ -53,7 +53,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
         <Header communityData={communityData} imageLink={imageLink} backLink={backLink} />
         <PageContent>
             <>
-                <CreatePostLink />
+                <CreatePostLink communityData={communityData} />
                 <Posts communityData={communityData} />
             </>
             <>

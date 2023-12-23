@@ -7,15 +7,23 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { authModalState } from '../components/atoms/authModalAtom';
 import { useEffect } from 'react';
 import { communityState } from '../components/atoms/communitiesAtom';
+import { useRouter } from 'next/router';
 
 const usePosts = () => {
     const [user] = useAuthState(authentication)
     const setAuthModalState = useSetRecoilState(authModalState);
+    const router = useRouter();
     var uid = "";
     if (user) { uid = user.email!.split(".")[0] }
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const currentCommunity = useRecoilValue(communityState).currentCommunity;
-    const onSelectPost = () => { }
+    const onSelectPost = (post: Post) => {
+        setPostStateValue(prev => ({
+            ...prev,
+            selectedPost: post
+        }));
+        router.push('/r/' + post.communityID + '/comments/' + post.id);
+    }
     const onVote = async (post: Post, vote: number, communityID: string) => {
         if (!uid) {
             setAuthModalState({

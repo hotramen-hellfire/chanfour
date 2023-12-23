@@ -22,12 +22,10 @@ type PostItemProps = {
     userVoteValue?: number;
     onVote: (post: Post, vote: number, communityID: string) => void;
     onDeletePost: (post: Post) => Promise<[boolean, string]>;
-    onSelectPost: () => void;
-    uid: string;
-    communityID: string;
+    onSelectPost?: (post: Post) => void;
 };
 
-const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost, uid }) => {
+const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, onSelectPost }) => {
     const [loading, setLoading] = useState(false);
     const [user] = useAuthState(authentication);
     const [deleting, setDeleting] = useState(false);
@@ -139,7 +137,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                                     <MenuItem icon={<VscReport />} >
                                         Report
                                     </MenuItem>
-                                    <MenuItem onClick={handleDelete} color="red" icon={<RiDeleteBinLine />} display={post.creatorID === uid ? 'unset' : 'none'}>
+                                    <MenuItem onClick={handleDelete} color="red" icon={<RiDeleteBinLine />} display={userIsCreator ? 'unset' : 'none'}>
                                         Delete
                                     </MenuItem>
                                 </MenuList>
@@ -275,6 +273,7 @@ const PostItem: React.FC<PostItemProps> = ({ communityID, post, userIsCreator, u
                                 border: '1px solid gray',
                                 borderRadius: '4'
                             }}
+                            onClick={() => onSelectPost!(post)}
                         />
                         <Icon
                             as={IoShareSocialOutline}
