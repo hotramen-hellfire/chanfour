@@ -1,8 +1,10 @@
+import About from '@/src/components/Community/About';
 import CreatePostLink from '@/src/components/Community/CreatePostLink';
 import NotFound from '@/src/components/Community/NotFound';
 import PageContent from '@/src/components/Layout/PageContent';
 import Posts from '@/src/components/Posts/Posts';
 import { Community, communityState } from '@/src/components/atoms/communitiesAtom';
+import { communityImageState } from '@/src/components/atoms/communityImageAtom';
 import { firestore } from '@/src/firebase/clientApp';
 import { Timestamp, doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
@@ -10,9 +12,6 @@ import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
-import About from '@/src/components/Community/About';
-import { Image } from '@chakra-ui/react';
-import { communityImageState } from '@/src/components/atoms/communityImageAtom';
 type CommunityPageProps = {
     communityData: Community;
 };

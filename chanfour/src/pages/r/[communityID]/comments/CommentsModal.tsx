@@ -1,7 +1,7 @@
 import { Community } from '@/src/components/atoms/communitiesAtom';
 import { authentication } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
-import { Button, Code, Flex, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from '@chakra-ui/react';
+import { Button, Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -17,11 +17,18 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
     const { postStateValue, setPostStateValue, onDeletePost, onVote } = usePosts();
     const [user] = useAuthState(authentication);
     let isTime = false;
+    const onModalClose = () => {
+        setCommentsModalStateValue(false)
+        setPostStateValue(prev => ({
+            ...prev,
+            selectedPost: null
+        }))
+    }
     if (postStateValue.selectedPost?.creatorID) isTime = true;
     return (
         <>
             {/* {postStateValue.selectedPost && <PostItem post={postStateValue.selectedPost} onVote={onVote} onDeletePost={onDeletePost} userVoteValue={postStateValue.postVotes.find(item => item.postID === postStateValue.selectedPost?.id)?.voteValue} userIsCreator={user?.email?.split(".")[0] === postStateValue.selectedPost?.creatorID} />} */}
-            <Modal onClose={() => { }} size={'xl'} isOpen={commentsModalState}>
+            <Modal onClose={() => { onModalClose() }} size={'xl'} isOpen={commentsModalState}>
                 <ModalOverlay />
                 <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
                 <ModalContent alignItems={'center'} border={'1px solid black'}>
@@ -59,7 +66,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                                 fontSize={20}
                                 color={'purple'}
                                 _hover={{ fontSize: 30 }}
-                                onClick={() => setCommentsModalStateValue(false)}
+                                onClick={onModalClose}
                             />
                         </Flex>
                     </Flex>
@@ -74,7 +81,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                         noen
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={() => setCommentsModalStateValue(false)}>Close</Button>
+                        <Button onClick={onModalClose}>Close</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
