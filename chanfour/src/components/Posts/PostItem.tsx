@@ -95,7 +95,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     }
                     {/* this is title box */}
                     <Flex width={'100%'} mb={1}>
-                        <Box borderRadius={5} bg='white' width={"80%"} white-space='nowrap'>
+                        <Box borderRadius={5} bg='white' width={"90%"}>
                             <Text fontWeight={600} mr={2} white-space='nowrap'>
                                 {post.title}
                             </Text>

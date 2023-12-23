@@ -67,17 +67,6 @@ const usePosts = () => {
                 posts: updatedPosts,
                 postVotes: updatedPostVotes
             }))
-            const communityDocRef = doc(firestore, 'communities', communityID);
-            await updateDoc(communityDocRef, { numberOfPosts: increment(-1) })
-            let updatedCommunity = {
-                ...communityStateValue.currentCommunity!,
-                numberOfPosts: communityStateValue.currentCommunity!.numberOfPosts + 1
-            };
-            setCommunityStateValue(prev => ({
-                ...prev,
-                currentCommunity: updatedCommunity as Community
-            }));
-
         } catch (error: any) {
             console.log('onVote error: ', error.message);
         }
@@ -98,6 +87,16 @@ const usePosts = () => {
                 ...prev,
                 posts: prev.posts.filter((item) => item.id !== post.id)
             }))
+            const communityDocRef = doc(firestore, 'communities', post.communityID);
+            await updateDoc(communityDocRef, { numberOfPosts: increment(-1) })
+            let updatedCommunity = {
+                ...communityStateValue.currentCommunity!,
+                numberOfPosts: communityStateValue.currentCommunity!.numberOfPosts - 1
+            };
+            setCommunityStateValue(prev => ({
+                ...prev,
+                currentCommunity: updatedCommunity as Community
+            }));
             return [true, ""]
         } catch (error: any) {
             console.log("onDeletePost error: ", error.message)

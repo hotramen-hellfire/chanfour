@@ -14,7 +14,6 @@ const CommentsStack: React.FC<CommentsStackProps> = ({ comments, fetchLoading })
         <>
             <Flex
                 width={'100%'}
-                // border={'1px solid purple'}
                 flexDirection={'column'}
                 mt={2}
                 bg={'white'}
@@ -25,8 +24,6 @@ const CommentsStack: React.FC<CommentsStackProps> = ({ comments, fetchLoading })
                 _hover={{
                     boxShadow: 'dark-lg'
                 }}
-            // maxHeight={'500px'}
-            // overflow={'scroll-hidden'}
             >
                 <Spinner display={fetchLoading ? 'flex' : 'none'} />
                 <Stack width={'100%'} display={'flex'}>

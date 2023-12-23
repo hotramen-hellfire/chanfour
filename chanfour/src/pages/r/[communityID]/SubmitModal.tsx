@@ -440,6 +440,8 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                         </Text>
                     </ModalBody>
                     <ModalFooter>
+                        <Spinner ml={1}
+                            mr={1} display={loading ? 'unset' : 'none'} />
                         <Code
                             ml={1}
                             mr={1}
@@ -463,7 +465,6 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             colorScheme={'red'}>
                             CLOSE
                         </Code>
-                        <Spinner display={loading ? 'unset' : 'none'} />
                     </ModalFooter>
                 </ModalContent>
             </Modal >
