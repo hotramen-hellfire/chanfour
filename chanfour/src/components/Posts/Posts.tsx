@@ -66,9 +66,9 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     return (
         <>
             <CommentsModal communityData={communityData} commentsModalState={commentsModalState} setCommentsModalStateValue={setCommentsModalStateValue} />
-            {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <div key={item.id} id={item.id}><PostItem key={item.id} openComments={openComments} post={item} userIsCreator={item.creatorID === uid}
+            {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <PostItem key={item.id} openComments={openComments} post={item} userIsCreator={item.creatorID === uid}
                 userVoteValue={postStateValue.postVotes.find((vote) => vote.postID === item.id)?.voteValue}
-                onVote={onVote} onDeletePost={onDeletePost} /></div>)}
+                onVote={onVote} onDeletePost={onDeletePost} />)}
         </>
     )
 }

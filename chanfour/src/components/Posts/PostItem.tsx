@@ -103,13 +103,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                 &gt;_&lt;{post.creatorID}
                             </Text>
                         </Box >
-                        <Flex
-                            width={'10%'}
-                            justify={'center'}
-                            align='center'
-                        >
-                            {post.voteStatus !== 0 && <Text>{post.voteStatus}</Text>}
-                        </Flex>
+
                         <Flex
                             width={'10%'}
                             justify={'center'}
@@ -265,6 +259,13 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                 borderRadius: '4'
                             }}
                         />
+                        <Flex
+                            justify={'center'}
+                            align='center'
+                            display={post.voteStatus ? 'flex' : 'none'}
+                        >
+                            {post.voteStatus !== 0 && <Text>{post.voteStatus}</Text>}
+                        </Flex>
                         <Icon
                             as={TfiCommentAlt}
                             fontSize={'30px'}
@@ -276,6 +277,13 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             }}
                             onClick={() => openComments!(post)}
                         />
+                        <Flex
+                            justify={'center'}
+                            align='center'
+                            display={post.numberOfComments ? 'flex' : 'none'}
+                        >
+                            {post.numberOfComments !== 0 && <Text>{post.numberOfComments}</Text>}
+                        </Flex>
                         <Icon
                             as={IoShareSocialOutline}
                             fontSize={'30px'}

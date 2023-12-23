@@ -119,7 +119,6 @@ const usePosts = () => {
                 console.log("getCommunityPostVotes error: ", error.message)
             }
         }
-        console.log(currentCommunity)
         if (currentCommunity && user) getCommunityPostVotes(currentCommunity.communityID);
     }, [user])
 

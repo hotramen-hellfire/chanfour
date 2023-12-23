@@ -1,7 +1,7 @@
 import { UNameState } from '@/src/components/atoms/UNameAtom';
 import { authModalState } from '@/src/components/atoms/authModalAtom';
 import { Community } from '@/src/components/atoms/communitiesAtom';
-import { CommentObject } from '@/src/components/atoms/postsAtom';
+import { CommentObject, Post } from '@/src/components/atoms/postsAtom';
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
 import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalOverlay } from '@chakra-ui/react';
@@ -12,6 +12,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdOutlineCloseFullscreen } from 'react-icons/md';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import CreateComment from './CreateComment';
+import { PostState } from '../../../../components/atoms/postsAtom';
 
 type PostPageProps = {
     communityData: Community;
@@ -66,6 +67,22 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             await batch.commit();
             setCommentText("");
             setComments((prev) => [newComment, ...prev]);
+            let updatedPost: Post = postStateValue.selectedPost!;
+            let updatedPosts = [...postStateValue.posts];
+            updatedPost = { ...updatedPost, numberOfComments: postStateValue.selectedPost!.numberOfComments + 1 }
+            const postIndex = updatedPosts.findIndex((item) => item.id === postStateValue.selectedPost?.id);
+            console.log("postUpdated: ", updatedPost)
+            updatedPosts[postIndex] = {
+                ...postStateValue.selectedPost!,
+                numberOfComments: updatedPost.numberOfComments
+            };
+            console.log("postsUpdated")
+            setPostStateValue(prev => ({
+                ...prev,
+                selectedPost: updatedPost,
+                posts: updatedPosts
+            }))
+
         } catch (error: any) {
             console.log("onCreateComment error: ", error);
         }
