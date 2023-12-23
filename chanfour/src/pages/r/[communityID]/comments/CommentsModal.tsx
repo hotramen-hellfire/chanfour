@@ -43,6 +43,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
     }
     const onModalClose = () => {
         setCommentsModalStateValue(false)
+        setCommentText("")
         setPostStateValue(prev => ({
             ...prev,
             selectedPost: null

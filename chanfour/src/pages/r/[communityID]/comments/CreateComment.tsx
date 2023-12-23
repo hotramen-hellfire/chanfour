@@ -18,7 +18,7 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
         <>
             <Flex
                 mt={2}
-                flexDirection={'column'}
+                flexDirection={'row'}
                 textAlign={'center'}
                 width={'100%'}
                 align={'center'}
@@ -46,17 +46,19 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                     }}
                     onChange={onChange}
                     boxShadow={'xl'}
-                    width={'100%'}
-                    height={'50px'}
+                    width={'90%'}
+                    height={'100%'}
+                    display={'flex'}
                 />
                 <Button
-                    borderRadius={10}
-                    height={'40px'}
+                    borderRadius={0}
+                    height={'100%'}
                     border='1px solid'
                     borderColor={'purple'}
                     variant={'outline'}
                     bg='white'
-                    width={'40%'}
+                    minHeight={'80px'}
+                    width={'9%'}
                     color={'purple'}
                     _hover={{
                         border: '1px solid green',
@@ -65,10 +67,8 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                     display={props.commentText ? 'unset' : 'none'}
                     justifyContent='center'
                     onClick={() => { props.onCreateComment(props.commentText); }}
-                    mt={2}
-                    mr={2}
+                    ml={1}
                 >
-                    Push Comment
                     <Icon as={FaPaperPlane} />
                 </Button>
             </Flex>
