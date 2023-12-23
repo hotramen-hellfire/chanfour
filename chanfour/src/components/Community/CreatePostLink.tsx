@@ -1,7 +1,6 @@
 import { authentication } from "@/src/firebase/clientApp";
 import SubmitModal from "@/src/pages/r/[communityID]/SubmitModal";
 import { Flex, Icon, Input } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
@@ -39,7 +38,10 @@ const CreatePostLink: React.FC<CreatePostProps> = (props) => {
             p={2}
             mb={4}
             flexDirection={'row'}
-            boxShadow={'dark-lg'}
+            boxShadow={'2xl'}
+            _hover={{
+                boxShadow: 'dark-lg'
+            }}
             width={'100%'}
         >
             <Flex onClick={onClick} width={'80%'}>

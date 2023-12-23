@@ -17,7 +17,10 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 bg='white'
                 borderRadius={10}
                 flexDirection={'column'}
-                boxShadow={'dark-lg'}
+                boxShadow={'2xl'}
+                _hover={{
+                    boxShadow: 'dark-lg'
+                }}
                 maxWidth={'100%'}
                 position={'sticky'}
                 top={'14px'}

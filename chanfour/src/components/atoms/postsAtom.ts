@@ -43,5 +43,6 @@ export type CommentObject = {
     creatorID: string,
     creatorUName: string,
     text: string,
-    createdAt: Timestamp
+    createdAt: Timestamp,
+    color: string
 }

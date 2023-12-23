@@ -76,7 +76,10 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                 bg='white'
                 borderRadius={10}
                 flexDirection={'column'}
-                boxShadow={'dark-lg'}
+                boxShadow={'2xl'}
+                _hover={{
+                    boxShadow: 'dark-lg'
+                }}
                 id={post.id}
             >
                 {/* this is the postobject */}

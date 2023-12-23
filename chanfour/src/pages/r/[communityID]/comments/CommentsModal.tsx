@@ -11,8 +11,8 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdOutlineCloseFullscreen } from 'react-icons/md';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import CommentsStack from './CommentsStack';
 import CreateComment from './CreateComment';
-import { PostState } from '../../../../components/atoms/postsAtom';
 
 type PostPageProps = {
     communityData: Community;
@@ -30,6 +30,17 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
     const [fetchLoading, setFetchLoading] = useState(false);
     const [createLoading, setCreateLoading] = useState(false);
     let isTime = false;
+    const colors = ["yellow", 'red', 'blue', 'green', 'pink', 'purple']
+    const getColor = (creatorID: string) => {
+        let sum = 0;
+        for (let i = 0; i < creatorID.length; i++) {
+            const j = creatorID[i];
+            sum += j.charCodeAt(0);
+        }
+        const k = postStateValue.selectedPost?.createdAt.seconds! % 5;
+        sum = (sum + k) % 6
+        return sum;
+    }
     const onModalClose = () => {
         setCommentsModalStateValue(false)
         setPostStateValue(prev => ({
@@ -49,14 +60,16 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             return;
         }
         try {
+            const creatorID = user.email!.split('.')[0];
             const batch = writeBatch(firestore);
             const commentDocRef = doc(collection(firestore, 'posts/' + postStateValue.selectedPost?.id + '/comments'));
             const newComment: CommentObject = {
                 id: commentDocRef.id as string,
-                creatorID: user.email!.split('.')[0],
+                creatorID: creatorID,
                 creatorUName: UNameObj.UName,
                 text: commentText,
-                createdAt: serverTimestamp() as Timestamp
+                createdAt: serverTimestamp() as Timestamp,
+                color: colors[getColor(creatorID)],
             }
             batch.set(commentDocRef, newComment);
 
@@ -66,6 +79,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             })
             await batch.commit();
             setCommentText("");
+            newComment.createdAt = { seconds: Date.now() / 1000 } as Timestamp;
             setComments((prev) => [newComment, ...prev]);
             let updatedPost: Post = postStateValue.selectedPost!;
             let updatedPosts = [...postStateValue.posts];
@@ -89,9 +103,11 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
     }
 
     useEffect(() => {
-        const getPostComments = async () => { };
-        getPostComments();
-    }, [])
+        const getPostComments = async () => {
+            setComments([]);
+        };
+        if (commentsModalState) getPostComments();
+    }, [commentsModalState])
 
     if (postStateValue.selectedPost?.creatorID) isTime = true;
     return (
@@ -147,6 +163,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                     />
                     <ModalBody width={'100%'}>
                         <CreateComment commentText={commentText} setCommentText={setCommentText} user={user} createLoading={createLoading} onCreateComment={onCreateComment} />
+                        <CommentsStack comments={comments} />
                     </ModalBody>
                 </ModalContent>
             </Modal>
