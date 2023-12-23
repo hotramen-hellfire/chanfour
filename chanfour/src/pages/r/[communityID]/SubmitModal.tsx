@@ -436,11 +436,10 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             cursor={'pointer'}
                             _hover={{ fontSize: 30 }}
                             colorScheme='green'
-                            display={textInput.title && fileSize < 1024 * 1024 * 5 ? 'unset' : 'none'}
+                            display={textInput.title && fileSize < 1024 * 1024 * 5 && !loading && !embedLoad ? 'unset' : 'none'}
                             justifyContent='center'
                             onClick={handleCreatePost}
                         >
-
                             POST
                         </Code>
                         <Code
