@@ -7,8 +7,8 @@ import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import { LiaPagerSolid } from "react-icons/lia";
 import { RiAddBoxLine } from "react-icons/ri";
 import { useSetRecoilState } from "recoil";
-import { authModalState } from "../atoms/authModalAtom";
-import { Community } from "../atoms/communitiesAtom";
+import { authModalState } from "../Atoms/authModalAtom";
+import { Community } from "../Atoms/communitiesAtom";
 
 type CreatePostProps = {
     communityData: Community;

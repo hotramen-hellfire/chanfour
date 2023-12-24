@@ -1,12 +1,12 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { Post, PostState, PostVote } from '../components/atoms/postsAtom';
+import { Post, PostState, PostVote } from '../components/Atoms/postsAtom';
 import { authentication, firestore, storage } from '../firebase/clientApp';
 import { deleteObject, ref } from 'firebase/storage';
 import { collection, deleteDoc, doc, getDocs, increment, query, updateDoc, where, writeBatch } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { authModalState } from '../components/atoms/authModalAtom';
+import { authModalState } from '../components/Atoms/authModalAtom';
 import { useEffect } from 'react';
-import { Community, communityState } from '../components/atoms/communitiesAtom';
+import { Community, communityState } from '../components/Atoms/communitiesAtom';
 import { useRouter } from 'next/router';
 
 const usePosts = () => {

@@ -1,7 +1,7 @@
 import { Button, Text, Flex, Image, Input, Skeleton } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
+import { loadingState } from '../Atoms/loadingAtom';
 type CreateLinkTypeProps = {
     onSet: (url: string) => void;
 };

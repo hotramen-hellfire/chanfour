@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { BsReddit } from "react-icons/bs";
 import { useSetRecoilState } from "recoil";
-import { authModalState } from '../../atoms/authModalAtom';
-import { loadingState } from '../../atoms/loadingAtom';
+import { authModalState } from '../../Atoms/authModalAtom';
+import { loadingState } from '../../Atoms/loadingAtom';
 
 
 const ResetPassword: React.FC = () => {

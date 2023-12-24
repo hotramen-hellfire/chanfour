@@ -1,6 +1,8 @@
+import { authentication } from '@/src/firebase/clientApp';
 import { Alert, AlertIcon, Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Spinner, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { BiSolidSave } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
@@ -11,10 +13,8 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { VscReport } from 'react-icons/vsc';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
-import { Post, PostState } from '../atoms/postsAtom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { authentication } from '@/src/firebase/clientApp';
+import { loadingState } from '../Atoms/loadingAtom';
+import { Post, PostState } from '../Atoms/postsAtom';
 
 type PostItemProps = {
     post: Post;

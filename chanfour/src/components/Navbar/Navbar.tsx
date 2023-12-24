@@ -6,9 +6,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import DirectoryWrapper from './Directory/DirectoryWrapper';
 import RightContent from './RightContent/RightContent';
 import SearchInput from './SearchInput';
-import { UNameState } from '../atoms/UNameAtom';
+import { UNameState } from '../Atoms/UNameAtom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
+import { loadingState } from '../Atoms/loadingAtom';
 const Navbar: React.FC = () => {
     const [loadingBar] = useRecoilState(loadingState);
     const [user, _, __] = useAuthState(authentication);

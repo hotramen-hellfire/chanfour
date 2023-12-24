@@ -5,9 +5,9 @@ import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
-import { Community } from '../atoms/communitiesAtom';
-import { loadingState } from '../atoms/loadingAtom';
-import { Post } from '../atoms/postsAtom';
+import { Community } from '../Atoms/communitiesAtom';
+import { loadingState } from '../Atoms/loadingAtom';
+import { Post } from '../Atoms/postsAtom';
 import PostItem from './PostItem';
 import PostSkeleton from './PostSkeleton';
 type PostsProps = {

@@ -6,7 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { BsFillEyeFill, BsFillPersonFill } from 'react-icons/bs';
 import { HiLockClosed } from 'react-icons/hi';
 import { useSetRecoilState } from 'recoil';
-import { loadingState } from '../../atoms/loadingAtom';
+import { loadingState } from '../../Atoms/loadingAtom';
 type CreateCommunityModalProps = {
     open: boolean;
     handleClose:

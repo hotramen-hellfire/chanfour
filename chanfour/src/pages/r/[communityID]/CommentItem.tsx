@@ -1,4 +1,4 @@
-import { CommentObject } from '@/src/components/atoms/postsAtom';
+import { CommentObject } from '@/src/components/Atoms/postsAtom';
 import { Code, Flex, Icon } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';

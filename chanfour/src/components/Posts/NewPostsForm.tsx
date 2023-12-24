@@ -8,12 +8,12 @@ import React, { useEffect, useState } from 'react';
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
 import { GrDocumentUpdate } from "react-icons/gr";
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
-import { Post } from '../atoms/postsAtom';
+import { loadingState } from '../Atoms/loadingAtom';
+import { Post } from '../Atoms/postsAtom';
 import CreateLinkType from './CreateLinkType';
 import CreateMediaType from './CreateMediaType';
 import CreatePostType from './CreatePostType';
-import { UNameState } from '../atoms/UNameAtom';
+import { UNameState } from '../Atoms/UNameAtom';
 type NewPostsFormProps = {
     communityID: string;
     user: User | null;

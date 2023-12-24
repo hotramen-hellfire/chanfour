@@ -1,8 +1,8 @@
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
-import { UNameState } from '@/src/components/atoms/UNameAtom';
-import { Community, communityState } from '@/src/components/atoms/communitiesAtom';
-import { loadingState } from '@/src/components/atoms/loadingAtom';
-import { Post, PostState } from '@/src/components/atoms/postsAtom';
+import { UNameState } from '@/src/components/Atoms/UNameAtom';
+import { Community, communityState } from '@/src/components/Atoms/communitiesAtom';
+import { loadingState } from '@/src/components/Atoms/loadingAtom';
+import { Post, PostState } from '@/src/components/Atoms/postsAtom';
 import { authentication, firestore, storage } from '@/src/firebase/clientApp';
 import { Button, Code, Flex, Icon, Image, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Skeleton, Spinner, Text, Textarea } from '@chakra-ui/react';
 import { Timestamp, addDoc, collection, deleteDoc, doc, increment, serverTimestamp, updateDoc } from 'firebase/firestore';

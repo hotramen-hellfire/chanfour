@@ -1,7 +1,7 @@
-import { UNameState } from '@/src/components/atoms/UNameAtom';
-import { authModalState } from '@/src/components/atoms/authModalAtom';
-import { Community } from '@/src/components/atoms/communitiesAtom';
-import { CommentObject, Post } from '@/src/components/atoms/postsAtom';
+import { UNameState } from '@/src/components/Atoms/UNameAtom';
+import { authModalState } from '@/src/components/Atoms/authModalAtom';
+import { Community } from '@/src/components/Atoms/communitiesAtom';
+import { CommentObject, Post } from '@/src/components/Atoms/postsAtom';
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
 import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';

@@ -14,7 +14,7 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRecoilState } from "recoil";
 import { authentication } from "../../../../firebase/clientApp";
-import { authModalState } from "../../../atoms/authModalAtom";
+import { authModalState } from "../../../Atoms/authModalAtom";
 
 
 import { TiSpiral } from "react-icons/ti";

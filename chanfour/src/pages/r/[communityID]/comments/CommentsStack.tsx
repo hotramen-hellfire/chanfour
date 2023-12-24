@@ -1,7 +1,7 @@
 import { Flex, Spinner, Stack } from '@chakra-ui/react';
 import React from 'react';
 import CommentItem from '../CommentItem';
-import { CommentObject } from '@/src/components/atoms/postsAtom';
+import { CommentObject } from '@/src/components/Atoms/postsAtom';
 
 type CommentsStackProps = {
     comments: CommentObject[];

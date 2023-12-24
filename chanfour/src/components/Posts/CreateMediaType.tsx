@@ -1,7 +1,7 @@
 import { Button, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
+import { loadingState } from '../Atoms/loadingAtom';
 
 type CreateMediaTypeProps = {
     selectedFile?: string;

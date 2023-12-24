@@ -1,5 +1,5 @@
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
-import { Community } from '@/src/components/atoms/communitiesAtom';
+import { Community } from '@/src/components/Atoms/communitiesAtom';
 import useCommunityData from '@/src/hooks/useCommunityData';
 import Router from "next/router";
 import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Spinner, Text, Textarea } from '@chakra-ui/react';

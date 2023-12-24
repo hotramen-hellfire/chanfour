@@ -1,5 +1,5 @@
-import { Community } from '@/src/components/atoms/communitiesAtom';
-import { loadingState } from '@/src/components/atoms/loadingAtom';
+import { Community } from '@/src/components/Atoms/communitiesAtom';
+import { loadingState } from '@/src/components/Atoms/loadingAtom';
 import { authentication } from '@/src/firebase/clientApp';
 import useCommunityData from '@/src/hooks/useCommunityData';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';

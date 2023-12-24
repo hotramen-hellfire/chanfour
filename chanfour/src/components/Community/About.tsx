@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Community, communityState } from '../atoms/communitiesAtom';
+import { Community, communityState } from '../Atoms/communitiesAtom';
 import { Code, Flex, Stack, Text } from '@chakra-ui/react';
 import moment from 'moment';
 import { useRecoilState, useRecoilValue } from 'recoil';

@@ -2,7 +2,7 @@ import { Button, Flex, Input, Stack, Textarea, Text, Icon } from '@chakra-ui/rea
 import React, { useEffect } from 'react';
 import { FaLock } from "react-icons/fa";
 import { useSetRecoilState } from 'recoil';
-import { loadingState } from '../atoms/loadingAtom';
+import { loadingState } from '../Atoms/loadingAtom';
 type CreatePostTypeProps = {
     textInput: {
         title: string,

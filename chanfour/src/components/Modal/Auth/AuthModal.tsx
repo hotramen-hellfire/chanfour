@@ -3,7 +3,7 @@ import { Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, Mo
 import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState } from 'recoil';
-import { authModalState } from '../../atoms/authModalAtom';
+import { authModalState } from '../../Atoms/authModalAtom';
 import AuthInputs from './AuthInputs';
 import ResetPassword from './ResetPassword';
 
