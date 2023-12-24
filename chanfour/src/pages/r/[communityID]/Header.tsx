@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                     height={{ base: '100px', md: '75px' }}
                 >
                     <Flex
-                        width={{ base: 'none', md: '8%' }}
+                        width={{ base: '1%', md: '8%' }}
                         maxWidth={'1000px'}
                         flexDirection={'row'}
                     // border={'2px solid red'}

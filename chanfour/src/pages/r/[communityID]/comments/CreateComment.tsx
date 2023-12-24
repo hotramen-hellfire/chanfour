@@ -50,38 +50,40 @@ const CreateComment: React.FC<CreateCommentProps> = (props) => {
                     height={'100%'}
                     display={'flex'}
                 />
-                <Button
-                    borderRadius={0}
+                <Flex
                     height={'100%'}
-                    border='1px solid'
-                    borderColor={'purple'}
-                    variant={'outline'}
-                    bg='white'
+                    // border='1px solid'
+                    // borderColor={'purple'}
+                    borderRadius={5}
                     minHeight={'80px'}
                     width={'9%'}
+                    ml={1}
                     color={'purple'}
                     _hover={{
                         border: '1px solid green',
                         color: 'green'
                     }}
                     display={props.commentText ? 'unset' : 'none'}
-                    justifyContent={'center'}
-                    justifyItems={'center'}
-                    alignContent={'center'}
-                    alignItems={'center'}
                     onClick={() => { props.onCreateComment(props.commentText); }}
-                    ml={1}
+                    bgColor={'white'}
                 >
-                    <Icon
-                        display={!props.createLoading ? 'flex' : 'none'}
-                        as={FaPaperPlane}
-                    />
-                    <Spinner
-                        justifySelf={'center'}
-                        alignSelf={'center'}
-                        display={props.createLoading ? 'flex' : 'none'}
-                    />
-                </Button>
+                    <Flex
+                        // border={'1px solid green'}
+                        align={'center'}
+                        justify={'center'}
+                        mt={'75%'}
+                    >
+                        <Icon
+                            display={!props.createLoading ? 'flex' : 'none'}
+                            as={FaPaperPlane}
+                        />
+                        <Spinner
+                            justifySelf={'center'}
+                            alignSelf={'center'}
+                            display={props.createLoading ? 'flex' : 'none'}
+                        />
+                    </Flex>
+                </Flex>
             </Flex>
         </>
     )

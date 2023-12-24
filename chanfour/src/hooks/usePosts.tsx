@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, getDocs, increment, query, updateDoc, where, writeBatch } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { authModalState } from '../components/Atoms/authModalAtom';
@@ -11,17 +11,20 @@ import { authentication, firestore, storage } from '../firebase/clientApp';
 const usePosts = () => {
     var uid = "";
     const [user] = useAuthState(authentication)
+    const [hookLoad, setHookLoad] = useState(false);
     if (user) { uid = user.email!.split(".")[0] }
     const setAuthModalState = useSetRecoilState(authModalState);
     const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const currentCommunity = useRecoilValue(communityState).currentCommunity;
     const onVote = async (post: Post, vote: number, communityID: string) => {
+        setHookLoad(true);
         if (!uid) {
             setAuthModalState({
                 view: 'login',
                 open: true
             })
+            setHookLoad(false);
             return;
         }
         try {
@@ -67,7 +70,9 @@ const usePosts = () => {
                 posts: updatedPosts,
                 postVotes: updatedPostVotes
             }))
+            setHookLoad(false);
         } catch (error: any) {
+            setHookLoad(false);
             console.log('onVote error: ', error.message);
         }
     }
@@ -137,7 +142,8 @@ const usePosts = () => {
         postStateValue,
         setPostStateValue,
         onVote,
-        onDeletePost
+        onDeletePost,
+        hookLoad
     }
 }
 export default usePosts;

@@ -17,6 +17,7 @@ import { loadingState } from '../Atoms/loadingAtom';
 import { Post, PostState } from '../Atoms/postsAtom';
 
 type PostItemProps = {
+    hookLoad: boolean,
     post: Post;
     userIsCreator: boolean;
     userVoteValue?: number;
@@ -25,7 +26,7 @@ type PostItemProps = {
     openComments?: (post: Post) => void;
 };
 
-const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, openComments }) => {
+const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, openComments, hookLoad }) => {
     const [loading, setLoading] = useState(false);
     const [user] = useAuthState(authentication);
     const [deleting, setDeleting] = useState(false);
@@ -82,7 +83,6 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                 }}
                 id={post.id}
             >
-                {userVoteValue}
                 {/* this is the postobject */}
                 <Flex
                     width={'100%'}
@@ -273,7 +273,12 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             top={2}
                             left={-1}
                         >
-                            {post.voteStatus !== 0 && <Text>{post.voteStatus}</Text>}
+                            {post.voteStatus !== 0 && !hookLoad && <Text>{post.voteStatus}</Text>}
+                            <Spinner
+                                color='red'
+                                fontSize={5}
+                                display={hookLoad ? 'flex' : 'none'}
+                            />
                         </Flex>
                         <Icon
                             as={TfiCommentAlt}

@@ -73,6 +73,7 @@ const Communities: React.FC = () => {
                     align={'center'}
                     pl={2}
                     pr={2}
+                    cursor={'pointer'}
                 >
                     <Flex
                         align="center"

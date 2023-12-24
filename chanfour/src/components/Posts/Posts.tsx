@@ -22,7 +22,8 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     const { postStateValue,
         setPostStateValue,
         onVote,
-        onDeletePost } = usePosts();
+        onDeletePost,
+        hookLoad } = usePosts();
     var uid = "";
     if (user) uid = user.email!.split(".")[0];
 
@@ -66,7 +67,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     return (
         <>
             <CommentsModal communityData={communityData} commentsModalState={commentsModalState} setCommentsModalStateValue={setCommentsModalStateValue} />
-            {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <PostItem key={item.id} openComments={openComments} post={item} userIsCreator={item.creatorID === uid}
+            {loading ? <PostSkeleton /> : postStateValue.posts.map((item) => <PostItem key={item.id} hookLoad={hookLoad} openComments={openComments} post={item} userIsCreator={item.creatorID === uid}
                 userVoteValue={postStateValue.postVotes.find((vote) => vote.postID === item.id)?.voteValue}
                 onVote={onVote} onDeletePost={onDeletePost} />)}
         </>
