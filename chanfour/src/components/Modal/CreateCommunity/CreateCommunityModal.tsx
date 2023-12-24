@@ -1,31 +1,35 @@
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import { Box, Button, Checkbox, Divider, Flex, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text } from '@chakra-ui/react';
 import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { BsFillEyeFill, BsFillPersonFill } from 'react-icons/bs';
 import { HiLockClosed } from 'react-icons/hi';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { CommunitySnippet, communityState } from '../../Atoms/communitiesAtom';
 import { loadingState } from '../../Atoms/loadingAtom';
 type CreateCommunityModalProps = {
     open: boolean;
-    handleClose:
-    () => void;
+    handleClose: () => void;
 };
 
 const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handleClose }) => {
+    const nameLength = 21;
+    const router = useRouter();
+    const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [user] = useAuthState(authentication);
     const [communityName, setCommunityName] = useState('');
-    const [charsRemaining, setCharsRemaining] = useState(21);
+    const [charsRemaining, setCharsRemaining] = useState(nameLength);
     const [communityType, setCommunityType] = useState("public");
     const [error, setError] = useState('false');
     const [loading, setLoading] = useState(false);
     const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
     var uid: string = user!.email!.split(".")[0];
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length > 21) return;
+        if (event.target.value.length > nameLength) return;
         setCommunityName(event.target.value);
-        setCharsRemaining(21 - event.target.value.length)
+        setCharsRemaining(nameLength - event.target.value.length)
         if (format.test(event.target.value)) {
             setError("cannot contain /[ `!@#$%^&*()+\-=\[\]{};':\"\\|,.<>\/?~]/</>");
             return;
@@ -72,6 +76,19 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                     }
                 )
             })
+            const newSnippet: CommunitySnippet = {
+                communityID: communityName,
+                isModerator: true,
+                imageURL: ""
+            }
+            setCommunityStateValue(prev => ({
+                ...prev,
+                mySnippets: [newSnippet, ...communityStateValue.mySnippets]
+            }))
+            router.push("/r/" + communityName);
+            handleClose();
+            setCommunityName("");
+            setCharsRemaining(nameLength);
         } catch (error: any) {
             console.log('in handleCreateCommunity: ', error);
             setError(error.message);
@@ -106,7 +123,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                             <Text fontSize={11} color={'gray.500'}>
                                 cannot be changed once put
                             </Text>
-                            <Text position='relative' top="28px" left="10px" width="20px" color={charsRemaining !== 21 ? "purple" : "purple.200"}>r/</Text>
+                            <Text position='relative' top="28px" left="10px" width="20px" color={charsRemaining !== nameLength ? "purple" : "purple.200"}>r/</Text>
                             <Input position="relative" value={communityName} size={'sm'} pl={'22px'} onChange={handleChange} color={"purple"} _focusVisible={{
                                 outline: "none",
                             }} />

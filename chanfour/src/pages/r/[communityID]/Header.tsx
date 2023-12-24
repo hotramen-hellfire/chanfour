@@ -64,7 +64,6 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                         >
                             <Image
                                 src={imageLink}
-                                // borderRadius={imageWidth / 4}
                                 objectFit={'cover'}
                                 minWidth={imageWidth}
                                 minHeight={imageWidth}

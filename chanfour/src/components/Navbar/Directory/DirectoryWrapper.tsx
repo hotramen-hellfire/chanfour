@@ -40,7 +40,10 @@ const DirectoryWrapper: React.FC<DirectoryWrapperProps> = ({ UName }) => {
                     <ChevronDownIcon />
                 </Flex>
             </MenuButton>
-            <MenuList>
+            <MenuList
+                width={'100%'}
+                boxShadow={'dark-lg'}
+            >
                 <Communities />
             </MenuList>
         </Menu >
