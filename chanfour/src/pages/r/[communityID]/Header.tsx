@@ -2,7 +2,7 @@ import { Community } from '@/src/components/Atoms/communitiesAtom';
 import { loadingState } from '@/src/components/Atoms/loadingAtom';
 import { authentication } from '@/src/firebase/clientApp';
 import useCommunityData from '@/src/hooks/useCommunityData';
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Button, Code, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
@@ -34,20 +34,24 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                 <Box height={'50px'} overflow={'hidden'} width={'100%'}>
                     <Image src={backLink} alt={'just theming'} width={'100%'} />
                 </Box>
-                <Flex bg='white' flexGrow={1} overflow={'visible'} border={'2px solid violet'} boxShadow={'dark-lg'}>
+                <Flex
+                    bg='white'
+                    flexGrow={1}
+                    overflow={'visible'}
+                    border={'2px solid violet'}
+                    boxShadow={'dark-lg'}
+                    height={{ base: '100px', md: '75px' }}
+                >
                     <Flex
-                        height='50px'
-                        width='9%'
+                        width={{ base: 'none', md: '8%' }}
                         maxWidth={'1000px'}
                         flexDirection={'row'}
                     // border={'2px solid red'}
                     >
                     </Flex>
                     <Flex
-                        height='50px'
-                        width={{ base: '81%', md: '60%' }}
-                        maxWidth={'1000px'}
                         flexDirection={'row'}
+                        width={'100%'}
                     // border={'2px solid green'}
                     >
                         <Flex
@@ -61,6 +65,8 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                             overflow={"hidden"}
                             border={'3px solid white'}
                             mr={5}
+                            boxShadow={'dark-lg'}
+                        // border={'2px solid green'}
                         >
                             <Image
                                 src={imageLink}
@@ -69,73 +75,159 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                                 minHeight={imageWidth}
                             />
                         </Flex>
-                        <Text
-                            fontSize={'50px'}
-                            color={'purple.300'}
-                            position={'relative'}
-                            top='-14px'
+                        <Flex
+                            // border={'2px solid green'}
+                            display={{ base: 'none', md: 'flex' }}
+                            maxWidth={'70%'}
                         >
-                            r/
-                        </Text>
-                        <Text
-                            fontSize={'40px'}
-                            color={'purple'}
-                            position={'relative'}
-                            top='-4px'
+                            <Text
+                                fontSize={'50px'}
+                                color={'purple.300'}
+                                position={'relative'}
+                                top='-14px'
+                            >
+                                r/
+                            </Text>
+                            <Text
+                                fontSize={'40px'}
+                                color={'purple'}
+                                position={'relative'}
+                                top='-4px'
+                            >
+                                {communityData.communityID}
+
+                            </Text>
+                        </Flex>
+                        <Flex
+                            // border={'2px solid green'}
+                            flexDirection='row'
+                            align={'center'}
+                            display={{ base: 'none', md: 'flex' }}
+                            p={2}
                         >
-                            {communityData.communityID}
-                        </Text>
-                        <Button
-                            borderRadius={0}
-                            height={'40px'}
-                            width={'80px'}
-                            border='2px solid purple'
-                            variant={'outline'}
-                            position={'relative'}
-                            top={'1'}
-                            bg='white'
-                            ml={5}
-                            isLoading={loading}
-                            fontSize={'20px'}
-                            onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
-                            _hover={{
-                                bg: 'purple',
-                                color: 'white',
-                                fontSize: '40px',
-                                top: '-4',
-                                height: '80px',
-                                width: '160px',
-                                border: '2px solid white'
-                            }}
+                            <Button
+                                m={1}
+                                borderRadius={0}
+                                height={'40px'}
+                                width={'80px'}
+                                border='2px solid purple'
+                                variant={'outline'}
+                                position={'relative'}
+                                top={'1'}
+                                bg='white'
+                                isLoading={loading}
+                                fontSize={'20px'}
+                                onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
+                                _hover={{
+                                    bg: 'purple',
+                                    color: 'white',
+                                    fontSize: '35px',
+                                    top: '-4',
+                                    height: '70px',
+                                    width: '140px',
+                                    border: '2px solid white'
+                                }}
+                            >
+                                {isJoined ? 'Joined' : 'Join'}
+                            </Button>
+                            <Button
+                                borderRadius={0}
+                                height={'40px'}
+                                width={'80px'}
+                                border='2px solid purple'
+                                variant={'outline'}
+                                position={'relative'}
+                                top={'1'}
+                                bg='white'
+                                isLoading={loading}
+                                fontSize={'20px'}
+                                onClick={() => { setCAModalState(true) }}
+                                display={user?.email?.split(".")[0] === communityData.creatorID ? 'flex' : 'none'}
+                                _hover={{
+                                    bg: 'purple',
+                                    color: 'white',
+                                    fontSize: '35px',
+                                    top: '-4',
+                                    height: '70px',
+                                    width: '140px',
+                                    border: '2px solid white'
+                                }}
+                            >
+                                Admin
+                            </Button>
+                        </Flex>
+                        <Flex
+                            // border={'2px solid green'}
+                            display={{ base: 'flex', md: 'none' }}
+                            height={'100%'}
+                            maxWidth={'70%'}
+                            flexDirection={'column'}
                         >
-                            {isJoined ? 'Joined' : 'Join'}
-                        </Button>
-                        <Button
-                            borderRadius={0}
-                            height={'40px'}
-                            width={'80px'}
-                            border='2px solid purple'
-                            variant={'outline'}
-                            position={'relative'}
-                            top={'1'}
-                            bg='white'
-                            ml={5}
-                            isLoading={loading}
-                            fontSize={'20px'}
-                            onClick={() => { setCAModalState(true) }}
-                            display={user?.email?.split(".")[0] === communityData.creatorID ? 'flex' : 'none'}
-                            _hover={{
-                                bg: 'purple',
-                                color: 'white',
-                                fontSize: '40px',
-                                top: '-4',
-                                height: '80px',
-                                width: '160px',
-                                border: '2px solid white'
-                            }}
-                        >
-                            Admin
-                        </Button>
+                            <Code
+                                fontSize={'30'}
+                                colorScheme='purple'
+                            >
+                                r/{communityData.communityID}
+                            </Code>
+                            <Flex
+                                // border={'2px solid green'}
+                                flexDirection='row'
+                                align={'center'}
+                                justify={'center'}
+                            >
+                                <Button
+                                    mr={2}
+                                    borderRadius={0}
+                                    height={'40px'}
+                                    width={'80px'}
+                                    border='2px solid purple'
+                                    variant={'outline'}
+                                    position={'relative'}
+                                    top={'1'}
+                                    bg='white'
+                                    isLoading={loading}
+                                    fontSize={'20px'}
+                                    onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
+                                    _hover={{
+                                        bg: 'purple',
+                                        color: 'white',
+                                        fontSize: '35px',
+                                        top: '-4',
+                                        height: '70px',
+                                        width: '140px',
+                                        border: '2px solid white'
+                                    }}
+                                >
+                                    {isJoined ? 'Joined' : 'Join'}
+                                </Button>
+                                <Button
+                                    ml={2}
+                                    borderRadius={0}
+                                    height={'40px'}
+                                    width={'80px'}
+                                    border='2px solid purple'
+                                    variant={'outline'}
+                                    position={'relative'}
+                                    top={'1'}
+                                    bg='white'
+                                    isLoading={loading}
+                                    fontSize={'20px'}
+                                    onClick={() => { setCAModalState(true) }}
+                                    display={user?.email?.split(".")[0] === communityData.creatorID ? 'flex' : 'none'}
+                                    _hover={{
+                                        bg: 'purple',
+                                        color: 'white',
+                                        fontSize: '35px',
+                                        top: '-4',
+                                        height: '70px',
+                                        width: '140px',
+                                        border: '2px solid white'
+                                    }}
+                                >
+                                    Admin
+                                </Button>
+                            </Flex>
+                        </Flex>
                     </Flex>
                 </Flex>
             </Flex >

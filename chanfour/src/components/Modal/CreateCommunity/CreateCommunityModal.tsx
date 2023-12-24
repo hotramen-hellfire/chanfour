@@ -15,7 +15,7 @@ type CreateCommunityModalProps = {
 };
 
 const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handleClose }) => {
-    const nameLength = 21;
+    const nameLength = 15;
     const router = useRouter();
     const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [user] = useAuthState(authentication);
