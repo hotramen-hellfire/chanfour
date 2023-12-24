@@ -166,7 +166,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             align={'center'}
                             flexDirection={'column'}
                         >
-                            <Code fontSize={30} colorScheme='purple'>r/{commmunityData.communityID}/submit</Code>
+                            <Code fontSize={{ base: 25, md: 30 }} colorScheme='purple'>r/{commmunityData.communityID}/submit</Code>
                         </Flex>
                         <Flex
                             width={'10%'}

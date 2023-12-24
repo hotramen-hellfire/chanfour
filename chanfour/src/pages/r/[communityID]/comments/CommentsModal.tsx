@@ -157,6 +157,10 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
                             minHeight={'100%'}
                             align={'center'}
                             justify={'center'}
+                            position={'relative'}
+                            left={-5}
+                            top={-2}
+                        // display={{ base: 'none', md: 'flex' }}
                         >
                             <Icon
                                 as={MdOutlineCloseFullscreen}
