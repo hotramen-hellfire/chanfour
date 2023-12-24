@@ -24,7 +24,7 @@ const Communities: React.FC = () => {
                     fontSize="10pt"
                     fontWeight={700}
                     _hover={{
-                        bg: "purple.400",
+                        bg: "purple.500",
                         color: "white",
                         boxShadow: 'dark-lg',
                     }}
@@ -35,6 +35,7 @@ const Communities: React.FC = () => {
                     align={'center'}
                     pl={2}
                     pr={2}
+                    cursor={'pointer'}
                 >
                     <Flex
                         align="center"
@@ -51,6 +52,7 @@ const Communities: React.FC = () => {
                             justifyItems={'center'}
                             alignContent={'center'}
                             alignItems={'center'}
+                            fontSize={16}
                         >a/createBoard</Code>
                     </Flex>
                 </Flex>
@@ -86,6 +88,7 @@ const Communities: React.FC = () => {
                             justifyItems={'center'}
                             alignContent={'center'}
                             alignItems={'center'}
+                            fontSize={16}
                         >a/goHome</Code>
                     </Flex>
                 </Flex>
@@ -110,7 +113,7 @@ const Communities: React.FC = () => {
                             fontSize="10pt"
                             fontWeight={700}
                             _hover={{
-                                bg: "purple.400",
+                                bg: "purple.500",
                                 color: "white",
                                 boxShadow: 'dark-lg',
                             }}
@@ -121,6 +124,7 @@ const Communities: React.FC = () => {
                             align={'center'}
                             pl={2}
                             pr={2}
+                            cursor={'pointer'}
                         >
                             <Icon as={TbCornerDownRightDouble} />
                             <Flex
@@ -139,6 +143,7 @@ const Communities: React.FC = () => {
                                     justifyItems={'center'}
                                     alignContent={'center'}
                                     alignItems={'center'}
+                                    fontSize={16}
                                 >b/{item.communityID}</Code>
                             </Flex>
                         </Flex>
