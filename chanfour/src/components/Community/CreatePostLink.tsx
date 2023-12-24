@@ -1,6 +1,6 @@
 import { authentication } from "@/src/firebase/clientApp";
 import SubmitModal from "@/src/pages/r/[communityID]/SubmitModal";
-import { Flex, Icon, Input } from "@chakra-ui/react";
+import { Button, Flex, Icon, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { BsFileEarmarkImage, BsLink45Deg } from "react-icons/bs";
@@ -53,13 +53,11 @@ const CreatePostLink: React.FC<CreatePostProps> = (props) => {
                     width={'100%'}
                 >
                     <Icon as={RiAddBoxLine} fontSize={24} color="pink.500" cursor="pointer" mr={3} _hover={{ color: 'purple' }} />
-                    <Input
-                        placeholder="Create Post"
+                    <Button
                         fontSize="10pt"
-                        _placeholder={{ color: "pink.500" }}
                         _hover={{
                             bg: "white",
-                            border: "1px solid",
+                            border: "2px solid",
                             borderColor: "pink.500",
                         }}
                         _focus={{
@@ -71,13 +69,18 @@ const CreatePostLink: React.FC<CreatePostProps> = (props) => {
                         textAlign={'center'}
                         bg="purple.50 "
                         borderColor="pink.500"
+                        border={'1px solid'}
+                        color={'pink.500'}
                         height="36px"
+                        width={'100%'}
                         borderRadius={'18px'}
                         mr={5}
                         _focusVisible={{
                             outline: "none",
                         }}
-                    />
+                    >
+                        Create A Post
+                    </Button>
                 </Flex>
             </Flex >
             <Flex

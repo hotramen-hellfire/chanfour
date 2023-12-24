@@ -55,7 +55,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
         <>
             <Modal isOpen={camodalState} onClose={() => { }} size={'xl'}>
                 <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
-                <ModalContent alignItems={'center'} border={'1px solid black'}>
+                <ModalContent alignItems={'center'} border={'1px solid black'} minW={{ base: '10%', md: '80%' }}>
                     <Flex
                         textAlign={'center'}
                         width={'100%'}

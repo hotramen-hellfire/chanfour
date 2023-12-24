@@ -127,9 +127,8 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
     return (
         <>
             <Modal onClose={() => { onModalClose() }} size={'xl'} isOpen={commentsModalState}>
-                <ModalOverlay />
                 <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
-                <ModalContent alignItems={'center'} border={'1px solid black'}>
+                <ModalContent alignItems={'center'} border={'3px solid black'}>
                     <Flex
                         textAlign={'center'}
                         width={'100%'}
