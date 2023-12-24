@@ -47,7 +47,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
     }, [])
 
     return (<>
-        {communityData.backURL && <style jsx global>
+        {<style jsx global>
             {`body {background-image: url(${backLink}); background-attachment:fixed; background-size:cover; background-repeat: no-repeat;background-position: center center}`}
         </style>}
         <Header communityData={communityData} imageLink={imageLink} backLink={backLink} />
