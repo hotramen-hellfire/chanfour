@@ -27,7 +27,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 _hover={{
                     boxShadow: 'dark-lg'
                 }}
-                maxWidth={'100%'}
+                width={'100%'}
                 position={'sticky'}
                 top={'14px'}
             >
@@ -48,9 +48,9 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 <Flex width={'100%'} padding="2px 4px 4px 2px" fontSize={14}>
                     {communityData.description}
                 </Flex>
-                <Flex width={'100%'} padding="2px 4px 4px 2px" fontSize={12} color={'gray'}>
+                <Flex width={'100%'} padding="2px 4px 4px 2px" fontSize={12} color={'gray'} justify={'left'} flexDirection={'column'}>
                     created by {communityData.creatorID}
-                    {communityData.createdAt && <Text><br />{moment(new Date(communityData.createdAt.seconds * 1000)).format("MMM DD, YYYY")}</Text>}
+                    {communityData.createdAt && <Text>{moment(new Date(communityData.createdAt.seconds * 1000)).format("MMM DD, YYYY")}</Text>}
                 </Flex>
             </Flex >
         </>
