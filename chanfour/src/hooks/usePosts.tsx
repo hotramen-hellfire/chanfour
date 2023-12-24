@@ -1,13 +1,12 @@
+import { collection, deleteDoc, doc, getDocs, increment, query, updateDoc, where, writeBatch } from 'firebase/firestore';
+import { deleteObject, ref } from 'firebase/storage';
+import { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { authModalState } from '../components/Atoms/authModalAtom';
+import { Community, communityState } from '../components/Atoms/communitiesAtom';
 import { Post, PostState, PostVote } from '../components/Atoms/postsAtom';
 import { authentication, firestore, storage } from '../firebase/clientApp';
-import { deleteObject, ref } from 'firebase/storage';
-import { collection, deleteDoc, doc, getDocs, increment, query, updateDoc, where, writeBatch } from 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { authModalState } from '../components/Atoms/authModalAtom';
-import { useEffect } from 'react';
-import { Community, communityState } from '../components/Atoms/communitiesAtom';
-import { useRouter } from 'next/router';
 
 const usePosts = () => {
     var uid = "";
@@ -34,6 +33,7 @@ const usePosts = () => {
             let updatedPostVotes = [...postStateValue.postVotes]
             let voteChange = vote;
             if (!existingVote) {
+                console.log("vote: ", vote);
                 const postVoteRef = doc(collection(firestore, 'userByID/', uid + '/votesByUser/'), '/', post.id);
                 const newVote: PostVote = {
                     postID: post.id!,
@@ -42,7 +42,7 @@ const usePosts = () => {
                 };
                 batch.set(postVoteRef, newVote)
                 updatedPost.voteStatus = voteStatus + vote;
-                updatedPostVotes = [...updatedPostVotes, newVote];
+                updatedPostVotes = [newVote, ...updatedPostVotes];
             } else {
                 const postVoteRef = doc(firestore, 'userByID/', uid + '/votesByUser/' + post.id);
                 voteChange = -existingVote.voteValue + vote;
@@ -52,7 +52,7 @@ const usePosts = () => {
                     ...existingVote,
                     voteValue: vote,
                 }
-                batch.update(postVoteRef, { voteValue: updatedPost.voteStatus });
+                batch.update(postVoteRef, { voteValue: vote });
             }
             const postRef = doc(firestore, 'posts', post.id!)
             batch.update(postRef, { voteStatus: updatedPost.voteStatus })

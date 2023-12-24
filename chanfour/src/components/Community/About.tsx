@@ -18,6 +18,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
         <>
             <Flex border='2px solid purple'
                 mt={2}
+                mb={6}
                 padding='4px 4px 4px 4px'
                 bg='white'
                 borderRadius={10}

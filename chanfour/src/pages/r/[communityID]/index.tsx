@@ -12,6 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
+import { Flex } from '@chakra-ui/react';
 type CommunityPageProps = {
     communityData: Community;
 };
@@ -52,6 +53,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
         <Header communityData={communityData} imageLink={imageLink} backLink={backLink} />
         <PageContent>
             <>
+                <Flex display={{ base: 'flex', md: 'none' }}><About communityData={communityData} /></Flex>
                 <CreatePostLink communityData={communityData} />
                 <Posts communityData={communityData} />
             </>

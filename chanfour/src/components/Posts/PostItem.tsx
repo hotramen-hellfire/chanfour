@@ -82,6 +82,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                 }}
                 id={post.id}
             >
+                {userVoteValue}
                 {/* this is the postobject */}
                 <Flex
                     width={'100%'}
