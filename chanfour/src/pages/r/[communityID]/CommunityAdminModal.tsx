@@ -2,7 +2,7 @@ import { Community, communityFunctionsState } from '@/src/components/Atoms/commu
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
 import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Spinner, Text, Textarea } from '@chakra-ui/react';
 import Router from "next/router";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
 import { useRecoilValue } from 'recoil';
 type CommunityAdminModalProps = {
@@ -51,6 +51,13 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
             Router.reload();
         }
     }
+    useEffect(() => {
+        setUrl(commmunityData.imageURL);
+        setBackURL(commmunityData.backURL);
+        setChange(false);
+        setTextInput({ description: commmunityData.description, })
+        setCharsRemaining(descLength - commmunityData.description.length)
+    }, [commmunityData])
     return (
         <>
             <Modal isOpen={camodalState} onClose={() => { }} size={'xl'}>
@@ -106,9 +113,9 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                         >
                             <Text color={'purple'} fontSize={20}>
                                 Board Description
-                                <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'gray.500'}>
-                                    {charsRemaining} Characters remaining
-                                </Text>
+                            </Text>
+                            <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'gray.500'}>
+                                {charsRemaining} Characters remaining
                             </Text>
                             <Textarea
                                 name={textInput.description}

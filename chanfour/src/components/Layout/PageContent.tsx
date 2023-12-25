@@ -18,7 +18,7 @@ const PageContent: React.FC<PageContentProps> = ({ children }) => {
                     // border={'2px solid green'}
                     width={{ base: '100%', md: '65%' }}
                     flexDirection={'column'}
-                    mr={{ base: 0, md: 6 }}
+                    mr={{ base: 2, md: 6 }}
                 >
                     {children[0 as keyof typeof children]}
                 </Flex>

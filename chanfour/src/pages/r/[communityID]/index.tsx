@@ -1,27 +1,27 @@
+import { Community, communityState } from '@/src/components/Atoms/communitiesAtom';
 import About from '@/src/components/Community/About';
 import CreatePostLink from '@/src/components/Community/CreatePostLink';
 import NotFound from '@/src/components/Community/NotFound';
 import PageContent from '@/src/components/Layout/PageContent';
 import Posts from '@/src/components/Posts/Posts';
-import { Community, communityState } from '@/src/components/Atoms/communitiesAtom';
-import { communityImageState } from '@/src/components/Atoms/communityImageAtom';
 import { firestore } from '@/src/firebase/clientApp';
+import { Flex } from '@chakra-ui/react';
 import { Timestamp, doc, getDoc } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import React, { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import safeJsonStringify from 'safe-json-stringify';
 import Header from './Header';
-import { Flex } from '@chakra-ui/react';
+import { bgState } from '@/src/components/Atoms/bgAtom';
+
 type CommunityPageProps = {
     communityData: Community;
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
     const setCommunityStateValue = useSetRecoilState(communityState);
-    const setCommunityImageStateValue = useSetRecoilState(communityImageState);
+    const [bgLink, setBGLink] = useRecoilState(bgState)
     const [imageLink, setImageLink] = useState("https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg");
-    const [backLink, setBackLink] = useState('https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg');
     if (!communityData) {
         return (
             <NotFound />
@@ -33,24 +33,15 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
             ...prev,
             currentCommunity: communityData,
         }))
+        setImageLink(communityData.imageURL ? communityData.imageURL : "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg");
+        setBGLink(communityData.backURL ? communityData.backURL : "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg")
     }, [communityData])
 
     useEffect(() => {
-        if (communityData.imageURL) {
-            setImageLink(communityData.imageURL);
-            setCommunityImageStateValue((prev) => ({ ...prev, icon: communityData.imageURL }));
-        }
-        if (communityData.backURL) {
-            setBackLink(communityData.backURL);
-            setCommunityImageStateValue((prev) => ({ ...prev, backImg: communityData.backURL }));
-        }
-    }, [communityData])
+    }, [])
 
     return (<>
-        {<style jsx global>
-            {`body {background-image: url(${backLink}); background-attachment:fixed; background-size:cover; background-repeat: no-repeat;background-position: center center}`}
-        </style>}
-        <Header communityData={communityData} imageLink={imageLink} backLink={backLink} />
+        <Header communityData={communityData} imageLink={imageLink} backLink={bgLink} />
         <PageContent>
             <>
                 <Flex display={{ base: 'flex', md: 'none' }}><About communityData={communityData} /></Flex>
