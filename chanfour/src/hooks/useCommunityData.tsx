@@ -6,8 +6,10 @@ import { authModalState } from '../components/Atoms/authModalAtom';
 import "../components/Atoms/communitiesAtom";
 import { Community, CommunitySnippet, communityState } from '../components/Atoms/communitiesAtom';
 import { authentication, firestore } from '../firebase/clientApp';
+import { User } from 'firebase/auth';
 const useCommunityData = () => {
     const [commmunityStateValue, setCommunityStateValue] = useRecoilState(communityState)
+    const [lastSnippetsUser, setLastSnippetsUser] = useState<User>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [user] = useAuthState(authentication)
@@ -106,18 +108,19 @@ const useCommunityData = () => {
     };
 
     useEffect(() => {
-        if (!user) {
-            setLoading(false);
-            setCommunityStateValue(prev => ({
-                ...prev,
-                mySnippets: [],
-            }));
-            return;
-        }
         const getMySnippets = async () => {
             console.log('getting snippets read');
             setLoading(true);
+            if (!user) {
+                setLoading(false);
+                setCommunityStateValue(prev => ({
+                    ...prev,
+                    mySnippets: [],
+                }));
+                return;
+            }
             try {
+                setLastSnippetsUser(user);
                 const snippetDocs = await getDocs(collection(firestore, '/userByID/' + uid + '/communitySnippets'));
                 const snippets = snippetDocs.docs.map((doc) => ({ ...doc.data() }));
                 setCommunityStateValue((prev) => ({
@@ -130,7 +133,8 @@ const useCommunityData = () => {
             }
             setLoading(false);
         }
-        getMySnippets();
+        if (lastSnippetsUser !== user || !commmunityStateValue.mySnippets) getMySnippets();
+        setLoading(false);
     }, [user]);
 
 
