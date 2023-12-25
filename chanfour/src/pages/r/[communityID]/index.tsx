@@ -28,13 +28,27 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
         )
     }
 
+    const photos = [
+        "https://wallpapercave.com/wp/wp8382258.jpg",
+        "https://wallpapercave.com/wp/wp8595392.jpg",
+        "https://wallpapercave.com/wp/wp8988329.jpg",
+        "https://wallpapercave.com/wp/wp9040375.jpg",
+        "https://wallpapercave.com/wp/wp5430510.jpg",
+        "https://wallpapercave.com/wp/wp5108937.jpg",
+        "https://wallpapercave.com/wp/wp9514970.jpg",
+        "https://wallpapercave.com/dwp2x/wp12753708.jpg",
+        "https://wallpapercave.com/dwp2x/wp10874361.jpg",
+        "https://wallpapercave.com/dwp2x/wp2847270.jpg",
+        "https://wallpapercave.com/dwp2x/wp7568574.jpg"
+    ]
+
     useEffect(() => {
         setCommunityStateValue(prev => ({
             ...prev,
             currentCommunity: communityData,
         }))
         setImageLink(communityData.imageURL ? communityData.imageURL : "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg");
-        setBGLink(communityData.backURL ? communityData.backURL : "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communitiesBack.jpg")
+        setBGLink(communityData.backURL ? communityData.backURL : photos[Math.floor(Math.random() * photos.length)])
     }, [communityData])
 
     useEffect(() => {
