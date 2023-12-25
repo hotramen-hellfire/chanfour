@@ -1,16 +1,15 @@
 import { UNameState } from '@/src/components/Atoms/UNameAtom';
 import { authModalState } from '@/src/components/Atoms/authModalAtom';
 import { Community } from '@/src/components/Atoms/communitiesAtom';
-import { CommentObject, Post } from '@/src/components/Atoms/postsAtom';
+import { CommentObject, Post, PostState } from '@/src/components/Atoms/postsAtom';
 import { authentication, firestore } from '@/src/firebase/clientApp';
-import usePosts from '@/src/hooks/usePosts';
 import { Code, Flex, Icon, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay } from '@chakra-ui/react';
 import { Timestamp, collection, doc, getDocs, increment, orderBy, query, serverTimestamp, where, writeBatch } from 'firebase/firestore';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdOutlineCloseFullscreen } from 'react-icons/md';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CommentsStack from './CommentsStack';
 import CreateComment from './CreateComment';
 
@@ -21,7 +20,7 @@ type PostPageProps = {
 };
 
 const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, setCommentsModalStateValue }) => {
-    const { postStateValue, setPostStateValue } = usePosts();
+    const [postStateValue, setPostStateValue] = useRecoilState(PostState);
     const [user] = useAuthState(authentication);
     const UNameObj = useRecoilValue(UNameState);
     const setAuthModalState = useSetRecoilState(authModalState);

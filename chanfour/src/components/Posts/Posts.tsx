@@ -58,7 +58,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
             }
         };
         getPosts();
-    }, []);
+    }, [communityData]);
 
     useEffect(() => {
         setLoadingBar(loading);
