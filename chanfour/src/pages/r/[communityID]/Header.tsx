@@ -1,11 +1,11 @@
-import { Community } from '@/src/components/Atoms/communitiesAtom';
+import { Community, communityFunctionsState, communityState } from '@/src/components/Atoms/communitiesAtom';
 import { loadingState } from '@/src/components/Atoms/loadingAtom';
 import { authentication } from '@/src/firebase/clientApp';
 import useCommunityData from '@/src/hooks/useCommunityData';
 import { Box, Button, Code, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import CommunityAdminModal from './CommunityAdminModal';
 type HeaderProps = {
     communityData: Community;
@@ -16,7 +16,8 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) => {
     const [user] = useAuthState(authentication);
     const [camodalState, setCAModalState] = useState(false);
-    const { commmunityStateValue, onJoinOrLeaveCommunity, loading } = useCommunityData();
+    const { onJoinOrLeaveCommunity, loading } = useRecoilValue(communityFunctionsState);
+    const commmunityStateValue = useRecoilValue(communityState);
     const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
     var imageWidth: number = 120;
     const setLoadingBar = useSetRecoilState(loadingState);

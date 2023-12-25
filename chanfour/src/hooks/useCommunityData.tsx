@@ -4,7 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { authModalState } from '../components/Atoms/authModalAtom';
 import "../components/Atoms/communitiesAtom";
-import { Community, CommunitySnippet, communityState } from '../components/Atoms/communitiesAtom';
+import { Community, CommunitySnippet, communityFunctionsState, communityState } from '../components/Atoms/communitiesAtom';
 import { authentication, firestore } from '../firebase/clientApp';
 import { User } from 'firebase/auth';
 const useCommunityData = () => {
@@ -13,6 +13,7 @@ const useCommunityData = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [user] = useAuthState(authentication)
+    const [communityFunctions, setCommunityFunctions] = useRecoilState(communityFunctionsState);
     const setAuthModalState = useSetRecoilState(authModalState);
     var uid = "";
     if (user && user.email) uid = user?.email.split('.')[0];
@@ -108,8 +109,15 @@ const useCommunityData = () => {
     };
 
     useEffect(() => {
+        setCommunityFunctions({
+            onJoinOrLeaveCommunity: onJoinOrLeaveCommunity,
+            updateBID: updateBID,
+            loading: loading
+        })
+    }, [loading])
+
+    useEffect(() => {
         const getMySnippets = async () => {
-            console.log('getting snippets read');
             setLoading(true);
             if (!user) {
                 setLoading(false);
@@ -119,6 +127,7 @@ const useCommunityData = () => {
                 }));
                 return;
             }
+            console.log('Getting snippets read. . .');
             try {
                 setLastSnippetsUser(user);
                 const snippetDocs = await getDocs(collection(firestore, '/userByID/' + uid + '/communitySnippets'));
@@ -132,18 +141,17 @@ const useCommunityData = () => {
                 setError(error);
             }
             setLoading(false);
+            console.log("Snippets read. . .")
         }
-        if (lastSnippetsUser !== user || !commmunityStateValue.mySnippets) getMySnippets();
+        getMySnippets();
         setLoading(false);
     }, [user]);
 
 
 
     return {
-        commmunityStateValue,
-        onJoinOrLeaveCommunity,
         loading,
-        updateBID
+        commmunityStateValue,
     }
 }
 export default useCommunityData;

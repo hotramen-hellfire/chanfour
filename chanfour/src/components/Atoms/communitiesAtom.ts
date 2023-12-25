@@ -26,3 +26,21 @@ export const communityState = atom<CommunityState>({
     key: 'communityState',
     default: { mySnippets: [] }
 })
+
+
+export interface communityFunctions {
+    onJoinOrLeaveCommunity: (communityData: Community, isJoined: boolean) => Promise<void>
+    loading: boolean
+    updateBID: (communityData: Community, updates: { description: string, imageURL: string, backURL: string }) => Promise<void>
+}
+
+export const communityFunctionsState = atom<communityFunctions>({
+    key: 'communityFunctionState',
+    default: {
+        onJoinOrLeaveCommunity: async (communityData: Community, isJoined: boolean) => { return; },
+        loading: false,
+        updateBID: async (communityData: Community, updates: { description: string, imageURL: string, backURL: string }) => {
+            return
+        }
+    }
+})

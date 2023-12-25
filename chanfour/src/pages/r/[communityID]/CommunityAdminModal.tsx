@@ -1,10 +1,10 @@
+import { Community, communityFunctionsState } from '@/src/components/Atoms/communitiesAtom';
 import SubmitRedirect from '@/src/components/Community/SubmitRedirect';
-import { Community } from '@/src/components/Atoms/communitiesAtom';
-import useCommunityData from '@/src/hooks/useCommunityData';
-import Router from "next/router";
 import { Code, Flex, Icon, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalOverlay, Spinner, Text, Textarea } from '@chakra-ui/react';
+import Router from "next/router";
 import React, { useState } from 'react';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
+import { useRecoilValue } from 'recoil';
 type CommunityAdminModalProps = {
     commmunityData: Community;
     camodalState: boolean,
@@ -13,7 +13,7 @@ type CommunityAdminModalProps = {
 
 const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData, camodalState, setCAModalState }) => {
     if (!commmunityData) <SubmitRedirect />;
-    const { updateBID, loading } = useCommunityData();
+    const { updateBID, loading } = useRecoilValue(communityFunctionsState);
     const descLength = 800;
     const [charsRemaining, setCharsRemaining] = useState(descLength - commmunityData.description.length);
     const [textInput, setTextInput] = useState({
