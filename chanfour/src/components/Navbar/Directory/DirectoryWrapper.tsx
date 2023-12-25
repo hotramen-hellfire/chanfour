@@ -1,5 +1,3 @@
-import React from "react";
-
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
     Flex,
@@ -9,7 +7,8 @@ import {
     MenuList,
     Text
 } from "@chakra-ui/react";
-import { TiHome } from "react-icons/ti";
+import React from "react";
+import { TfiAlignJustify } from "react-icons/tfi";
 import Communities from "./Communities";
 
 type DirectoryWrapperProps = {
@@ -30,10 +29,10 @@ const DirectoryWrapper: React.FC<DirectoryWrapperProps> = ({ UName }) => {
             >
                 <Flex alignItems="center" justify="space-between" width={{ base: "auto", lg: "100px" }}>
                     <Flex alignItems="center">
-                        <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TiHome} />
+                        <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiAlignJustify} />
                         <Flex display={{ base: 'none', lg: "flex" }}>
                             <Text fontWeight={600} fontSize={"10pt"}>
-                                Home
+                                /navigate
                             </Text>
                         </Flex>
                     </Flex>

@@ -1,14 +1,14 @@
-import { Code, Flex, Icon, Stack } from '@chakra-ui/react';
+import useCommunityData from '@/src/hooks/useCommunityData';
+import { Code, Flex, Icon, Spinner, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { TbCornerDownRightDouble } from "react-icons/tb";
-import { useRecoilValue } from 'recoil';
-import { communityState } from '../../Atoms/communitiesAtom';
 import CreateCommunityModal from '../../Modal/CreateCommunity/CreateCommunityModal';
 
 const Communities: React.FC = () => {
+    const { commmunityStateValue, loading } = useCommunityData();
     const [open, setOpen] = useState(false);
-    const mySnippets = useRecoilValue(communityState).mySnippets;
+    const mySnippets = commmunityStateValue.mySnippets;
     const router = useRouter();
 
     return (
@@ -105,9 +105,19 @@ const Communities: React.FC = () => {
                         textColor={'purple'}
                     >YOUR BOARDS</Code>
                 </Flex>
+                <Flex
+                    justify={'center'}
+                    width='100%'
+                    mt={1}
+                    color={'purple'}
+                    display={loading ? 'flex' : 'none'}
+                >
+                    <Spinner />
+                </Flex>
                 {
                     mySnippets.map(item =>
                         <Flex
+                            key={item.communityID}
                             mt={0.5}
                             mb={0.5}
                             width="100%"
