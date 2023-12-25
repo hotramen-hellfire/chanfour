@@ -33,7 +33,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
             ...prev,
             currentCommunity: communityData,
         }))
-    }, [])
+    }, [communityData])
 
     useEffect(() => {
         if (communityData.imageURL) {
@@ -44,7 +44,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
             setBackLink(communityData.backURL);
             setCommunityImageStateValue((prev) => ({ ...prev, backImg: communityData.backURL }));
         }
-    }, [])
+    }, [communityData])
 
     return (<>
         {<style jsx global>

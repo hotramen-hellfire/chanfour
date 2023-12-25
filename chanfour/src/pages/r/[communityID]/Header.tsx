@@ -1,7 +1,7 @@
-import { Community, communityFunctionsState, communityState } from '@/src/components/Atoms/communitiesAtom';
+import { Community, communityState } from '@/src/components/Atoms/communitiesAtom';
 import { loadingState } from '@/src/components/Atoms/loadingAtom';
 import { authentication } from '@/src/firebase/clientApp';
-import useCommunityData from '@/src/hooks/useCommunityData';
+import useCommunityFunctions from '@/src/hooks/useCommunityFunctions';
 import { Box, Button, Code, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -16,15 +16,18 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) => {
     const [user] = useAuthState(authentication);
     const [camodalState, setCAModalState] = useState(false);
-    const { onJoinOrLeaveCommunity, loading } = useRecoilValue(communityFunctionsState);
+    // const { onJoinOrLeaveCommunity, loading } = useRecoilValue(communityFunctionsState);
+    const { onJoinOrLeaveCommunity, loading } = useCommunityFunctions();
     const commmunityStateValue = useRecoilValue(communityState);
-    const isJoined = !!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID)
+    const [isJoined, setIsJoined] = useState(!!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID))
     var imageWidth: number = 120;
     const setLoadingBar = useSetRecoilState(loadingState);
     useEffect(() => {
         setLoadingBar(loading)
     }, [loading])
-
+    useEffect(() => {
+        setIsJoined(!!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID))
+    }, [user, commmunityStateValue])
     return (
         <>
             <CommunityAdminModal camodalState={camodalState} setCAModalState={setCAModalState} commmunityData={communityData} />
