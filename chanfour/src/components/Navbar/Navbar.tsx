@@ -1,19 +1,21 @@
 import { authentication, firestore } from '@/src/firebase/clientApp';
-import { Flex, Image, Progress } from '@chakra-ui/react';
+import { Flex, Icon, Image, Progress, Text } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { FaHome } from "react-icons/fa";
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { UNameState } from '../Atoms/UNameAtom';
+import { loadingState } from '../Atoms/loadingAtom';
 import DirectoryWrapper from './Directory/DirectoryWrapper';
 import RightContent from './RightContent/RightContent';
-import SearchInput from './SearchInput';
-import { UNameState } from '../Atoms/UNameAtom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { loadingState } from '../Atoms/loadingAtom';
 const Navbar: React.FC = () => {
     const [loadingBar] = useRecoilState(loadingState);
     const [user, _, __] = useAuthState(authentication);
     const setUNameState = useSetRecoilState(UNameState);
     const [UNameObj] = useRecoilState(UNameState);
+    const router = useRouter();
     useEffect(() => {
         const getUName = async () => {
             if (!user) { return; }//will never be invoked
@@ -31,13 +33,47 @@ const Navbar: React.FC = () => {
 
     return (
         <>
-            <Flex bg="#710193" border="1px solid purple" height="44px" padding="6px 12px" overflow={"visible"}>
+            <Flex
+                // bg="#710193"
+                backdropFilter={'blur(40px)'}
+                border="1px solid white"
+                height="44px"
+                padding="6px 12px"
+                overflow={"visible"}
+                justify={'space-evenly'}
+                align={'center'}
+            >
                 <Flex align="center" mr={{ base: 2, md: 6, lg: 2 }}>
                     <Image src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/leaf.png" height="30px" mr={2} />
                     <Image display={{ base: "none", md: "unset" }} src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/webname.png" height="46px" />
                 </Flex>
                 {user && <DirectoryWrapper UName={UNameObj.UName} />}
-                <SearchInput user={user} />
+                {/* <SearchInput user={user} /> */}
+                <Flex
+                    display={user ? 'none' : 'flex'}
+                    align="center"
+                    justify="center"
+                    width={{ base: "120px", lg: "120px" }}
+                    color={'white'}
+                    _hover={{
+                        border: '1px solid black',
+                        color: 'black',
+                        background: 'white'
+                    }}
+                    borderRadius={5}
+                    cursor={'pointer'}
+                    height={'38px'}
+                    onClick={() => router.push('/')}
+                >
+                    <Flex align="center" justify={'space-evenly'}>
+                        <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={FaHome} />
+                        <Flex >
+                            <Text fontWeight={600} fontSize={"10pt"}>
+                                goHome();
+                            </Text>
+                        </Flex>
+                    </Flex>
+                </Flex>
                 <RightContent user={user} UName={UNameObj.UName} />
             </Flex>
             <Progress size='xs' isIndeterminate display={loadingBar ? 'flex' : 'none'} colorScheme='pink' />

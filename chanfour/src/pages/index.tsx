@@ -52,7 +52,7 @@ export default function Home() {
       <Text
         color={'white'}
       >
-        <br />copying post link
+        <br />youtube embed
         <br />show tags on community page
       </Text>
       <Stack
