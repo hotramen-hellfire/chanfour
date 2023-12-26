@@ -2,11 +2,11 @@ import { Code, Flex, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { boardsList, board } from './Originals';
 import router from 'next/router';
-type OrirginalBoardsProps = {
+type OriginalBoardsProps = {
 
 };
 
-const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
+const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
     const [height, setHeight] = useState(200)
     useEffect(() => {
         console.log();
@@ -70,4 +70,4 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
         </Flex>
     )
 }
-export default OrirginalBoards;
+export default OriginalBoards;

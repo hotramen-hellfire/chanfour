@@ -6,11 +6,11 @@ import { collection, doc, getDocs, increment, limit, orderBy, query, updateDoc }
 import Link from 'next/link';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
-type OrirginalBoardsProps = {
+type TopBoardsProps = {
 
 };
 
-const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
+const TopBoards: React.FC<TopBoardsProps> = () => {
     const [communities, setCommunities] = useState<Community[]>([]);
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(false);
@@ -185,7 +185,8 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
                         return (
                             <Link
                                 href={"/r/" + communityID + '#' + id}
-                                scroll={false}
+                                key={id}
+                            // scroll={false}
                             >
                                 <Text
                                     key={id}
@@ -206,4 +207,4 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
         </Flex >
     )
 }
-export default OrirginalBoards;
+export default TopBoards;

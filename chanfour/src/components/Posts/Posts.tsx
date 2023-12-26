@@ -27,6 +27,29 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     var uid = "";
     if (user) uid = user.email!.split(".")[0];
 
+    useEffect(() => {
+        const handleHashChange = () => {
+            const { hash } = window.location
+            console.log(hash)
+            if (hash) {
+                const targetElement = document.querySelector(hash)
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' })
+                }
+            }
+        }
+
+        if (postStateValue.posts.length && !loading) handleHashChange()
+
+        // // Listen for hash changes and scroll to the section
+        // window.addEventListener('hashchange', handleHashChange)
+
+        // return () => {
+        //     // Clean up event listener
+        //     window.removeEventListener('hashchange', handleHashChange)
+        // }
+    }, [loading])
+
     const openComments = (post: Post) => {
         setPostStateValue(prev => ({
             ...prev,

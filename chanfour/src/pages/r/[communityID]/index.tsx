@@ -28,6 +28,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
         )
     }
 
+
     const photos = [
         "https://wallpapercave.com/wp/wp8382258.jpg",
         "https://wallpapercave.com/wp/wp8595392.jpg",

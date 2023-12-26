@@ -1,12 +1,12 @@
-import { useRecoilState } from "recoil"
-import { bgState } from "../components/Atoms/bgAtom";
+import { Stack, Text } from "@chakra-ui/react";
+import { collection, doc, getCountFromServer, getDocs, increment, query, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from "react";
-import { Flex, Stack, Text } from "@chakra-ui/react";
-import Stats from "./homePage/Stats";
-import Originalboards from "./homePage/Originalboards";
-import TopBoards from "./homePage/TopBoards";
-import { collection, doc, getCountFromServer, getDoc, getDocs, query, updateDoc, increment } from 'firebase/firestore';
+import { useRecoilState } from "recoil";
+import { bgState } from "../components/Atoms/bgAtom";
 import { firestore } from "../firebase/clientApp";
+import Originalboards from "./homePage/Originalboards";
+import Stats from "./homePage/Stats";
+import TopBoards from "./homePage/TopBoards";
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
