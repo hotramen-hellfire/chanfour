@@ -35,7 +35,7 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
         const getPostRecommendations = async () => {
             setLoading(true);
             try {
-                const communityQuery = query(collection(firestore, 'posts'), orderBy('voteStatus', "desc"), limit(10));
+                const communityQuery = query(collection(firestore, 'posts'), orderBy('activity', "desc"), limit(10));
                 const communityDocs = await getDocs(communityQuery);
                 const communities = communityDocs.docs.map((doc) => ({
                     ...doc.data(),

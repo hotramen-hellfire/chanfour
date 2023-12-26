@@ -13,6 +13,7 @@ export type Post = {
     imageURL?: string,
     embedURL?: string,
     communityImageURL?: string;
+    activity: number;
 }
 
 interface PostState {

@@ -83,7 +83,8 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
             numberOfComments: 0,
             voteStatus: 0,
             createdAt: serverTimestamp() as Timestamp,
-            creatorUName: UNameObj.UName
+            creatorUName: UNameObj.UName,
+            activity: 0
         }
         newPost.createdAt = { seconds: Date.now() / 1000 } as Timestamp;
         var postDocRef: any = null;

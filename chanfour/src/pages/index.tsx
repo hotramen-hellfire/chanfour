@@ -6,7 +6,7 @@ import { bgState } from "../components/Atoms/bgAtom";
 import { firestore } from "../firebase/clientApp";
 import Originalboards from "./homePage/Originalboards";
 import Stats from "./homePage/Stats";
-import TopBoards from "./homePage/TopBoards";
+import TopBoards from "./homePage/TopBoardsPosts";
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
@@ -52,8 +52,7 @@ export default function Home() {
       <Text
         color={'white'}
       >
-        implement pageranks
-        <br />implement anchors to get to specific posts
+        <br />copying post link and deletion period
       </Text>
       <Stack
         width={'100%'}

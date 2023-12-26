@@ -78,6 +78,7 @@ const PostPage: React.FC<PostPageProps> = ({ communityData, commentsModalState, 
             const postDocRef = doc(firestore, 'posts', postStateValue.selectedPost?.id!);
             batch.update(postDocRef, {
                 numberOfComments: increment(1),
+                activity: increment(2)
             })
             await batch.commit();
             setCommentText("");
