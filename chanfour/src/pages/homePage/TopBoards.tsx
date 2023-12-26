@@ -3,6 +3,7 @@ import { Post } from '@/src/components/Atoms/postsAtom';
 import { firestore } from '@/src/firebase/clientApp';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
 import { collection, doc, getDocs, increment, limit, orderBy, query, updateDoc } from 'firebase/firestore';
+import Link from 'next/link';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 type OrirginalBoardsProps = {
@@ -53,7 +54,6 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
             width={'90%'}
             justify={'space-evenly'}
         >
-
             <Flex
                 width={'45%'}
                 // height={'100px'}
@@ -181,20 +181,23 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
                     maxHeight={'250px'}
                     display={loading ? 'none' : 'flex'}
                 >
-                    {posts.map(({ title, id }: Post) => {
+                    {posts.map(({ title, id, communityID }: Post) => {
                         return (
-                            <Text
-                                key={id}
-                                color={'white'}
-                                onClick={() => { }}
-                                cursor={'pointer'}
-                                _hover={{
-                                    textDecoration: 'underline',
-                                    color: 'orange'
-                                }}
+                            <Link
+                                href={"/r/" + communityID + '#' + id}
                             >
-                                {title}
-                            </Text>
+                                <Text
+                                    key={id}
+                                    color={'white'}
+                                    cursor={'pointer'}
+                                    _hover={{
+                                        textDecoration: 'underline',
+                                        color: 'orange'
+                                    }}
+                                >
+                                    {title}
+                                </Text>
+                            </Link>
                         )
                     })}
                 </Flex>
