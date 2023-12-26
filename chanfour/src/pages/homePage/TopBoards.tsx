@@ -185,6 +185,7 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
                         return (
                             <Link
                                 href={"/r/" + communityID + '#' + id}
+                                scroll={false}
                             >
                                 <Text
                                     key={id}
