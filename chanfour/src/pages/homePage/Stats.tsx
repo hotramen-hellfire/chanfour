@@ -78,7 +78,7 @@ const Stats: React.FC<StatsProps> = (props) => {
                 <Text
                     color={'white'}
                 >
-                    #Visits: visits
+                    #Visits: {props.numVisits}
                 </Text>
             </Flex>
         </Flex>

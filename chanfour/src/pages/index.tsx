@@ -5,7 +5,7 @@ import { Flex, Stack, Text } from "@chakra-ui/react";
 import Stats from "./homePage/Stats";
 import Originalboards from "./homePage/Originalboards";
 import TopBoards from "./homePage/TopBoards";
-import { collection, getCountFromServer } from "firebase/firestore";
+import { collection, doc, getCountFromServer, getDoc, getDocs, query, updateDoc, increment } from 'firebase/firestore';
 import { firestore } from "../firebase/clientApp";
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
@@ -28,6 +28,8 @@ export default function Home() {
     setBGLink(photos[Math.floor(Math.random() * photos.length)]);
     const fetchStats = async () => {
       setStatsLoading(true)
+      const metaDoc = doc(firestore, 'meta', 'metadata')
+      await updateDoc(metaDoc, { visitors: increment(1) })
       var coll = collection(firestore, 'userByID');
       var snapshot = await getCountFromServer(coll);
       setNumUsers(snapshot.data().count);
@@ -37,6 +39,10 @@ export default function Home() {
       var coll = collection(firestore, 'posts');
       var snapshot = await getCountFromServer(coll);
       setNumPosts(snapshot.data().count);
+      const metaQry = query(collection(firestore, 'meta'));
+      const docs = await getDocs(metaQry);
+      const metaData = docs.docs.map((item) => item.data()['visitors'])
+      setNumVisits(metaData[0])
       setStatsLoading(false)
     }
     fetchStats();

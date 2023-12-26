@@ -1,7 +1,7 @@
 import { Community } from '@/src/components/Atoms/communitiesAtom';
 import { firestore } from '@/src/firebase/clientApp';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
+import { collection, doc, getDocs, increment, limit, orderBy, query, updateDoc } from 'firebase/firestore';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 type OrirginalBoardsProps = {
@@ -87,6 +87,7 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
                 {communities.map(({ communityID }: Community) => {
                     return (
                         <Text
+                            key={communityID}
                             color={'white'}
                             onClick={() => router.push('/r/' + communityID)}
                             cursor={'pointer'}

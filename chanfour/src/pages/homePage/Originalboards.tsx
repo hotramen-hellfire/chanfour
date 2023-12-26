@@ -1,5 +1,5 @@
 import { Code, Flex, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { boardsList, board } from './Originals';
 import router from 'next/router';
 type OrirginalBoardsProps = {
@@ -7,6 +7,11 @@ type OrirginalBoardsProps = {
 };
 
 const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
+    const [height, setHeight] = useState(200)
+    useEffect(() => {
+        console.log();
+        setHeight(boardsList.length * 10);
+    })
     return (
         <Flex
             width={'90%'}
@@ -43,11 +48,12 @@ const OrirginalBoards: React.FC<OrirginalBoardsProps> = () => {
                 flexWrap={'wrap'}
                 align={'center'}
                 flexDirection={'column'}
-                maxHeight={'300px'}
+                maxHeight={height}
             >
                 {boardsList.map(({ boardName, shortDesc, route }: board) => {
                     return (
                         <Text
+                            key={boardName}
                             color={'white'}
                             onClick={() => router.push(route)}
                             cursor={'pointer'}
