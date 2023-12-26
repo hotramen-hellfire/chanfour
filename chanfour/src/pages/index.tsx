@@ -52,8 +52,8 @@ export default function Home() {
       <Text
         color={'white'}
       >
-        <br />copying post link and deletion period
-        <br />indexing
+        <br />copying post link
+        <br />show tags on community page
       </Text>
       <Stack
         width={'100%'}

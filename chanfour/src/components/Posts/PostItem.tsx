@@ -1,20 +1,24 @@
-import { authentication } from '@/src/firebase/clientApp';
-import { Alert, AlertIcon, Box, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Skeleton, Spinner, Text } from '@chakra-ui/react';
+import { authentication, firestore } from '@/src/firebase/clientApp';
+import { Alert, AlertIcon, Box, Button, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Modal, ModalBody, ModalContent, ModalOverlay, Skeleton, Spinner, Text, Textarea, useClipboard } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { BiSolidSave } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { FaHeartCircleBolt, FaHeartCrack } from "react-icons/fa6";
 import { IoShareSocialOutline } from "react-icons/io5";
+import { MdCloseFullscreen } from "react-icons/md";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { TfiCommentAlt } from "react-icons/tfi";
+import { FaBullhorn } from "react-icons/fa";
 import { VscReport } from 'react-icons/vsc';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { loadingState } from '../Atoms/loadingAtom';
 import { Post, PostState } from '../Atoms/postsAtom';
+import { authModalState } from '../Atoms/authModalAtom';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { error } from 'console';
 
 type PostItemProps = {
     hookLoad: boolean,
@@ -28,21 +32,66 @@ type PostItemProps = {
 
 const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, openComments, hookLoad }) => {
     const [loading, setLoading] = useState(false);
+    const [linkCopyModal, setLinkCopyModal] = useState(false);
     const deletionTime = 15;
+    const descLength = 500;
     const [user] = useAuthState(authentication);
     const [deleting, setDeleting] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [heartValue, setHeartValue] = useState(userVoteValue ? userVoteValue : 0);
     const [imageLoading1, setImageLoading1] = useState(true)
     const [imageLoading2, setImageLoading2] = useState(true)
+    const setAuthModal = useSetRecoilState(authModalState);
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
+    const { onCopy, value, setValue, hasCopied } = useClipboard("");
+    const [openReport, setReport] = useState(false);
+    const [reportText, setReportText] = useState("");
+    const [charsRemaining, setCharsRemaining] = useState(descLength);
     const setLoadingBar = useSetRecoilState(loadingState);
+    const [URL, setURL] = useState("")
 
     const updateHeartValue = () => {
         if (user) setHeartValue((heartValue + 1) % 4);
     }
 
+    const onReportChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        if (event.target.value.length > descLength) {
+            event.target.value = event.target.value.substring(0, descLength);
+            return;
+        }
+        setCharsRemaining(descLength - event.target.value.length)
+        setReportText(event.target.value);
+    };
+
+    const onSubmitReport = async () => {
+        if (!user) {
+            setAuthModal({
+                open: true,
+                view: 'login'
+            })
+            return;
+        }
+        setLoading(true);
+        try {
+            const repDocRef = doc(firestore, 'reportsByPost', post.id);
+            const document = await getDoc(repDocRef);
+            if (document.exists()) await updateDoc(repDocRef, {
+                [user.email!.split('.')[0]]: reportText,
+            })
+            else {
+                await setDoc(repDocRef, {
+                    [user.email!.split('.')[0]]: reportText,
+                })
+            }
+        } catch (error: any) {
+            console.log("onSubmitReport Error: ", error)
+            // setDeleteError(error);
+        }
+        setLoading(false);
+    }
+
     useEffect(() => {
+        setURL((document.URL as string).split('#')[0] + "#" + post.id)
         if (!user) setHeartValue(0);
         else setHeartValue(userVoteValue ? userVoteValue : 0);
     }, [user, postStateValue.postVotes])
@@ -96,7 +145,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     {deleteError &&
                         <Alert status='error' minHeight={'20px'} border={'2px solid brown'} borderRadius={'5px'}>
                             <AlertIcon />
-                            <Text mr={2} fontSize={12} fontWeight={600}>Deletion failed :( <br /> {deleteError}</Text>
+                            <Text mr={2} fontSize={12} fontWeight={600}>Action failed :( <br /> {deleteError}</Text>
                         </Alert>
                     }
                     {/* this is title box */}
@@ -138,7 +187,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                         _hover={{}}
                                     />}
                                 <MenuList>
-                                    <MenuItem icon={<VscReport />} >
+                                    <MenuItem icon={<VscReport />} onClick={() => setReport(true)}>
                                         Report
                                     </MenuItem>
                                     <MenuItem onClick={handleDelete} color="red" icon={<RiDeleteBinLine />} display={userIsCreator ? 'unset' : 'none'}>
@@ -317,21 +366,205 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                 border: '1px solid gray',
                                 borderRadius: '4'
                             }}
+                            onClick={() => { setLinkCopyModal(true); setValue(URL); }}
                         />
-                        <Icon
-                            as={BiSolidSave}
-                            fontSize={'30px'}
-                            mr={1}
-                            ml={1}
-                            _hover={{
-                                border: '1px solid gray',
-                                borderRadius: '4'
-                            }}
-                        />
-
                     </Flex>
                 </Flex >
             </Flex >
+            <Modal isOpen={linkCopyModal || openReport} onClose={() => { }}>
+                <ModalOverlay
+                    backdropFilter={'blur(5px)'}
+                />
+                <ModalContent
+                    minW={'50%'}
+                    bg={'transparent'}
+                    justifyContent={'center'}
+                    justifyItems={'center'}
+                    alignContent={'center'}
+                    alignItems={'center'}
+                    display={'flex'}
+                >
+                    <ModalBody
+                        minW={'100%'}
+                        // border={'1px solid white'}
+                        display={linkCopyModal ? 'flex' : 'none'}
+                    >
+                        <Flex
+                            width={'100%'}
+                            // height={'100px'}
+                            flexDirection={'column'}
+                            backdropFilter={'blur(100px)'}
+                            borderRadius={10}
+                            justify={'center'}
+                            align={'center'}
+                            border={'1px solid purple'}
+                            pb={2}
+                        >
+                            <Flex
+                                height={'40px'}
+                                width={'100%'}
+                                // border={'1px solid white'}
+                                justify={'center'}
+                                align={'center'}
+                            >
+                                <Flex
+                                    width={'90%'}
+                                    justify={'space-around'}
+                                >
+                                    <Text
+                                        color={'white'}
+                                        fontSize={30}
+                                        fontWeight={50}
+                                    >
+                                        Share Post
+                                    </Text>
+                                </Flex>
+
+                                <Flex
+                                    justifySelf={'flex-end'}
+                                >
+                                    <Icon
+                                        as={MdCloseFullscreen}
+                                        color={'white'}
+                                        _hover={{
+                                            fontSize: 30
+                                        }}
+                                        onClick={() => { setLinkCopyModal(false) }}
+                                    />
+                                </Flex>
+
+                            </Flex>
+                            <Flex
+                                width={'95%'}
+                                height={0.25}
+                                border={'0.5px solid white'}
+                                mb={2}
+                            />
+                            <Spinner
+                                color='white'
+                                display={loading ? 'flex' : 'none'}
+                            />
+                            <Text
+                                color={'white'}
+                                mb={1}
+                            >
+                                {URL}
+                            </Text>
+                            <Button
+                                onClick={onCopy}
+                                borderRadius={0}
+                                bg={hasCopied ? 'transparent' : 'purple'}
+                            >
+                                {!hasCopied ? 'Click Here To Copy!!' : 'Copied to Clipboard!!'}
+                            </Button>
+                        </Flex>
+                    </ModalBody>
+
+
+                    <ModalBody
+                        minW={'100%'}
+                        // border={'1px solid white'}
+                        display={openReport ? 'flex' : 'none'}
+                    >
+                        <Flex
+                            width={'100%'}
+                            // height={'100px'}
+                            flexDirection={'column'}
+                            backdropFilter={'blur(100px)'}
+                            borderRadius={10}
+                            justify={'center'}
+                            align={'center'}
+                            border={'1px solid purple'}
+                            pb={2}
+                        >
+                            <Flex
+                                height={'40px'}
+                                width={'100%'}
+                                // border={'1px solid white'}
+                                justify={'center'}
+                                align={'center'}
+                            >
+                                <Flex
+                                    width={'90%'}
+                                    justify={'space-around'}
+                                >
+                                    <Text
+                                        color={'white'}
+                                        fontSize={30}
+                                        fontWeight={50}
+                                    >
+                                        Report
+                                    </Text>
+                                </Flex>
+
+                                <Flex
+                                    justifySelf={'flex-end'}
+                                >
+                                    <Icon
+                                        as={MdCloseFullscreen}
+                                        color={'white'}
+                                        _hover={{
+                                            fontSize: 30
+                                        }}
+                                        onClick={() => { setReport(false) }}
+                                    />
+                                </Flex>
+
+                            </Flex>
+                            <Flex
+                                width={'95%'}
+                                height={0.25}
+                                border={'0.5px solid white'}
+                                mb={2}
+                            />
+                            <Spinner
+                                color='white'
+                                display={loading ? 'flex' : 'none'}
+                            />
+                            <Text
+                                color={'white'}
+                                mb={1}
+                            >
+                                Title: {post.title}<br />
+                                Creator: {post.creatorID}
+                            </Text>
+                            <Textarea
+                                width={'80%'}
+                                onChange={onReportChange}
+                                name={reportText}
+                                color={'white'}
+                                placeholder='enter report here :('
+                                _hover={{
+                                    bg: 'white',
+                                    color: 'black'
+                                }}
+                            >
+                            </Textarea>
+                            <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'red' : 'white'}>
+                                {charsRemaining} Characters remaining
+                            </Text>
+                            <Text fontSize={11} color={'white'}>
+                                your previous report for this post will be overwritten (if any) . . .
+                            </Text>
+                            <Button
+                                onClick={onSubmitReport}
+                                isLoading={loading}
+                                borderRadius={0}
+                                bg={hasCopied ? 'transparent' : 'purple'}
+                                display={reportText ? 'flex' : 'none'}
+                            >
+                                Report
+                                <Icon
+                                    as={FaBullhorn}
+                                    color={'white'}
+                                    ml={1}
+                                />
+                            </Button>
+                        </Flex>
+                    </ModalBody>
+                </ModalContent>
+            </Modal >
+
         </>
     )
 }
