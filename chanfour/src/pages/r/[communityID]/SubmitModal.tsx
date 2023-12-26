@@ -110,7 +110,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                 posts: updatedPosts,
             }))
             const communityDocRef = doc(firestore, 'communities', commmunityData.communityID);
-            await updateDoc(communityDocRef, { numberOfPosts: increment(1) })
+            await updateDoc(communityDocRef, { numberOfPosts: increment(1), activity: increment(1) })
             let updatedCommunity = {
                 ...communityStateValue.currentCommunity!,
                 numberOfPosts: communityStateValue.currentCommunity!.numberOfPosts + 1

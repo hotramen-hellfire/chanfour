@@ -60,7 +60,7 @@ const useCommunityData = () => {
                 newSnippet
             )
 
-            batch.update(doc(firestore, 'communities', communityData.communityID), { numberOfMembers: increment(1) });
+            batch.update(doc(firestore, 'communities', communityData.communityID), { numberOfMembers: increment(1), activity: increment(3) });
             await batch.commit();
             setCommunityStateValue(prev => ({
                 ...prev,
@@ -79,7 +79,7 @@ const useCommunityData = () => {
             const batch = writeBatch(firestore);
 
             batch.delete(doc(firestore, 'userByID/' + uid + '/communitySnippets', communityID))
-            batch.update(doc(firestore, 'communities', communityID), { numberOfMembers: increment(-1) });
+            batch.update(doc(firestore, 'communities', communityID), { numberOfMembers: increment(-1), activity: increment(-2) });
             await batch.commit();
             setCommunityStateValue(prev => ({
                 ...prev,
