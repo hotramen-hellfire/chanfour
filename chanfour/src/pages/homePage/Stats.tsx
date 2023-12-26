@@ -1,11 +1,15 @@
-import { Code, Flex, Text } from '@chakra-ui/react';
+import { Code, Flex, Spinner, Text } from '@chakra-ui/react';
 import React from 'react';
 
 type StatsProps = {
-
+    numUsers: number,
+    numPosts: number,
+    numBoards: number,
+    numVisits: number,
+    loading: boolean
 };
 
-const Stats: React.FC<StatsProps> = () => {
+const Stats: React.FC<StatsProps> = (props) => {
 
     return (
         <Flex
@@ -38,30 +42,43 @@ const Stats: React.FC<StatsProps> = () => {
                 height={0.25}
                 border={'0.5px solid white'} />
             <Flex
+                height={'60px'}
+                width={'93%'}
+                align={'center'}
+                justify={'space-evenly'}
+                display={props.loading ? 'flex' : 'none'}
+            >
+                <Spinner
+                    color='white'
+                    size={'lg'}
+                />
+            </Flex>
+            <Flex
                 height={'40px'}
                 width={'93%'}
                 align={'center'}
                 justify={'space-evenly'}
+                display={props.loading ? 'none' : 'flex'}
             >
                 <Text
                     color={'white'}
                 >
-                    #Users: 121
+                    #Users: {props.numUsers}
                 </Text>
                 <Text
                     color={'white'}
                 >
-                    #Posts: 121
+                    #Posts: {props.numPosts}
                 </Text>
                 <Text
                     color={'white'}
                 >
-                    #Boards: 121
+                    #Boards: {props.numBoards}
                 </Text>
                 <Text
                     color={'white'}
                 >
-                    #Visits: 121
+                    #Visits: visits
                 </Text>
             </Flex>
         </Flex>

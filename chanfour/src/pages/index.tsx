@@ -1,10 +1,18 @@
 import { useRecoilState } from "recoil"
 import { bgState } from "../components/Atoms/bgAtom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Flex, Stack, Text } from "@chakra-ui/react";
 import Stats from "./homePage/Stats";
 import Originalboards from "./homePage/Originalboards";
+import TopBoards from "./homePage/TopBoards";
+import { collection, getCountFromServer } from "firebase/firestore";
+import { firestore } from "../firebase/clientApp";
 export default function Home() {
+  const [numUsers, setNumUsers] = useState(0);
+  const [numPosts, setNumPosts] = useState(0);
+  const [numBoards, setNumBoards] = useState(0);
+  const [numVisits, setNumVisits] = useState(0);
+  const [statsLoading, setStatsLoading] = useState(false);
   const [bgLink, setBGLink] = useRecoilState(bgState);
   const photos = [
     "https://wallpapercave.com/wp/wp8382258.jpg",
@@ -18,6 +26,20 @@ export default function Home() {
   ]
   useEffect(() => {
     setBGLink(photos[Math.floor(Math.random() * photos.length)]);
+    const fetchStats = async () => {
+      setStatsLoading(true)
+      var coll = collection(firestore, 'userByID');
+      var snapshot = await getCountFromServer(coll);
+      setNumUsers(snapshot.data().count);
+      var coll = collection(firestore, 'communities');
+      var snapshot = await getCountFromServer(coll);
+      setNumBoards(snapshot.data().count);
+      var coll = collection(firestore, 'posts');
+      var snapshot = await getCountFromServer(coll);
+      setNumPosts(snapshot.data().count);
+      setStatsLoading(false)
+    }
+    fetchStats();
   }, [])
   return (
     <>
@@ -34,8 +56,9 @@ export default function Home() {
         align={'center'}
       // flexDirection={'column'}
       >
+        <TopBoards />
         <Originalboards />
-        <Stats />
+        <Stats loading={statsLoading} numBoards={numBoards} numPosts={numPosts} numUsers={numUsers} numVisits={numVisits} />
       </Stack>
 
     </>
