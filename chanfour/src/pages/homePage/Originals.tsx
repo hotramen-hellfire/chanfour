@@ -6,7 +6,7 @@ export interface board {
 
 export const boardsList: board[] = [
     {
-        boardName: 'Anime discussions',
+        boardName: 'AnimeDiscussions',
         shortDesc: 'simpleBoard',
         route: '/r/anime'
     },
@@ -16,7 +16,7 @@ export const boardsList: board[] = [
         route: '/r/anime'
     },
     {
-        boardName: 'Video Games',
+        boardName: 'VideoGames',
         shortDesc: 'simpleBoard',
         route: '/r/anime'
     },

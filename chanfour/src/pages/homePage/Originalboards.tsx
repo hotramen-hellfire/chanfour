@@ -1,18 +1,21 @@
-import { Code, Flex, Text } from '@chakra-ui/react';
+import { Flex, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { boardsList, board } from './Originals';
-import router from 'next/router';
+import BoardModal from './BoardModal';
+import { board, boardsList } from './Originals';
 type OriginalBoardsProps = {
 
 };
 
 const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
-    const [height, setHeight] = useState(200)
+    const [height, setHeight] = useState(200);
+    const [selectedBoard, setSelectBoard] = useState("AnimeDiscussions");
+    const [boardModal, setBoardModal] = useState(false);
     useEffect(() => {
         console.log();
         setHeight(boardsList.length * 10);
     })
-    return (
+    return (<>
+        <BoardModal selectedBoard={selectedBoard} open={boardModal} setOpen={setBoardModal} />
         <Flex
             width={'90%'}
             // height={'100px'}
@@ -23,21 +26,30 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
             align={'center'}
             border={'1px solid purple'}
         >
-            <Flex
-                height={'40px'}
+            <Stack
                 width={'100%'}
-                // border={'1px solid white'}
-                justify={'center'}
                 align={'center'}
+                flexDirection={'column'}
+                spacing={'1px'}
+                mb={1}
             >
                 <Text
                     color={'white'}
                     fontSize={30}
                     fontWeight={50}
+                // border={'1px solid white'}
                 >
-                    ORIGINAL BOARDS
+                    BOARDS BY INTRESTS
                 </Text>
-            </Flex>
+                <Text
+                    color={'white'}
+                    fontSize={15}
+                    fontWeight={50}
+                // border={'1px solid white'}
+                >
+                    add your boards here, to make them accessible to those with similar intrests
+                </Text>
+            </Stack>
             <Flex
                 width={'95%'}
                 height={0.25}
@@ -55,11 +67,11 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
                         <Text
                             key={boardName}
                             color={'white'}
-                            onClick={() => router.push(route)}
+                            onClick={() => { setSelectBoard(boardName); setBoardModal(true); }}
                             cursor={'pointer'}
                             _hover={{
                                 textDecoration: 'underline',
-                                color: 'orange'
+                                color: 'yellow'
                             }}
                         >
                             {boardName}
@@ -67,7 +79,8 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
                     )
                 })}
             </Flex>
-        </Flex>
+        </Flex >
+    </>
     )
 }
 export default OriginalBoards;

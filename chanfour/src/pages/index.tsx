@@ -1,5 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
-import { collection, doc, getCountFromServer, getDocs, increment, query, updateDoc } from 'firebase/firestore';
+import { collection, doc, getCountFromServer, getDoc, getDocs, increment, query, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { bgState } from "../components/Atoms/bgAtom";
@@ -39,10 +39,10 @@ export default function Home() {
       var coll = collection(firestore, 'posts');
       var snapshot = await getCountFromServer(coll);
       setNumPosts(snapshot.data().count);
-      const metaQry = query(collection(firestore, 'meta'));
-      const docs = await getDocs(metaQry);
-      const metaData = docs.docs.map((item) => item.data()['visitors'])
-      setNumVisits(metaData[0])
+      const docRef = doc(firestore, 'meta', 'metadata')
+      const document = await getDoc(docRef);
+      const value = { ...document.data() }
+      setNumVisits(value['visitors'])
       setStatsLoading(false)
     }
     fetchStats();
@@ -53,6 +53,7 @@ export default function Home() {
         color={'white'}
       >
         <br />copying post link and deletion period
+        <br />indexing
       </Text>
       <Stack
         width={'100%'}

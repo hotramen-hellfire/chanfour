@@ -118,7 +118,7 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                                 cursor={'pointer'}
                                 _hover={{
                                     textDecoration: 'underline',
-                                    color: 'orange'
+                                    color: 'yellow'
                                 }}
                             >
                                 {communityID}
@@ -194,7 +194,7 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                                     cursor={'pointer'}
                                     _hover={{
                                         textDecoration: 'underline',
-                                        color: 'orange'
+                                        color: 'yellow'
                                     }}
                                 >
                                     {title}
