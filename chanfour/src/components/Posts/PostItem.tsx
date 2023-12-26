@@ -28,6 +28,7 @@ type PostItemProps = {
 
 const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue, onVote, onDeletePost, openComments, hookLoad }) => {
     const [loading, setLoading] = useState(false);
+    const deletionTime = 15;
     const [user] = useAuthState(authentication);
     const [deleting, setDeleting] = useState(false);
     const [deleteError, setDeleteError] = useState("");
@@ -52,6 +53,10 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
             setLoading(true);
             setLoadingBar(true);
             setDeleting(true);
+            console.log(((Date.now() as number / 1000) - (post.createdAt.seconds as number)) / 60);
+            if (((Date.now() as number / 1000) - (post.createdAt.seconds as number)) / 60 > deletionTime) {
+                throw new Error("Posts can only be deleted within 15 minutes of creation :(");
+            }
             const [success, error] = await onDeletePost(post);
             if (!success) throw new Error(error);
             console.log("post was successfully deleted :)");
