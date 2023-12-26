@@ -6,16 +6,21 @@ import React, { useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { FaHome } from "react-icons/fa";
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { signOut } from "firebase/auth";
 import { UNameState } from '../Atoms/UNameAtom';
 import { loadingState } from '../Atoms/loadingAtom';
 import DirectoryWrapper from './Directory/DirectoryWrapper';
 import RightContent from './RightContent/RightContent';
+import { RiLogoutCircleRFill } from "react-icons/ri";
 const Navbar: React.FC = () => {
     const [loadingBar] = useRecoilState(loadingState);
     const [user, _, __] = useAuthState(authentication);
     const setUNameState = useSetRecoilState(UNameState);
     const [UNameObj] = useRecoilState(UNameState);
     const router = useRouter();
+    const logout = async () => {
+        await signOut(authentication);
+    };
     useEffect(() => {
         const getUName = async () => {
             if (!user) { return; }//will never be invoked
@@ -34,6 +39,7 @@ const Navbar: React.FC = () => {
     return (
         <>
             <Flex
+                zIndex={1}
                 // bg="#710193"
                 backdropFilter={'blur(40px)'}
                 border="1px solid white"
@@ -72,6 +78,31 @@ const Navbar: React.FC = () => {
                                 goHome();
                             </Text>
                         </Flex>
+                    </Flex>
+                </Flex>
+                <Flex
+                    display={!user ? 'none' : 'flex'}
+                    align="center"
+                    justify="center"
+                    width={{ base: "120px", lg: "120px" }}
+                    color={'white'}
+                    _hover={{
+                        border: '1px solid black',
+                        color: 'black',
+                        background: 'white'
+                    }}
+                    borderRadius={5}
+                    cursor={'pointer'}
+                    height={'38px'}
+                    onClick={logout}
+                >
+                    <Flex align="center" justify={'space-evenly'}>
+                        <Flex >
+                            <Text fontWeight={600} fontSize={"10pt"}>
+                                LogOut
+                            </Text>
+                        </Flex>
+                        <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={RiLogoutCircleRFill} />
                     </Flex>
                 </Flex>
                 <RightContent user={user} UName={UNameObj.UName} />

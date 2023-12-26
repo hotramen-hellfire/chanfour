@@ -9,7 +9,6 @@ const AuthButtons: React.FC = () => {
     const setAuthModalState = useSetRecoilState(authModalState);
     return (
         <>
-
             <Flex
                 align="center"
                 justify="center"
