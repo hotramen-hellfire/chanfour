@@ -40,7 +40,6 @@ const Navbar: React.FC = () => {
         <>
             <Flex
                 zIndex={1}
-                // bg="#710193"
                 backdropFilter={'blur(40px)'}
                 border="1px solid white"
                 height="44px"

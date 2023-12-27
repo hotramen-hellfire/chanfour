@@ -11,15 +11,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { MdOutlineCloseFullscreen } from "react-icons/md";
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import EmbedYt from '@/src/components/Community/EmbedYt';
 type CommunityAdminModalProps = {
     commmunityData: Community;
     submitModalState: boolean
     setSubmitModalState: (state: boolean) => void;
 };
 
+
+
 const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData, submitModalState, setSubmitModalState }) => {
     if (!commmunityData) <SubmitRedirect />;
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
+    const [ytEmbed, setYtEmbed] = useState("");
     const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [fileSize, setFileSize] = useState(0);
     const [selectedFile, setSelectedFile] = useState<string>();
@@ -84,7 +88,8 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
             voteStatus: 0,
             createdAt: serverTimestamp() as Timestamp,
             creatorUName: UNameObj.UName,
-            activity: 0
+            activity: 0,
+            ytURL: ytEmbed,
         }
         newPost.createdAt = { seconds: Date.now() / 1000 } as Timestamp;
         var postDocRef: any = null;
@@ -437,8 +442,8 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                         <Text fontSize={11} color={'gray.500'} mt={2}>
                             (smaller image sizes make loading faster)<br />
                             compress at: www.img2go.com/compress-image<br />
-                            upload: use oshi.at
                         </Text>
+                        <EmbedYt setYtEmbed={setYtEmbed} />
                     </ModalBody>
                     <ModalFooter>
                         <Spinner ml={1}

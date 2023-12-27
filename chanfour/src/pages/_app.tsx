@@ -17,13 +17,13 @@ function App({ Component, pageProps }: AppProps) {
 
     <RecoilRoot>
       <ChakraProvider theme={theme}>
+        <Head >
+          <title>
+            SAITAMA
+          </title>
+          <link rel="icon" href="/leaf.png" />
+        </Head>
         <Layout>
-          <Head >
-            <title>
-              SAITAMA
-            </title>
-            <link rel="icon" href="/leaf.png" />
-          </Head>
           <Component {...pageProps} />
         </Layout>
       </ChakraProvider>

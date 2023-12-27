@@ -7,6 +7,7 @@ import { firestore } from "../firebase/clientApp";
 import Originalboards from "./homePage/Originalboards";
 import Stats from "./homePage/Stats";
 import TopBoards from "./homePage/TopBoardsPosts";
+import Iframe from 'react-iframe'
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
@@ -24,6 +25,7 @@ export default function Home() {
     "https://wallpapercave.com/dwp2x/wp7568574.jpg"
 
   ]
+
   useEffect(() => {
     setBGLink(photos[Math.floor(Math.random() * photos.length)]);
     const fetchStats = async () => {
@@ -47,6 +49,8 @@ export default function Home() {
     }
     fetchStats();
   }, [])
+
+
   return (
     <>
       <Text
@@ -54,6 +58,10 @@ export default function Home() {
       >
         <br />youtube embed
         <br />show tags on community page
+        <br />checkloading
+        <br />fix navbar icons
+        <br />fix loading?
+
       </Text>
       <Stack
         width={'100%'}

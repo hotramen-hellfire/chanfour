@@ -19,6 +19,7 @@ import { Post, PostState } from '../Atoms/postsAtom';
 import { authModalState } from '../Atoms/authModalAtom';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { error } from 'console';
+import Iframe from 'react-iframe';
 
 type PostItemProps = {
     hookLoad: boolean,
@@ -231,6 +232,9 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             padding={'8px'}
                             maxHeight={'400px'}
                             boxShadow={'2xl'}
+                            _hover={{
+                                boxShadow: 'dark-lg'
+                            }}
                             border={'0.1px solid black'}
                             mb={2}
                         >
@@ -244,10 +248,45 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             padding={'8px'}
                             maxHeight={'400px'}
                             boxShadow={'2xl'}
+                            _hover={{
+                                boxShadow: 'dark-lg'
+                            }}
                             border={'0.1px solid black'}
                         >
                             <Image maxHeight={'100%'} onLoad={() => setImageLoading2(false)} display={!imageLoading2 ? 'unset' : 'none'} maxWidth={'100%'} src={post.embedURL} border='4px solid black' alt='only images are supported as of now' />
                         </Flex>
+                        {post.ytURL &&
+                            <Flex
+                                mt={2}
+                                display={!imageLoading2 ? 'flex' : 'none'}
+                                align={'center'}
+                                justify={'center'}
+                                padding={'6px'}
+                                maxHeight={'400px'}
+                                boxShadow={'2xl'}
+                                _hover={{
+                                    boxShadow: 'dark-lg'
+                                }}
+                                border={'0.1px solid black'}
+                                width={'91%'}
+                                bg={'white'}
+                            >
+                                <Flex
+                                    border='8px solid black'
+                                    // m={2}
+                                    w={{ base: '98%', lg: '98%' }}
+                                    h={{ base: '226px', lg: '314px' }}
+                                >
+                                    <Iframe url={post.ytURL}
+                                        className=""
+                                        display="block"
+                                        position="relative"
+                                        width='100%'
+                                        height='100%'
+                                    />
+                                </Flex>
+                            </Flex>
+                        }
                     </Flex>
                     <Flex
                         height={'1px'}
