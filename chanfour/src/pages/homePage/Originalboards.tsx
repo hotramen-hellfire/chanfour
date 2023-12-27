@@ -1,21 +1,19 @@
 import { Flex, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import BoardModal from './BoardModal';
-import { board, boardsList } from './Originals';
+import AddIndex from './AddIndex';
 type OriginalBoardsProps = {
-
+    indexes: string,
+    setIndexes: (indexes: string) => void
 };
 
-const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
-    const [height, setHeight] = useState(200);
+const OriginalBoards: React.FC<OriginalBoardsProps> = (props) => {
     const [selectedBoard, setSelectBoard] = useState("AnimeDiscussions");
     const [boardModal, setBoardModal] = useState(false);
-    useEffect(() => {
-        console.log();
-        setHeight(boardsList.length * 10);
-    })
+    const [addIndexOpen, setAddIndexOpen] = useState(false);
     return (<>
         <BoardModal selectedBoard={selectedBoard} open={boardModal} setOpen={setBoardModal} />
+        <AddIndex open={addIndexOpen} setOpen={setAddIndexOpen} indexes={props.indexes} setIndexes={props.setIndexes} />
         <Flex
             width={'90%'}
             // height={'100px'}
@@ -60,24 +58,35 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = () => {
                 flexWrap={'wrap'}
                 align={'center'}
                 flexDirection={'column'}
-                maxHeight={height}
+                maxHeight={'250px'}
             >
-                {boardsList.map(({ boardName, shortDesc, route }: board) => {
+                {props.indexes.split(",").map((item: string) => {
                     return (
                         <Text
-                            key={boardName}
+                            key={item}
                             color={'white'}
-                            onClick={() => { setSelectBoard(boardName); setBoardModal(true); }}
+                            onClick={() => { setSelectBoard(item); setBoardModal(true); }}
                             cursor={'pointer'}
                             _hover={{
                                 textDecoration: 'underline',
                                 color: 'yellow'
                             }}
                         >
-                            {boardName}
+                            {item}
                         </Text>
                     )
                 })}
+                <Text
+                    color={'white'}
+                    onClick={() => { setAddIndexOpen(true); }}
+                    cursor={'pointer'}
+                    _hover={{
+                        textDecoration: 'underline',
+                        color: 'yellow'
+                    }}
+                >
+                    Add a board. . .
+                </Text>
             </Flex>
         </Flex >
     </>

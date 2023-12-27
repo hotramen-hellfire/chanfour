@@ -7,13 +7,17 @@ import { firestore } from "../firebase/clientApp";
 import Originalboards from "./homePage/Originalboards";
 import Stats from "./homePage/Stats";
 import TopBoards from "./homePage/TopBoardsPosts";
+import AllBoards from "./homePage/AllBoards";
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
   const [numBoards, setNumBoards] = useState(0);
   const [numVisits, setNumVisits] = useState(0);
+  const [communities, setCommunities] = useState("");
   const [statsLoading, setStatsLoading] = useState(false);
+  const [indexes, setIndexes] = useState("")
   const [bgLink, setBGLink] = useRecoilState(bgState);
+  const [openAll, setOpenAll] = useState(false);
   const photos = [
     "https://wallpapercave.com/wp/wp8382258.jpg",
     "https://wallpapercave.com/wp/wp8988329.jpg",
@@ -44,6 +48,12 @@ export default function Home() {
       const document = await getDoc(docRef);
       const value = { ...document.data() }
       setNumVisits(value['visitors'])
+      if (value['communities']) {
+        setCommunities((value['communities'] as string));
+      }
+      if (value['indexes']) {
+        setIndexes((value['indexes'] as string));
+      }
       setStatsLoading(false)
     }
     fetchStats();
@@ -52,12 +62,8 @@ export default function Home() {
 
   return (
     <>
-      <Text
-        color={'white'}
-      >
-        <br />fix loading?
-      </Text>
       <Stack
+        mt={10}
         width={'100%'}
         // border={'2px solid yellow'}
         justify={'center'}
@@ -65,10 +71,10 @@ export default function Home() {
       // flexDirection={'column'}
       >
         <TopBoards />
-        <Originalboards />
+        <Originalboards indexes={indexes} setIndexes={setIndexes} />
+        <AllBoards communitiesString={communities} />
         <Stats loading={statsLoading} numBoards={numBoards} numPosts={numPosts} numUsers={numUsers} numVisits={numVisits} />
       </Stack>
-
     </>
   )
 }

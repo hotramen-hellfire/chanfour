@@ -146,34 +146,6 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                                 {charsRemaining} Characters remaining
                             </Text>
                             <Text fontSize={12} color={'purple'} display={error === 'false' ? 'none' : 'flex'}>{error}</Text>
-                            <Box mt={1} mb={2}>
-                                <Text fontWeight={600} fontSize={15}>
-                                    Community Type
-                                </Text>
-                                <Stack spacing={2}>
-                                    <Checkbox name='public' isChecked={true ? communityType === 'public' : false} onChange={() => setCommunityType('public')}>
-                                        <Flex align='center'>
-                                            <Icon as={BsFillPersonFill} color={"gray.500"} />
-                                            <Text fontSize={15} >Open</Text>
-                                            <Text fontSize={10} color={"gray.500"} ml={5}>Anyone can view, join, comment</Text>
-                                        </Flex>
-                                    </Checkbox>
-                                    <Checkbox name='restricted' isChecked={true ? communityType === 'restricted' : false} onChange={() => setCommunityType('restricted')}>
-                                        <Flex align='center'>
-                                            <Icon as={BsFillEyeFill} color={"gray.500"} />
-                                            <Text fontSize={15} >Closed</Text>
-                                            <Text fontSize={10} color={"gray.500"} ml={5}>Anyone can view but only approved users can submit</Text>
-                                        </Flex>
-                                    </Checkbox>
-                                    <Checkbox name='private' isChecked={true ? communityType === 'private' : false} onChange={() => setCommunityType('private')}>
-                                        <Flex align='center'>
-                                            <Icon as={HiLockClosed} color={"gray.500"} />
-                                            <Text fontSize={15} >Isolated</Text>
-                                            <Text fontSize={10} color={"gray.500"} ml={5}>Only approved users can join and submit</Text>
-                                        </Flex>
-                                    </Checkbox>
-                                </Stack>
-                            </Box>
                         </ModalBody>
 
                     </Box>

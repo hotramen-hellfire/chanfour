@@ -214,8 +214,9 @@ const SignUp: React.FC<SignUpProps> = () => {
             />
             <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'gray.500'}>
                 {charsRemaining} Characters remaining
-                <Text fontSize={12} color={'purple'} display={uerror === '' ? 'none' : 'flex'}>{uerror}</Text>
             </Text>
+            <Text fontSize={12} color={'purple'} display={uerror === '' ? 'none' : 'flex'}>{uerror}</Text>
+
             <Text fontSize={12} color={'purple'} display={error === '' ? 'none' : 'flex'}>{error}</Text>
             {
                 userError && <Text textAlign="center" fontSize={12} color={'purple'} display={userError ? 'flex' : 'none'}>
