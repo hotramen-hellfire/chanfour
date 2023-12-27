@@ -47,6 +47,10 @@ const Navbar: React.FC = () => {
                 overflow={"visible"}
                 justify={'space-evenly'}
                 align={'center'}
+                boxShadow={'2xl'}
+                _hover={{
+                    boxShadow: 'dark-lg'
+                }}
             >
                 <Flex align="center" mr={{ base: 2, md: 6, lg: 2 }}>
                     <Image src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/leaf.png" height="30px" mr={2} />
@@ -58,7 +62,7 @@ const Navbar: React.FC = () => {
                     display={user ? 'none' : 'flex'}
                     align="center"
                     justify="center"
-                    width={{ base: "120px", lg: "120px" }}
+                    width={{ lg: "120px" }}
                     color={'white'}
                     _hover={{
                         border: '1px solid black',
@@ -71,8 +75,11 @@ const Navbar: React.FC = () => {
                     onClick={() => router.push('/')}
                 >
                     <Flex align="center" justify={'space-evenly'}>
-                        <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={FaHome} />
-                        <Flex >
+                        <Icon fontSize={24} mr={{ base: 1, md: 1 }}
+                            ml={{ base: 1, md: 1 }} as={FaHome} />
+                        <Flex
+                            display={{ base: 'none', md: 'flex' }}
+                        >
                             <Text fontWeight={600} fontSize={"10pt"}>
                                 goHome();
                             </Text>

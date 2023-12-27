@@ -21,6 +21,10 @@ const Stats: React.FC<StatsProps> = (props) => {
             justify={'center'}
             align={'center'}
             border={'1px solid purple'}
+            boxShadow={'2xl'}
+            _hover={{
+                boxShadow: 'dark-lg'
+            }}
         >
             <Flex
                 height={'40px'}

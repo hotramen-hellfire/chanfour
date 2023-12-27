@@ -63,6 +63,10 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                 justify={'center'}
                 align={'center'}
                 border={'1px solid purple'}
+                boxShadow={'2xl'}
+                _hover={{
+                    boxShadow: 'dark-lg'
+                }}
             >
                 <Flex
                     height={'40px'}
@@ -135,6 +139,10 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                 borderRadius={10}
                 align={'center'}
                 border={'1px solid purple'}
+                boxShadow={'2xl'}
+                _hover={{
+                    boxShadow: 'dark-lg'
+                }}
             >
                 <Flex
                     height={'40px'}

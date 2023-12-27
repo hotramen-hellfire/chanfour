@@ -23,6 +23,10 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = (props) => {
             justify={'center'}
             align={'center'}
             border={'1px solid purple'}
+            boxShadow={'2xl'}
+            _hover={{
+                boxShadow: 'dark-lg'
+            }}
         >
             <Stack
                 width={'100%'}
