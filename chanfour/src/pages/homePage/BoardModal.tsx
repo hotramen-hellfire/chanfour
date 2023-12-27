@@ -51,6 +51,26 @@ const BoardModal: React.FC<BoardModalProps> = (props) => {
             const docRef = doc(firestore, 'meta', 'boards')
             await updateDoc(docRef, { [boardName]: [...communities, selectedCommunity].join(',') })
             setCommunities([...communities, selectedCommunity]);
+
+            const tagDocRef = doc(firestore, 'meta', 'tags')
+            const tagDoc = await getDoc(tagDocRef);
+            const value = { ...tagDoc.data() }
+            if (value[selectedCommunity]) {
+                const originalTags = (value[selectedCommunity] as string).split(',');
+                await updateDoc(
+                    tagDocRef,
+                    {
+                        [selectedCommunity]: [boardName, ...originalTags].join(',')
+                    }
+                )
+            } else {
+                await updateDoc(
+                    tagDocRef,
+                    {
+                        [selectedCommunity]: boardName
+                    }
+                )
+            }
         } catch (error: any) {
             setError(error);
         }
