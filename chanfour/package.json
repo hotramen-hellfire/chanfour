@@ -1,0 +1,38 @@
+{
+  "name": "chanfour",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/open-sans": "^5.0.18",
+    "@fontsource/raleway": "^5.0.16",
+    "firebase": "^10.7.1",
+    "framer-motion": "^10.16.16",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-firebase-hooks": "^5.1.1",
+    "react-icons": "^4.12.0",
+    "react-player": "^2.14.0",
+    "react-remove-scroll-bar": "^2.3.4",
+    "react-router-hash-link": "^2.4.3",
+    "recoil": "^0.7.7",
+    "safe-json-stringify": "^1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}
