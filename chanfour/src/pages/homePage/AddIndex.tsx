@@ -34,10 +34,10 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
                 await updateDoc(docRef, {
                     indexes: indexes.join(",") as string
                 })
-                props.setIndexes(indexes.join(","));
-                props.setOpen(false)
                 setCharsRemaining(maxlen);
                 setName("")
+                props.setIndexes(indexes.join(","));
+                props.setOpen(false)
             } catch (error: any) {
                 setError(error.message);
                 console.log("handleIndexAddition error: ", error.message);
@@ -59,6 +59,13 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
         }
         setName(event.target.value)
         setError('');
+    }
+
+    const onClose = () => {
+        setError("");
+        setName("");
+        setCharsRemaining(maxlen);
+        props.setOpen(false);
     }
 
     return (
@@ -120,7 +127,7 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
                                         _hover={{
                                             fontSize: 30
                                         }}
-                                        onClick={() => { props.setOpen(false); }}
+                                        onClick={onClose}
                                     />
                                 </Flex>
 
@@ -176,15 +183,24 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
                                 width={'90%'}
                                 pb={2}
                                 justify={'space-around'}
-                                display={user ? 'flex' : 'none'}
+                                align={'center'}
+                                flexDirection={'column'}
                             >
                                 <Button
                                     border={'2px solid white'}
                                     onClick={handleAddition}
                                     isLoading={loading}
+                                    display={user && name ? 'flex' : 'none'}
                                 >
                                     ADD INTREST
                                 </Button>
+                                <Text
+                                    color={'white'}
+                                    fontSize={12}
+                                    display={!user ? 'flex' : 'none'}
+                                >
+                                    You need to be logged in to add an intrest. . .
+                                </Text>
                             </Flex>
                             {/* {error &&
                                 <Alert status='error' minHeight={'10px'} border={'2px solid brown'} borderRadius={'5px'}>
