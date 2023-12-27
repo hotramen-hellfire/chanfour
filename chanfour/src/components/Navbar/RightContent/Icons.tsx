@@ -1,4 +1,4 @@
-import { Divider, Flex, Icon, Text } from "@chakra-ui/react";
+import { Divider, Flex, Icon, Link, Text } from "@chakra-ui/react";
 import React from "react";
 import { TfiGithub } from "react-icons/tfi";
 import { CiViewTimeline } from "react-icons/ci";
@@ -12,32 +12,37 @@ const ActionIcons: React.FC<ActionIconsProps> = () => {
                 align={'center'}
                 justify={'space-between'}
             >
-                <Flex
-                    // display={!user ? 'none' : 'flex'}
-                    align="center"
-                    justify="center"
-                    pl={2}
-                    pr={2}
-                    color={'white'}
-                    _hover={{
-                        border: '1px solid black',
-                        color: 'black',
-                        background: 'white'
-                    }}
-                    borderRadius={5}
-                    cursor={'pointer'}
-                    height={'38px'}
-                // onClick={logout}
+                <Link
+                    href="https://github.com/hotramen-hellfire/chanfour"
+                    target="_blank"
                 >
-                    <Flex align="center" justify={'space-evenly'}>
-                        <Flex >
-                            <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiGithub} />
-                            <Text fontWeight={600} fontSize={"10pt"}>
-                                Source
-                            </Text>
+                    <Flex
+                        // display={!user ? 'none' : 'flex'}
+                        align="center"
+                        justify="center"
+                        pl={2}
+                        pr={2}
+                        color={'white'}
+                        _hover={{
+                            border: '1px solid black',
+                            color: 'black',
+                            background: 'white'
+                        }}
+                        borderRadius={5}
+                        cursor={'pointer'}
+                        height={'38px'}
+                    // onClick={logout}
+                    >
+                        <Flex align="center" justify={'space-evenly'}>
+                            <Flex >
+                                <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiGithub} />
+                                <Text fontWeight={600} fontSize={"10pt"}>
+                                    Source
+                                </Text>
+                            </Flex>
                         </Flex>
                     </Flex>
-                </Flex>
+                </Link>
                 <Flex
                     width={'2px'}
                     border={'1px solid white'}
