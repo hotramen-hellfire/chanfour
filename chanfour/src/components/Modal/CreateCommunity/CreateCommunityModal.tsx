@@ -1,6 +1,6 @@
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import { Box, Button, Checkbox, Divider, Flex, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text } from '@chakra-ui/react';
-import { doc, runTransaction, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, runTransaction, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -76,6 +76,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                     }
                 )
             })
+
             const newSnippet: CommunitySnippet = {
                 communityID: communityName,
                 isModerator: true,
@@ -85,6 +86,20 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                 ...prev,
                 mySnippets: [newSnippet, ...communityStateValue.mySnippets]
             }))
+
+            const docRef = doc(firestore, 'meta', 'metadata')
+            const document = await getDoc(docRef);
+            const value = { ...document.data() }
+            if (value["communities"]) {
+                var items: string[] = (value["communities"] as string).split(",")
+                items = [communityName, ...items]
+                items.sort((a, b) => a.localeCompare(b))
+                await updateDoc(docRef, { communities: (items as string[]).join(",") });
+            }
+            else {
+                await updateDoc(docRef, { communities: communityName as string });
+            }
+
             router.push("/r/" + communityName);
             handleClose();
             setCommunityName("");

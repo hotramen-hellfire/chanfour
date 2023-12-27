@@ -1,5 +1,5 @@
 import { Stack, Text } from "@chakra-ui/react";
-import { collection, doc, getCountFromServer, getDoc, getDocs, increment, query, updateDoc } from 'firebase/firestore';
+import { collection, doc, getCountFromServer, getDoc, increment, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { bgState } from "../components/Atoms/bgAtom";
@@ -7,7 +7,6 @@ import { firestore } from "../firebase/clientApp";
 import Originalboards from "./homePage/Originalboards";
 import Stats from "./homePage/Stats";
 import TopBoards from "./homePage/TopBoardsPosts";
-import Iframe from 'react-iframe'
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
@@ -56,10 +55,7 @@ export default function Home() {
       <Text
         color={'white'}
       >
-        <br />checkloading
-        <br />fix navbar icons
         <br />fix loading?
-
       </Text>
       <Stack
         width={'100%'}

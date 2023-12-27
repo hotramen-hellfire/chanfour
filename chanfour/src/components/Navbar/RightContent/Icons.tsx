@@ -26,7 +26,7 @@ const ActionIcons: React.FC<ActionIconsProps> = () => {
                         _hover={{
                             border: '1px solid black',
                             color: 'black',
-                            background: 'white'
+                            background: 'white',
                         }}
                         borderRadius={5}
                         cursor={'pointer'}
