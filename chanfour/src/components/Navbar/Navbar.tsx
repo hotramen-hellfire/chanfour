@@ -79,11 +79,14 @@ const Navbar: React.FC = () => {
                         </Flex>
                     </Flex>
                 </Flex>
+
+                <RightContent user={user} UName={UNameObj.UName} />
                 <Flex
                     display={!user ? 'none' : 'flex'}
                     align="center"
                     justify="center"
-                    width={{ base: "120px", lg: "120px" }}
+                    pl={2}
+                    pr={2}
                     color={'white'}
                     _hover={{
                         border: '1px solid black',
@@ -104,7 +107,6 @@ const Navbar: React.FC = () => {
                         <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={RiLogoutCircleRFill} />
                     </Flex>
                 </Flex>
-                <RightContent user={user} UName={UNameObj.UName} />
             </Flex>
             <Progress size='xs' isIndeterminate display={loadingBar ? 'flex' : 'none'} colorScheme='pink' />
         </>

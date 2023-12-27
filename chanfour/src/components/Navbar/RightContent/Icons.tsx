@@ -1,98 +1,79 @@
-import { Box, Flex, Icon } from "@chakra-ui/react";
+import { Divider, Flex, Icon, Text } from "@chakra-ui/react";
 import React from "react";
-import { BsArrowUpRightCircle, BsChatDots } from "react-icons/bs";
-import { GrAdd } from "react-icons/gr";
-import {
-    IoFilterCircleOutline,
-    IoNotificationsOutline,
-    IoVideocamOutline,
-} from "react-icons/io5";
-// import useDirectory from "../../../hooks/useDirectory";
-
+import { TfiGithub } from "react-icons/tfi";
+import { CiViewTimeline } from "react-icons/ci";
 type ActionIconsProps = {};
 
 const ActionIcons: React.FC<ActionIconsProps> = () => {
     // const { toggleMenuOpen } = useDirectory();
     return (
-        <Flex alignItems="center" flexGrow={1}>
-            <Box
-                display={{ base: "none", md: "flex" }}
-                alignItems="center"
-                borderRight="1px solid"
-                borderColor="gray.200"
+        <>
+            <Flex
+                align={'center'}
+                justify={'space-between'}
             >
                 <Flex
-                    mr={1.5}
-                    ml={1.5}
-                    padding={1}
-                    cursor="pointer"
-                    borderRadius={4}
-                    color={"white"}
-                    _hover={{ bg: "gray.200", color: "purple" }}
+                    // display={!user ? 'none' : 'flex'}
+                    align="center"
+                    justify="center"
+                    pl={2}
+                    pr={2}
+                    color={'white'}
+                    _hover={{
+                        border: '1px solid black',
+                        color: 'black',
+                        background: 'white'
+                    }}
+                    borderRadius={5}
+                    cursor={'pointer'}
+                    height={'38px'}
+                // onClick={logout}
                 >
-                    <Icon as={BsArrowUpRightCircle} fontSize={20} />
+                    <Flex align="center" justify={'space-evenly'}>
+                        <Flex >
+                            <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiGithub} />
+                            <Text fontWeight={600} fontSize={"10pt"}>
+                                Source
+                            </Text>
+                        </Flex>
+                    </Flex>
                 </Flex>
                 <Flex
-                    mr={1.5}
-                    ml={1.5}
-                    padding={1}
-                    cursor="pointer"
-                    borderRadius={4}
-                    color={"white"}
-                    _hover={{ bg: "gray.200", color: "purple" }}
-                >
-                    <Icon as={IoFilterCircleOutline} fontSize={22} />
-                </Flex>
+                    width={'2px'}
+                    border={'1px solid white'}
+                    height={'22px'}
+                    ml={1}
+                    mr={1}
+                />
                 <Flex
-                    mr={1.5}
-                    ml={1.5}
-                    padding={1}
-                    cursor="pointer"
-                    borderRadius={4}
-                    color={"white"}
-                    _hover={{ bg: "gray.200", color: "purple" }}
+                    // display={!user ? 'none' : 'flex'}
+                    align="center"
+                    justify="center"
+                    pl={2}
+                    pr={2}
+                    color={'white'}
+                    _hover={{
+                        border: '1px solid black',
+                        color: 'black',
+                        background: 'white'
+                    }}
+                    borderRadius={5}
+                    cursor={'pointer'}
+                    height={'38px'}
+                // onClick={logout}
                 >
-                    <Icon as={IoVideocamOutline} fontSize={22} />
+                    <Flex align="center" justify={'space-evenly'}>
+                        <Flex >
+                            <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={CiViewTimeline} />
+                            <Text fontWeight={600} fontSize={"10pt"}>
+                                About
+                            </Text>
+                        </Flex>
+                    </Flex>
                 </Flex>
-            </Box>
-            <>
-                <Flex
-                    mr={1.5}
-                    ml={1.5}
-                    padding={1}
-                    cursor="pointer"
-                    borderRadius={4}
-                    color={"white"}
-                    _hover={{ bg: "gray.200", color: "purple" }}
-                >
-                    <Icon as={BsChatDots} fontSize={20} />
-                </Flex>
-                <Flex
-                    mr={1.5}
-                    ml={1.5}
-                    padding={1}
-                    cursor="pointer"
-                    borderRadius={4}
-                    color={"white"}
-                    _hover={{ bg: "gray.200", color: "purple" }}
-                >
-                    <Icon as={IoNotificationsOutline} fontSize={20} />
-                </Flex>
-                <Flex
-                    display={{ base: "none", md: "flex" }}
-                    mr={3}
-                    ml={1.5}
-                    padding={1}
-                    cursor="pointer"
-                    borderRadius={4}
-                    color={"white"}
-                    _hover={{ bg: "gray.200", color: "purple" }}
-                // onClick={toggleMenuOpen}
-                >
-                    <Icon as={GrAdd} fontSize={20} />
-                </Flex>
-            </>
-        </Flex>
+            </Flex >
+
+        </>
     );
 };
 export default ActionIcons;

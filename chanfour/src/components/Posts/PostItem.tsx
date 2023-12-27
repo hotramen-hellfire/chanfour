@@ -258,7 +258,6 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                         {post.ytURL &&
                             <Flex
                                 mt={2}
-                                display={!imageLoading2 ? 'flex' : 'none'}
                                 align={'center'}
                                 justify={'center'}
                                 padding={'6px'}

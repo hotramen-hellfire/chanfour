@@ -12,11 +12,8 @@ type RightContentProps = {
 const RightContent: React.FC<RightContentProps> = ({ user, UName }) => {
     return (
         <>
-            <AuthModal />
-            {/* <Flex justifyContent="space-between" alignItems="center" overflow={"visible"}> */}
             {user ? <Icons /> : <AuthButtons />}
-            {/* <MenuWrapper UName={UName} /> */}
-            {/* </Flex> */}
+            <AuthModal />
         </>
     );
 };

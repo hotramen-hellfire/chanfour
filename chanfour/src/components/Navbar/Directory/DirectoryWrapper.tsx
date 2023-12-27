@@ -22,15 +22,26 @@ const DirectoryWrapper: React.FC<DirectoryWrapperProps> = ({ UName }) => {
                 cursor="pointer"
                 padding="0px 6px"
                 borderRadius="4px"
-                color={"white"}
-                _hover={{ outline: "1px solid", outlineColor: "gray.200", bg: 'gray.100', color: 'purple' }}
                 mr={2}
+                color={'white'}
                 ml={{ md: 4, lg: 0 }}
+                _hover={{
+                    border: '1px solid black',
+                    color: 'black',
+                    background: 'white'
+                }}
             >
-                <Flex alignItems="center" justify="space-between" width={{ base: "auto", lg: "100px" }}>
-                    <Flex alignItems="center">
-                        <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiAlignJustify} />
-                        <Flex display={{ base: 'none', lg: "flex" }}>
+                <Flex
+                    align="center"
+                    justify="center"
+                    width={{ base: "120px", lg: "120px" }}
+                    borderRadius={5}
+                    cursor={'pointer'}
+                    height={'38px'}
+                >
+                    <Flex align="center" justify={'space-evenly'} >
+                        <Flex >
+                            <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiAlignJustify} />
                             <Text fontWeight={600} fontSize={"10pt"}>
                                 /navigate
                             </Text>
@@ -38,6 +49,8 @@ const DirectoryWrapper: React.FC<DirectoryWrapperProps> = ({ UName }) => {
                     </Flex>
                     <ChevronDownIcon />
                 </Flex>
+
+
             </MenuButton>
             <MenuList
                 width={'100%'}
