@@ -100,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                                     position={'relative'}
                                     top='-14px'
                                 >
-                                    r/
+                                    b/
                                 </Text>
                                 <Text
                                     fontSize={'38px'}

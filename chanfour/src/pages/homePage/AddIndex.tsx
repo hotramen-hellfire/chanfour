@@ -107,7 +107,7 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
                                         fontSize={30}
                                         fontWeight={50}
                                     >
-                                        ADD NEW BOARD
+                                        ADD NEW INTREST
                                     </Text>
                                 </Flex>
 
@@ -138,14 +138,21 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
                                 required
                                 textAlign={"center"}
                                 name={name}
-                                placeholder='BOARD_NAME'
+                                placeholder='type here'
                                 type='text'
                                 onChange={onNameChange}
                                 fontSize={"10pt"}
-                                bg="gray.50"
-                                _placeholder={{ color: "gray.500" }}
+                                color={'white'}
+                                backgroundColor={'transparent'}
+                                _hover={{
+                                    backgroundColor: 'white',
+                                    color: 'black'
+                                }}
+                                _focus={{
+                                    backgroundColor: 'white',
+                                    color: 'black'
+                                }}
                                 width={'60%'}
-
                             />
                             <Text fontSize={11} fontWeight={charsRemaining === 0 ? 1000 : 500} color={charsRemaining === 0 ? 'purple' : 'white'}>
                                 {charsRemaining} Characters remaining
@@ -176,7 +183,7 @@ const AddIndex: React.FC<AddIndexProps> = (props) => {
                                     onClick={handleAddition}
                                     isLoading={loading}
                                 >
-                                    ADD BOARD
+                                    ADD INTREST
                                 </Button>
                             </Flex>
                             {/* {error &&

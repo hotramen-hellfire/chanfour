@@ -85,7 +85,7 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = (props) => {
                         color: 'yellow'
                     }}
                 >
-                    Add a board. . .
+                    Add an intrest of yours. . .
                 </Text>
             </Flex>
         </Flex >

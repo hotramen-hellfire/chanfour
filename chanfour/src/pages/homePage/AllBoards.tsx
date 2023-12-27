@@ -31,7 +31,7 @@ const AllBoards: React.FC<AllBoardsProps> = (props) => {
                     fontWeight={50}
                 // border={'1px solid white'}
                 >
-                    ALL COMMUNITIES
+                    ALL BOARDS
                 </Text>
                 <Text
                     color={'white'}
