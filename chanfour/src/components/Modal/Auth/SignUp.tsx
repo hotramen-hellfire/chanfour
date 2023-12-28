@@ -42,7 +42,7 @@ const SignUp: React.FC<SignUpProps> = () => {
             let domain = "@iit";
             if (!signUpForm.email.includes(domain)) {
                 etype = 'e';
-                throw new Error("only emails with @iit* allowed!! :)");
+                throw new Error("only emails with .*@iit* allowed!! :)");
             }
 
 
@@ -112,7 +112,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 required
                 textAlign={"center"}
                 name="email"
-                placeholder='iitb email'
+                placeholder='@iit... email'
                 type='email'
                 mb={1}
                 onChange={onChange}

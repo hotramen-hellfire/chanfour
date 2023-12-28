@@ -73,6 +73,7 @@ const RightContent: React.FC<RightContentProps> = ({ user, UName }) => {
                                     <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={IoIosGitNetwork} />
                                     <Text fontWeight={600} fontSize={"10pt"}
                                         display={{ base: 'none', md: 'flex' }}
+                                        _hover={{ as: 'samp' }}
                                     >
                                         Issues
                                     </Text>

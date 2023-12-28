@@ -35,7 +35,7 @@ const ActionIcons: React.FC<ActionIconsProps> = () => {
                         <Flex align="center" justify={'space-evenly'}>
                             <Flex >
                                 <Icon fontSize={24} mr={{ base: 1, md: 1 }} as={TfiGithub} />
-                                <Text fontWeight={600} fontSize={"10pt"} display={{ base: 'none', md: 'flex' }}>
+                                <Text fontWeight={600} fontSize={"10pt"} _hover={{ as: 'samp' }} display={{ base: 'none', md: 'flex' }}>
                                     Source
                                 </Text>
                             </Flex>
