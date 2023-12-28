@@ -12,11 +12,11 @@ const AllBoards: React.FC<AllBoardsProps> = (props) => {
             width={'90%'}
             // height={'100px'}
             flexDirection={'column'}
-            backdropFilter={'blur(100px)'}
             borderRadius={10}
             justify={'center'}
             align={'center'}
             border={'1px solid purple'}
+            backdropFilter={'blur(100px)'}
             boxShadow={'2xl'}
             _hover={{
                 boxShadow: 'dark-lg'
@@ -58,7 +58,7 @@ const AllBoards: React.FC<AllBoardsProps> = (props) => {
                 flexDirection={'column'}
                 maxHeight={'500px'}
             >
-                {(props.communitiesString.split(',') as string[]).map(item => {
+                {props.communitiesString && (props.communitiesString.split(',') as string[]).map(item => {
                     return (<Text
                         key={item}
                         color={'white'}

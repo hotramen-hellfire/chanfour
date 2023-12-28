@@ -98,6 +98,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
 
                         {tags.map(item =>
                             <Code
+                                key={item}
                                 height={'20px'}
                                 colorScheme={colors[Math.floor(Math.random() * colors.length)]}
                                 mr={1}

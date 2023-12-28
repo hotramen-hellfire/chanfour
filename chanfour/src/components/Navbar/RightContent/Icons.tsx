@@ -10,6 +10,7 @@ const ActionIcons: React.FC<ActionIconsProps> = () => {
             <Flex
                 align={'center'}
                 justify={'space-between'}
+                display={{ base: 'none', md: 'flex' }}
             >
                 <Link
                     href="https://github.com/hotramen-hellfire/chanfour"

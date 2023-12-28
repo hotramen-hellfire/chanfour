@@ -12,7 +12,7 @@ type CommunityAdminModalProps = {
 };
 
 const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityData, camodalState, setCAModalState }) => {
-    if (!commmunityData) <SubmitRedirect />;
+    if (!commmunityData) return <SubmitRedirect />;
     const { updateBID, loading } = useRecoilValue(communityFunctionsState);
     const descLength = 800;
     const [charsRemaining, setCharsRemaining] = useState(descLength - commmunityData.description.length);
@@ -43,6 +43,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
     const handleBIDCommit = async () => {
         await updateBID(commmunityData, { description: textInput.description, imageURL: url, backURL: backURL });
         setChange(true);
+        setCAModalState(false);
     }
 
     const exitModal = () => {

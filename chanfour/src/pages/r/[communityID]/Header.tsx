@@ -14,6 +14,7 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) => {
+    if (!communityData) return <></>;
     const [user] = useAuthState(authentication);
     const [camodalState, setCAModalState] = useState(false);
     // const { onJoinOrLeaveCommunity, loading } = useRecoilValue(communityFunctionsState);

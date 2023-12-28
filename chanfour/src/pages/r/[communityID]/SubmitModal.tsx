@@ -150,7 +150,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
     }, [loading])
     return (
         <>
-            <Modal isOpen={submitModalState} onClose={() => { }} size={'xl'}>
+            {commmunityData && <Modal isOpen={submitModalState} onClose={() => { }} size={'xl'}>
                 <ModalOverlay backdropFilter='auto' backdropBlur='2px' />
                 <ModalContent alignItems={'center'} border={'1px solid black'} minW={{ base: '10%', md: '80%' }}>
                     <Flex
@@ -275,8 +275,8 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                                     <Text fontSize={12} color='purple'>
                                         fileSize:{fileSize / (1024 * 1024)} MB/2 MB
                                     </Text>
-                                    <Text fontSize={16} color='purple' display={fileSize > 1024 * 1024 * 5 ? 'unset' : 'none'} mb={1}>
-                                        Pwweasee use Links For Large Files :) (&gt; 5MB)
+                                    <Text fontSize={16} color='purple' display={fileSize > 1024 * 1024 * 2 ? 'unset' : 'none'} mb={1}>
+                                        Pwweasee use Links For Large Files :) (&gt; 2MB)
                                     </Text>
                                     <Image src={selectedFile} border='4px solid black' alt='only images are supported as of now' />
                                 </Flex>
@@ -455,7 +455,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                             cursor={'pointer'}
                             _hover={{ fontSize: 30 }}
                             colorScheme='green'
-                            display={textInput.title && fileSize < 1024 * 1024 * 5 && !loading && !embedLoad ? 'unset' : 'none'}
+                            display={(textInput.title) && (fileSize < 1024 * 1024 * 2) && (!loading) && !embedLoad ? 'unset' : 'none'}
                             justifyContent='center'
                             onClick={handleCreatePost}
                         >
@@ -473,7 +473,7 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
                         </Code>
                     </ModalFooter>
                 </ModalContent>
-            </Modal >
+            </Modal >}
         </>
     )
 }

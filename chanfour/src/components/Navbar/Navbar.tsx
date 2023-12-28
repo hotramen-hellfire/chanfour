@@ -52,7 +52,10 @@ const Navbar: React.FC = () => {
                     boxShadow: 'dark-lg'
                 }}
             >
-                <Flex align="center" mr={{ base: 2, md: 6, lg: 2 }}>
+                <Flex align="center" mr={{ base: 2, md: 6, lg: 2 }}
+                    onClick={() => { router.push('/') }}
+                    cursor={'pointer'}
+                >
                     <Image src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/leaf.png" height="30px" mr={2} />
                     <Image display={{ base: "none", md: "unset" }} src="https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/webname.png" height="46px" />
                 </Flex>

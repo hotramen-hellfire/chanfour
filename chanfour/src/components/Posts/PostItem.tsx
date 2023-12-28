@@ -203,8 +203,6 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                         border={'0.5px solid black'}
                         boxShadow={'dark-lg'}
                     />
-                    {/* <Divider orientation='horizontal' bg='black' /> */}
-                    {/* content box */}
                     <Flex
                         borderRadius={5}
                         bg='white'
@@ -230,7 +228,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             align={'center'}
                             justify={'center'}
                             padding={'8px'}
-                            maxHeight={'400px'}
+                            // maxHeight={'400px'}
                             boxShadow={'2xl'}
                             _hover={{
                                 boxShadow: 'dark-lg'
@@ -246,7 +244,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             align={'center'}
                             justify={'center'}
                             padding={'8px'}
-                            maxHeight={'400px'}
+                            // maxHeight={'400px'}
                             boxShadow={'2xl'}
                             _hover={{
                                 boxShadow: 'dark-lg'
@@ -261,7 +259,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                                 align={'center'}
                                 justify={'center'}
                                 padding={'6px'}
-                                maxHeight={'400px'}
+                                // maxHeight={'400px'}
                                 boxShadow={'2xl'}
                                 _hover={{
                                     boxShadow: 'dark-lg'

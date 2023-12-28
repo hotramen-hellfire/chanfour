@@ -1,13 +1,13 @@
-import { Stack, Text } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { collection, doc, getCountFromServer, getDoc, increment, updateDoc } from 'firebase/firestore';
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { bgState } from "../components/Atoms/bgAtom";
 import { firestore } from "../firebase/clientApp";
+import AllBoards from "./homePage/AllBoards";
 import Originalboards from "./homePage/Originalboards";
 import Stats from "./homePage/Stats";
 import TopBoards from "./homePage/TopBoardsPosts";
-import AllBoards from "./homePage/AllBoards";
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
@@ -17,7 +17,6 @@ export default function Home() {
   const [statsLoading, setStatsLoading] = useState(false);
   const [indexes, setIndexes] = useState("")
   const [bgLink, setBGLink] = useRecoilState(bgState);
-  const [openAll, setOpenAll] = useState(false);
   const photos = [
     "https://wallpapercave.com/wp/wp8382258.jpg",
     "https://wallpapercave.com/wp/wp8988329.jpg",

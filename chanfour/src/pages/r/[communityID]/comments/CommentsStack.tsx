@@ -27,7 +27,7 @@ const CommentsStack: React.FC<CommentsStackProps> = ({ comments, fetchLoading })
             >
                 <Spinner display={fetchLoading ? 'flex' : 'none'} />
                 <Stack width={'100%'} display={'flex'}>
-                    {comments.map(item => <CommentItem key={item.id} comment={item} />)}
+                    {comments && comments.map(item => <CommentItem key={item.id} comment={item} />)}
                 </Stack>
             </Flex>
         </>

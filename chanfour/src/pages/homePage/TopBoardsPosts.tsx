@@ -50,13 +50,13 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
     }, [])
     return (
         <Flex
-            flexDirection={'row'}
+            flexDirection={{ base: 'column', md: 'row' }}
             width={'90%'}
             justify={'space-evenly'}
         >
             <Flex
-                width={'45%'}
-                // height={'100px'}
+                mb={1}
+                width={{ base: '100%', md: '45%' }}
                 flexDirection={'column'}
                 backdropFilter={'blur(100px)'}
                 borderRadius={10}
@@ -88,7 +88,6 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                     height={0.25}
                     border={'0.5px solid white'} />
                 <Flex
-                    // height={'40px'}
                     width={'93%'}
                     flexWrap={'wrap'}
                     justify={'center'}
@@ -104,7 +103,6 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                     />
                 </Flex>
                 <Flex
-                    // height={'40px'}
                     width={'93%'}
                     flexWrap={'wrap'}
                     align={'center'}
@@ -132,7 +130,8 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                 </Flex>
             </Flex >
             <Flex
-                width={'45%'}
+                mt={1}
+                width={{ base: '100%', md: '45%' }}
                 // height={'100px'}
                 flexDirection={'column'}
                 backdropFilter={'blur(100px)'}
@@ -147,7 +146,6 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                 <Flex
                     height={'40px'}
                     width={'100%'}
-                    // border={'1px solid white'}
                     justify={'center'}
                     align={'center'}
                 >
@@ -164,7 +162,6 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                     height={0.25}
                     border={'0.5px solid white'} />
                 <Flex
-                    // height={'40px'}
                     width={'93%'}
                     flexWrap={'wrap'}
                     justify={'center'}
@@ -180,7 +177,6 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                     />
                 </Flex>
                 <Flex
-                    // height={'40px'}
                     width={'93%'}
                     flexWrap={'wrap'}
                     align={'center'}
@@ -194,7 +190,6 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                             <Link
                                 href={"/r/" + communityID + '#' + id}
                                 key={id}
-                            // scroll={false}
                             >
                                 <Text
                                     key={id}

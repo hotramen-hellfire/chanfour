@@ -40,7 +40,7 @@ const AboutModal: React.FC<AboutModalProps> = (props) => {
                             border={'1px solid purple'}
                         >
                             <Flex
-                                height={'40px'}
+                                // height={'40px'}
                                 width={'100%'}
                                 // border={'1px solid white'}
                                 justify={'center'}

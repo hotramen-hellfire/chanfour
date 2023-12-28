@@ -9,7 +9,7 @@ type CommentItemProps = {
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
 
-    return (
+    return (<>        {comment &&
         <Flex
             width={'100%'}
             border={'1px solid black'}
@@ -48,7 +48,8 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment }) => {
                     {comment.text}
                 </Flex>
             </Flex>
-        </Flex>
+        </Flex>}
+    </>
     )
 }
 export default CommentItem;
