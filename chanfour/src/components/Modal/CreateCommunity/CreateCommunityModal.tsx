@@ -25,7 +25,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
     const [error, setError] = useState('false');
     const [loading, setLoading] = useState(false);
     const format = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
-    var uid: string = user!.email!.split(".")[0];
+    var uid: string = user!.email!;
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length > nameLength) return;
         setCommunityName(event.target.value);
@@ -55,7 +55,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                 //create the community doc in firestore
                 transaction.set(communityDocRef, {
                     communityID: communityName,
-                    creatorID: user!.email!.split('.')[0],
+                    creatorID: user!.email!,
                     createdAt: serverTimestamp(),
                     numberOfMembers: 1,
                     privacyType: communityType,
@@ -100,7 +100,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                 await updateDoc(docRef, { communities: communityName as string });
             }
 
-            router.push("/r/" + communityName);
+            router.push("/b/" + communityName);
             handleClose();
             setCommunityName("");
             setCharsRemaining(nameLength);
@@ -120,7 +120,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
             <Modal isOpen={open} onClose={handleClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader display='flex' flexDirection={'column'} fontSize={15} padding={3}>Create A Community</ModalHeader>
+                    <ModalHeader display='flex' flexDirection={'column'} fontSize={15} padding={3}>Create A Board</ModalHeader>
                     <Box
                         pl={3}
                         pr={3}
@@ -138,7 +138,7 @@ const CreateCommunityModal: React.FC<CreateCommunityModalProps> = ({ open, handl
                             <Text fontSize={11} color={'gray.500'}>
                                 cannot be changed once put
                             </Text>
-                            <Text position='relative' top="28px" left="10px" width="20px" color={charsRemaining !== nameLength ? "purple" : "purple.200"}>r/</Text>
+                            <Text position='relative' top="28px" left="5px" width="20px" color={charsRemaining !== nameLength ? "purple" : "purple.200"}>b/</Text>
                             <Input position="relative" value={communityName} size={'sm'} pl={'22px'} onChange={handleChange} color={"purple"} _focusVisible={{
                                 outline: "none",
                             }} />

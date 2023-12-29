@@ -24,10 +24,10 @@ const Navbar: React.FC = () => {
     useEffect(() => {
         const getUName = async () => {
             if (!user) { return; }//will never be invoked
-            var uid = user.email!.split(".")[0];
+            var uid = user.email!;
             const userDocRef = await doc(firestore, 'userByID', uid);
             const userDoc = await getDoc(userDocRef);
-            await setUNameState({
+            setUNameState({
                 UName: userDoc.data()!['UName'],
                 isValid: true,
             })

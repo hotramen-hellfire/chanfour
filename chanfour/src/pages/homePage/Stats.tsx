@@ -1,4 +1,4 @@
-import { Code, Flex, Spinner, Text } from '@chakra-ui/react';
+import { Flex, Spinner, Text, baseTheme } from '@chakra-ui/react';
 import React from 'react';
 
 type StatsProps = {
@@ -17,11 +17,12 @@ const Stats: React.FC<StatsProps> = (props) => {
             // height={'100px'}
             flexDirection={'column'}
             backdropFilter={'blur(100px)'}
-            borderRadius={10}
+            borderRadius={16}
             justify={'center'}
             align={'center'}
             border={'1px solid purple'}
             boxShadow={'2xl'}
+            mb={10}
             _hover={{
                 boxShadow: 'dark-lg'
             }}
@@ -58,11 +59,13 @@ const Stats: React.FC<StatsProps> = (props) => {
                 />
             </Flex>
             <Flex
-                height={'40px'}
+                // height={'40px'}
+                m={2}
                 width={'93%'}
                 align={'center'}
                 justify={'space-evenly'}
                 display={props.loading ? 'none' : 'flex'}
+                fontSize={{ base: 10, md: 15 }}
             >
                 <Text
                     color={'white'}

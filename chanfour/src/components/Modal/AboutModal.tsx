@@ -1,4 +1,4 @@
-import { Code, Flex, Icon, Image, Modal, ModalBody, ModalContent, ModalOverlay, Text } from '@chakra-ui/react';
+import { Code, Flex, Icon, Image, Modal, ModalBody, ModalContent, ModalOverlay, Text, Link } from '@chakra-ui/react';
 import React from 'react';
 import { FaGit, FaGithubAlt } from "react-icons/fa6";
 import { MdCloseFullscreen } from 'react-icons/md';
@@ -93,45 +93,42 @@ const AboutModal: React.FC<AboutModalProps> = (props) => {
                                 <Code
                                     w={'100%'}
                                 >
-                                    This website was created in order to find new people in our sphere with similar intrests as ours(firstly, HipHop). It took around 15 days to
+                                    We created this website in order to find new people in our sphere with similar intrests as ours (firstly, HipHop). It took around 15 days to
                                     complete the first deployable with minimal features and maybe a 1000 bugs.
                                     <br />
-                                    This website is a result of people with no academic or, in that matter, concerns of any sort, seemingly infinite amount of time and
-                                    obsession, in our case, rap music, and hitting keyboard too loud results in. We started with reddit like communities, then added indexes (intrests) to
-                                    cluster communities which fall into the same category, like 4chan.
+                                    We started with reddit like communities, then added indexes (intrests) to
+                                    cluster communities which fall into the same category, just like 4chan(&lt;3).
                                     <br />
-                                    The source code for this project, along with instructions for setup and other nuances, is available on the cat logo.
+                                    The source code for this project, along with instructions for setup and other nuances, is available on the cat logo
                                     at the bottom of this message. . .
                                     <br />
+                                    If you are intrested in our work, want to collaborate or even if you are using the source for your project,
+                                    do hit us up, it would feel really great to create something that has some value to it, even remotely. . .
                                 </Code>
                                 <Code
                                     mt={2}
                                 >
-                                    Sukhmanjot Singh<br />
-                                    Himanshu Gangwal
+                                    PEACE OUT. . .
                                 </Code>
                             </Flex>
+                            <Link
+                                href="https://github.com/hotramen-hellfire/chanfour"
+                                target="_blank"
+                            >
+                                <Icon
+                                    mt={2}
+                                    as={FaGithubAlt}
+                                    color={'white'}
+                                    fontSize={'50px'}
+                                />
+                                <Icon
 
-                            <Icon
-                                mt={2}
-                                as={FaGithubAlt}
-                                color={'white'}
-                                fontSize={'50px'}
-                            />
-                            <Icon
-
-                                as={FaGit}
-                                color={'white'}
-                                fontSize={'16px'}
-                                mb={2}
-                            />
-                            {/* <Flex
-                                mt={2}
-                                width={'95%'}
-                                height={0.25}
-                                border={'0.5px solid white'}
-                                mb={2}
-                            /> */}
+                                    as={FaGit}
+                                    color={'white'}
+                                    fontSize={'16px'}
+                                    mb={2}
+                                />
+                            </Link>
                         </Flex>
                     </ModalBody>
                 </ModalContent>

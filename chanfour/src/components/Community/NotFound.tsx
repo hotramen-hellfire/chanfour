@@ -1,5 +1,7 @@
-import { Button, Card, CardBody, Flex, Link, Progress, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, Flex, Progress, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 const CommunityNotFound: React.FC = () => {
+    const router = useRouter();
     return (
         <>
             <Progress size='xs' isIndeterminate colorScheme='pink' />
@@ -23,17 +25,16 @@ const CommunityNotFound: React.FC = () => {
                             fontSize: '25px'
                         }}
                     >
-                        <Text >The requested community doesn't exist. . . :(</Text>
-                        <Link href="/">
-                            <Button
-                                mt={4}
-                                _hover={{
-                                    color: 'purple',
-                                    bg: 'white',
-                                    fontSize: '15px'
-                                }}
-                            > Go Home</Button>
-                        </Link>
+                        <Text >The requested board doesn't exist. . . :(</Text>
+                        <Button
+                            mt={4}
+                            onClick={() => { router.push('/') }}
+                            _hover={{
+                                color: 'purple',
+                                bg: 'white',
+                                fontSize: '15px'
+                            }}
+                        > Go Home</Button>
                     </CardBody>
                 </Card>
             </Flex >

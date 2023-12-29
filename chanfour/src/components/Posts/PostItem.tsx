@@ -77,11 +77,11 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
             const repDocRef = doc(firestore, 'reportsByPost', post.id);
             const document = await getDoc(repDocRef);
             if (document.exists()) await updateDoc(repDocRef, {
-                [user.email!.split('.')[0]]: reportText,
+                [user.email!]: reportText,
             })
             else {
                 await setDoc(repDocRef, {
-                    [user.email!.split('.')[0]]: reportText,
+                    [user.email!]: reportText,
                 })
             }
         } catch (error: any) {
@@ -412,7 +412,8 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     backdropFilter={'blur(5px)'}
                 />
                 <ModalContent
-                    minW={'50%'}
+                    minW={'85%'}
+                    maxW={'100%'}
                     bg={'transparent'}
                     justifyContent={'center'}
                     justifyItems={'center'}
@@ -421,7 +422,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                     display={'flex'}
                 >
                     <ModalBody
-                        minW={'100%'}
+                        maxW={'80%'}
                         // border={'1px solid white'}
                         display={linkCopyModal ? 'flex' : 'none'}
                     >
@@ -437,7 +438,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             pb={2}
                         >
                             <Flex
-                                height={'40px'}
+                                // height={'40px'}
                                 width={'100%'}
                                 // border={'1px solid white'}
                                 justify={'center'}
@@ -483,6 +484,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, userIsCreator, userVoteValue,
                             <Text
                                 color={'white'}
                                 mb={1}
+                                maxW={"80%"}
                             >
                                 {URL}
                             </Text>

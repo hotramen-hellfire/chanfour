@@ -8,6 +8,7 @@ import AllBoards from "./homePage/AllBoards";
 import Originalboards from "./homePage/Originalboards";
 import Stats from "./homePage/Stats";
 import TopBoards from "./homePage/TopBoardsPosts";
+import AboutSite from "./homePage/AboutSite";
 export default function Home() {
   const [numUsers, setNumUsers] = useState(0);
   const [numPosts, setNumPosts] = useState(0);
@@ -18,14 +19,16 @@ export default function Home() {
   const [indexes, setIndexes] = useState("")
   const [bgLink, setBGLink] = useRecoilState(bgState);
   const photos = [
-    "https://wallpapercave.com/wp/wp8382258.jpg",
-    "https://wallpapercave.com/wp/wp8988329.jpg",
-    "https://wallpapercave.com/wp/wp9040375.jpg",
-    "https://wallpapercave.com/wp/wp5430510.jpg",
-    "https://wallpapercave.com/wp/wp9514970.jpg",
-    "https://wallpapercave.com/dwp2x/wp12753708.jpg",
-    "https://wallpapercave.com/dwp2x/wp7568574.jpg"
-
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b1.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b2.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b3.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b4.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b5.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b6.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b7.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b8.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b9.jpg",
+    "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/b10.jpg",
   ]
 
   useEffect(() => {
@@ -64,11 +67,10 @@ export default function Home() {
       <Stack
         mt={10}
         width={'100%'}
-        // border={'2px solid yellow'}
         justify={'center'}
         align={'center'}
-      // flexDirection={'column'}
       >
+        <AboutSite />
         <TopBoards />
         <Originalboards indexes={indexes} setIndexes={setIndexes} />
         <AllBoards communitiesString={communities} />

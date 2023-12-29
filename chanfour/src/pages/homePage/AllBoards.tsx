@@ -1,4 +1,5 @@
 import { Flex, Stack, Text } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 type AllBoardsProps = {
@@ -6,7 +7,7 @@ type AllBoardsProps = {
 };
 
 const AllBoards: React.FC<AllBoardsProps> = (props) => {
-
+    const router = useRouter();
     return (
         <Flex
             width={'90%'}
@@ -62,7 +63,7 @@ const AllBoards: React.FC<AllBoardsProps> = (props) => {
                     return (<Text
                         key={item}
                         color={'white'}
-                        onClick={() => { }}
+                        onClick={() => { router.push("/b/" + item) }}
                         cursor={'pointer'}
                         _hover={{
                             textDecoration: 'underline',

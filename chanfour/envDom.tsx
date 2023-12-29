@@ -1,0 +1,1 @@
+export const domains: string[] = ['@iit', '@mnnit', '@lnmit', '@ihm'];

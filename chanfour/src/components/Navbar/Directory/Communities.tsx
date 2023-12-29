@@ -128,7 +128,7 @@ const Communities: React.FC = () => {
                                 color: "white",
                                 boxShadow: 'dark-lg',
                             }}
-                            onClick={() => router.push('/r/' + item.communityID)}
+                            onClick={() => router.push('/b/' + item.communityID)}
                             // border={'0.5px solid black'}
                             boxShadow={'xl'}
                             flexDirection={'row'}

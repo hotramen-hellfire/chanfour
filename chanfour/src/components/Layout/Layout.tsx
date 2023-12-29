@@ -20,6 +20,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 backgroundRepeat={'no-repeat'}
                 overflowX={'hidden'}
                 overflowY={'hidden'}
+                backgroundPosition={'center'}
             >
                 <Navbar />
                 <main>

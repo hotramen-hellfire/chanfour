@@ -13,7 +13,7 @@ const useCommunityFunctions = () => {
     const [user] = useAuthState(authentication)
     const setAuthModalState = useSetRecoilState(authModalState);
     var uid = "";
-    if (user && user.email) uid = user?.email.split('.')[0];
+    if (user && user.email) uid = user?.email;
     const onJoinOrLeaveCommunity = async (communityData: Community, isJoined: boolean) => {
         //is the user signed in
         //if not open auth modal state

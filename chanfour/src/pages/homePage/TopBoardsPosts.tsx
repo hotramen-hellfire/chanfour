@@ -2,8 +2,7 @@ import { Community } from '@/src/components/Atoms/communitiesAtom';
 import { Post } from '@/src/components/Atoms/postsAtom';
 import { firestore } from '@/src/firebase/clientApp';
 import { Flex, Spinner, Text } from '@chakra-ui/react';
-import { collection, doc, getDocs, increment, limit, orderBy, query, updateDoc } from 'firebase/firestore';
-import Link from 'next/link';
+import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 type TopBoardsProps = {
@@ -116,7 +115,7 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                             <Text
                                 key={communityID}
                                 color={'white'}
-                                onClick={() => router.push('/r/' + communityID)}
+                                onClick={() => router.push('/b/' + communityID)}
                                 cursor={'pointer'}
                                 _hover={{
                                     textDecoration: 'underline',
@@ -187,22 +186,18 @@ const TopBoards: React.FC<TopBoardsProps> = () => {
                 >
                     {posts.map(({ title, id, communityID }: Post) => {
                         return (
-                            <Link
-                                href={"/r/" + communityID + '#' + id}
+                            <Text
                                 key={id}
+                                color={'white'}
+                                onClick={() => { router.push('/b/' + communityID + '#' + id) }}
+                                cursor={'pointer'}
+                                _hover={{
+                                    textDecoration: 'underline',
+                                    color: 'yellow'
+                                }}
                             >
-                                <Text
-                                    key={id}
-                                    color={'white'}
-                                    cursor={'pointer'}
-                                    _hover={{
-                                        textDecoration: 'underline',
-                                        color: 'yellow'
-                                    }}
-                                >
-                                    {title}
-                                </Text>
-                            </Link>
+                                {title}
+                            </Text>
                         )
                     })}
                 </Flex>

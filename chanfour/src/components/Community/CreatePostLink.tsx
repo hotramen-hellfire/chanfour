@@ -1,5 +1,5 @@
 import { authentication } from "@/src/firebase/clientApp";
-import SubmitModal from "@/src/pages/r/[communityID]/SubmitModal";
+import SubmitModal from "@/src/pages/b/[communityID]/SubmitModal";
 import { Button, Flex, Icon, Input } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";

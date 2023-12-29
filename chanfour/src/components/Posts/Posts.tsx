@@ -1,6 +1,6 @@
 import { authentication, firestore } from '@/src/firebase/clientApp';
 import usePosts from '@/src/hooks/usePosts';
-import CommentsModal from '@/src/pages/r/[communityID]/comments/CommentsModal';
+import CommentsModal from '@/src/pages/b/[communityID]/comments/CommentsModal';
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -25,7 +25,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
         onDeletePost,
         hookLoad } = usePosts();
     var uid = "";
-    if (user) uid = user.email!.split(".")[0];
+    if (user) uid = user.email!;
 
     useEffect(() => {
         const handleHashChange = () => {
@@ -54,7 +54,7 @@ const Posts: React.FC<PostsProps> = ({ communityData }) => {
     }
 
     useEffect(() => {
-        if (user) uid = user.email!.split(".")[0];
+        if (user) uid = user.email!;
         else uid = "";
     }, [user])
 

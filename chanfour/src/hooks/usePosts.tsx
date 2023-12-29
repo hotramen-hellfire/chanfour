@@ -12,7 +12,7 @@ const usePosts = () => {
     var uid = "";
     const [user] = useAuthState(authentication)
     const [hookLoad, setHookLoad] = useState(false);
-    if (user) { uid = user.email!.split(".")[0] }
+    if (user) { uid = user.email! }
     const setAuthModalState = useSetRecoilState(authModalState);
     const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [postStateValue, setPostStateValue] = useRecoilState(PostState);
@@ -46,6 +46,9 @@ const usePosts = () => {
                 batch.set(postVoteRef, newVote)
                 updatedPost.voteStatus = voteStatus + vote;
                 updatedPostVotes = [newVote, ...updatedPostVotes];
+                const postRef = doc(firestore, 'posts', post.id!)
+                batch.update(postRef, { voteStatus: increment(vote), activity: increment(vote) })
+                await batch.commit();
             } else {
                 const postVoteRef = doc(firestore, 'userByID/', uid + '/votesByUser/' + post.id);
                 voteChange = -existingVote.voteValue + vote;
@@ -56,10 +59,10 @@ const usePosts = () => {
                     voteValue: vote,
                 }
                 batch.update(postVoteRef, { voteValue: vote });
+                const postRef = doc(firestore, 'posts', post.id!)
+                batch.update(postRef, { voteStatus: increment(voteChange), activity: increment(voteChange) })
+                await batch.commit();
             }
-            const postRef = doc(firestore, 'posts', post.id!)
-            batch.update(postRef, { voteStatus: updatedPost.voteStatus, activity: increment(voteChange) })
-            await batch.commit();
             const postIdx = updatedPosts.findIndex((postObj) => postObj.id === post.id);
             updatedPosts[postIdx] = {
                 ...post,

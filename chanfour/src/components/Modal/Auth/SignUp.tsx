@@ -7,6 +7,7 @@ import { authentication, firestore } from "../../../firebase/clientApp";
 import { FIREBASE_ERRORS } from '../../../firebase/errors';
 import { authModalState } from '../../Atoms/authModalAtom';
 import { loadingState } from "../../Atoms/loadingAtom";
+import { domains } from "@/envDom";
 type SignUpProps = {
 
 };
@@ -39,14 +40,13 @@ const SignUp: React.FC<SignUpProps> = () => {
             if (error) setError("");
             if (uerror !== '') return;
             setLoading(true);
-            let domain = "@iit";
-            if (!signUpForm.email.includes(domain)) {
-                etype = 'e';
-                throw new Error("only emails with .*@iit* allowed!! :)");
-            }
+            // if (!domains.some(((item) => (signUpForm.email.includes(item))))) {
+            //     etype = 'e';
+            //     throw new Error("only emails with .*@iit* allowed!! :)");
+            // }
 
 
-            var userDocRef: any = doc(firestore, 'userByID', signUpForm.email.split(".")[0]);
+            var userDocRef: any = doc(firestore, 'userByID', signUpForm.email);
             const userDoc = await getDoc(userDocRef);
             if (userDoc.exists()) {
                 etype = 'e';
@@ -67,7 +67,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 throw new Error('username is taken, get more creative++ :)');
             }
             await setDoc(userDocRef, {
-                uid: signUpForm.email.split(".")[0],
+                uid: signUpForm.email,
                 UName: signUpForm.UName,
                 joined: serverTimestamp(),
                 activity: 0,
@@ -112,7 +112,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 required
                 textAlign={"center"}
                 name="email"
-                placeholder='@iit... email'
+                placeholder='@... email'
                 type='email'
                 mb={1}
                 onChange={onChange}

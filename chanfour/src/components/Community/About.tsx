@@ -70,7 +70,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 top={'14px'}
             >
                 <Flex width={'100%'} justify={'center'} align={'center'} flexDirection={'column'}>
-                    <Code color={'pink.500'} bg={'pink.100'} width={'100%'}>ABOUT COMMUNITY</Code>
+                    <Code color={'pink.500'} bg={'pink.100'} width={'100%'}>ABOUT BOARD</Code>
                     <Stack spacing={'2px'} width={'100%'}>
                         <Code colorScheme='green' width={'100%'}>#Members: {communityData.numberOfMembers}</Code>
                         <Code colorScheme='yellow' width={'100%'}>#Posts: {numPosts}</Code>
