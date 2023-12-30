@@ -1,5 +1,6 @@
 import { Code, Flex, Icon, Image, Modal, ModalBody, ModalContent, ModalOverlay, Text, Link } from '@chakra-ui/react';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { FaGit, FaGithubAlt } from "react-icons/fa6";
 import { MdCloseFullscreen } from 'react-icons/md';
 type AboutModalProps = {
@@ -8,7 +9,7 @@ type AboutModalProps = {
 };
 
 const AboutModal: React.FC<AboutModalProps> = (props) => {
-
+    const router = useRouter();
     return (
         <>
             <Modal isOpen={props.open} onClose={() => { }}>

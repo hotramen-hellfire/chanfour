@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Community, communityState } from '../Atoms/communitiesAtom';
-import { Code, Flex, Stack, Text } from '@chakra-ui/react';
-import moment from 'moment';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { firestore } from '@/src/firebase/clientApp';
+import { Code, Flex, Stack, Text } from '@chakra-ui/react';
 import { doc, getDoc } from 'firebase/firestore';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { Community, communityState } from '../Atoms/communitiesAtom';
 
 type AboutProps = {
     communityData: Community
@@ -72,7 +72,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                 <Flex width={'100%'} justify={'center'} align={'center'} flexDirection={'column'}>
                     <Code color={'pink.500'} bg={'pink.100'} width={'100%'}>ABOUT BOARD</Code>
                     <Stack spacing={'2px'} width={'100%'}>
-                        <Code colorScheme='green' width={'100%'}>#Members: {communityData.numberOfMembers}</Code>
+                        <Code colorScheme='green' width={'100%'}>#Members: {communityStateValue.currentCommunity ? communityStateValue.currentCommunity?.numberOfMembers : 'loading'}</Code>
                         <Code colorScheme='yellow' width={'100%'}>#Posts: {numPosts}</Code>
                     </Stack>
                 </Flex>
@@ -84,7 +84,7 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
                     width={'100%'}
                 />
                 <Flex width={'100%'} padding="2px 4px 4px 2px" fontSize={14}>
-                    {communityData.description}
+                    {communityStateValue.currentCommunity?.description}
                 </Flex>
                 {tags &&
                     <Flex

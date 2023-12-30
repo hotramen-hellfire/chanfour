@@ -100,6 +100,14 @@ const useCommunityData = () => {
             const batch = writeBatch(firestore);
             batch.update(doc(firestore, 'communities', communityData.communityID), { description: updates.description, imageURL: updates.imageURL, backURL: updates.backURL })
             await batch.commit();
+            var updatedCommunity = { ...commmunityStateValue.currentCommunity };
+            updatedCommunity.description = updates.description!
+            updatedCommunity.imageURL = updates.imageURL!
+            updatedCommunity.backURL = updates.backURL!
+            setCommunityStateValue(prev => ({
+                ...prev,
+                currentCommunity: updatedCommunity as Community,
+            }))
             setLoading(false);
         } catch (error: any) {
             console.log('updateBID eror: ', error);

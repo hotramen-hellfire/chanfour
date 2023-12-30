@@ -5,7 +5,7 @@ import useCommunityFunctions from '@/src/hooks/useCommunityFunctions';
 import { Box, Button, Code, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import CommunityAdminModal from './CommunityAdminModal';
 type HeaderProps = {
     communityData: Community;
@@ -17,9 +17,8 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
     if (!communityData) return <></>;
     const [user] = useAuthState(authentication);
     const [camodalState, setCAModalState] = useState(false);
-    // const { onJoinOrLeaveCommunity, loading } = useRecoilValue(communityFunctionsState);
     const { onJoinOrLeaveCommunity, loading } = useCommunityFunctions();
-    const commmunityStateValue = useRecoilValue(communityState);
+    const [commmunityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [isJoined, setIsJoined] = useState(!!commmunityStateValue.mySnippets.find(item => item.communityID === communityData.communityID))
     var imageWidth: number = 120;
     const setLoadingBar = useSetRecoilState(loadingState);
@@ -208,7 +207,7 @@ const Header: React.FC<HeaderProps> = ({ communityData, imageLink, backLink }) =
                                         bg='white'
                                         isLoading={loading}
                                         fontSize={'20px'}
-                                        onClick={() => onJoinOrLeaveCommunity(communityData, isJoined)}
+                                        onClick={() => { onJoinOrLeaveCommunity(communityData, isJoined); }}
                                         _hover={{
                                             bg: 'purple',
                                             color: 'white',

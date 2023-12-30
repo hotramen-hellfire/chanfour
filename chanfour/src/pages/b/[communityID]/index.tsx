@@ -19,7 +19,7 @@ type CommunityPageProps = {
 };
 
 const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
-    const setCommunityStateValue = useSetRecoilState(communityState);
+    const [communityStateValue, setCommunityStateValue] = useRecoilState(communityState);
     const [bgLink, setBGLink] = useRecoilState(bgState)
     const [imageLink, setImageLink] = useState("https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg");
     if (!communityData) {
@@ -47,12 +47,12 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
             ...prev,
             currentCommunity: communityData,
         }))
-        setImageLink(communityData.imageURL ? communityData.imageURL : "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg");
-        setBGLink(communityData.backURL ? communityData.backURL : photos[Math.floor(Math.random() * photos.length)])
     }, [communityData])
 
     useEffect(() => {
-    }, [])
+        setImageLink(communityStateValue.currentCommunity?.imageURL ? communityStateValue.currentCommunity?.imageURL : "https://raw.githubusercontent.com/hotramen-hellfire/chanfour/main/imagebank/communityDefaultIcon.jpg");
+        setBGLink(communityStateValue.currentCommunity?.backURL ? communityStateValue.currentCommunity?.backURL : photos[Math.floor(Math.random() * photos.length)])
+    }, [communityStateValue])
 
     return (<>
         <Header communityData={communityData} imageLink={imageLink} backLink={bgLink} />

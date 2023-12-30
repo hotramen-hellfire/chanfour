@@ -67,6 +67,12 @@ const useCommunityFunctions = () => {
             console.log('joinCommunity eror: ', error);
             setError(error.message);
         }
+        var updatedCommunity = { ...commmunityStateValue.currentCommunity };
+        updatedCommunity.numberOfMembers = updatedCommunity.numberOfMembers! + 1
+        setCommunityStateValue(prev => ({
+            ...prev,
+            currentCommunity: updatedCommunity as Community,
+        }))
     };
     const leaveCommunity = async (communityID: string) => {
         //first create a new community snippet
@@ -86,6 +92,12 @@ const useCommunityFunctions = () => {
             console.log('leaveCommunity eror: ', error);
             setError(error.message);
         }
+        var updatedCommunity = { ...commmunityStateValue.currentCommunity };
+        updatedCommunity.numberOfMembers = updatedCommunity.numberOfMembers! - 1;
+        setCommunityStateValue(prev => ({
+            ...prev,
+            currentCommunity: updatedCommunity as Community,
+        }))
     };
 
     return {

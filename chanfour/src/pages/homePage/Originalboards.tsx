@@ -2,6 +2,7 @@ import { Flex, Stack, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import BoardModal from './BoardModal';
 import AddIndex from './AddIndex';
+import { useRouter } from 'next/router';
 type OriginalBoardsProps = {
     indexes: string,
     setIndexes: (indexes: string) => void
@@ -11,6 +12,23 @@ const OriginalBoards: React.FC<OriginalBoardsProps> = (props) => {
     const [selectedBoard, setSelectBoard] = useState("AnimeDiscussions");
     const [boardModal, setBoardModal] = useState(false);
     const [addIndexOpen, setAddIndexOpen] = useState(false);
+    const router = useRouter();
+    const handleOpen = () => {
+        setBoardModal(true);
+        router.push({ hash: 'about' }, undefined, { shallow: true })
+    }
+
+    // useEffect(() => {
+    //     if (!boardModal) {
+    //         router.push({ hash: '' }, undefined, { shallow: true })
+    //     }
+    // }, [boardModal])
+
+    // useEffect(() => {
+    //     if (boardModal && router.asPath === '/') {
+    //         setBoardModal(false);
+    //     }
+    // }, [router.asPath])
     return (<>
         {props.indexes &&
             <>

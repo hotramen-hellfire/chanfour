@@ -42,14 +42,10 @@ const CommunityAdminModal: React.FC<CommunityAdminModalProps> = ({ commmunityDat
     const handleBIDCommit = async () => {
         await updateBID(commmunityData, { description: textInput.description, imageURL: url, backURL: backURL });
         setChange(true);
-        exitModal();
     }
 
     const exitModal = () => {
         setCAModalState(false);
-        if (change) {
-            Router.reload();
-        }
     }
     useEffect(() => {
         setUrl(commmunityData.imageURL);
